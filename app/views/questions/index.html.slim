@@ -1,2 +1,6 @@
-h1 Questions#index
-p Find me in app/views/questions/index.html.slim
+h1
+  - @questions.each do |q|
+    == q.title
+    br
+    == q.body
+    br

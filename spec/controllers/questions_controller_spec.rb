@@ -3,19 +3,17 @@ require 'rails_helper'
 RSpec.describe QuestionsController, type: :controller do
 
   describe "GET #index" do
+    let!(:questions) { create_list(:question, 3) }
+
+    before { get :index }
+
     it "populate an array of all questions" do
-      question1 = FactoryBot.create(:question)
-      question2 = FactoryBot.create(:question)
-
-      get :index
-
-      expect(assigns(:questions)).to match_array([question1, question2])
+      expect(assigns(:questions)).to match_array(questions)
     end
-  end
 
-  it 'renders index view' do
-    get :index
-    expect(response).to render_template(:index)
-  end
+    it 'renders index view' do
+      expect(response).to render_template(:index)
+    end
 
+  end
 end
