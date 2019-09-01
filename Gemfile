@@ -6,6 +6,7 @@ ruby '2.5.3'
 # Custom gems
 
 gem 'slim-rails'
+gem 'decent_exposure', '~> 3.0' # Гем для рефакторинга CRUD в контроллере
 
 #############
 
