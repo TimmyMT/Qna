@@ -53,6 +53,13 @@ RSpec.describe AnswersController, type: :controller do
     context 'invalid' do
       it 'not updated answer' do
         patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer, :invalid_answer)}
+        answer.reload
+
+        expect(answer.body).to_not eq answer
+      end
+
+      it 'render edit after fail update' do
+        patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer, :invalid_answer)}
         expect(response).to render_template(:edit)
       end
     end
