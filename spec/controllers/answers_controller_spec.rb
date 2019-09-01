@@ -55,7 +55,7 @@ RSpec.describe AnswersController, type: :controller do
         patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer, :invalid_answer)}
         answer.reload
 
-        expect(answer.body).to_not eq answer
+        expect(answer.body).to eq 'MyText'
       end
 
       it 'render edit after fail update' do
