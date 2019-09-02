@@ -1,10 +1,12 @@
-= form_with model: question, local: true do |f|
+= form_with model: @question, local: true do |f|
+  = render 'shared/errors', resource: @question
+  br
   = f.label 'title'
   = f.text_field :title
   br
   br
   = f.label 'body'
-  = f.text_field :body
+  = f.text_area :body
   br
   br
-  = f.submit
+  = f.submit 'Ask'

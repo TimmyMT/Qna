@@ -1,24 +1,24 @@
 h4
   span Question id:
-  span= question.id
+  span= @question.id
 br
 span Question title:
 br
-span= question.title
+span= @question.title
 br
 br
 span Question body:
 br
-span= question.body
+span= @question.body
 
 h5
   span Answers:
-  span= question.answers.count
+  span= @question.answers.count
   br
-  = link_to 'Add answer', new_question_answer_path(question)
+  = link_to 'Add answer', new_question_answer_path(@question)
   br
   br
-  - question.answers.each do |answer|
+  - @question.answers.each do |answer|
     span answer id:
     span= answer.id
     br
