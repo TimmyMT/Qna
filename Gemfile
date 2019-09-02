@@ -7,6 +7,7 @@ ruby '2.5.3'
 
 gem 'slim-rails'
 # gem 'decent_exposure', '~> 3.0' # Гем для рефакторинга CRUD в контроллере
+gem 'devise'
 
 #############
 
@@ -69,6 +70,7 @@ group :test do
   gem 'shoulda', '~> 3.5'
   gem 'shoulda-matchers', '~> 2.0'
   gem 'rails-controller-testing'
+  gem 'launchy'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
