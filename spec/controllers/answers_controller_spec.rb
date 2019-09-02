@@ -32,7 +32,7 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe 'PATH #update' do
+  describe 'PATCH #update' do
     let(:question) { create(:question) }
     let(:answer) { create(:answer, question: question) }
 
