@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) { create(:question) }
+  let(:question) { create(:question, user: user) }
 
   # before { login(user) }
 
@@ -38,11 +38,28 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    before { login(user) }
-    before { get :edit, params: { id: question } }
+    context 'Authorized user' do
+      it 'renders edit view for author' do
+        login(user)
+        get :edit, params: { id: question }
+        expect(question.user_id).to eq(user.id)
+        expect(response).to render_template(:edit)
+      end
 
-    it 'renders edit view' do
-      expect(response).to render_template(:edit)
+      it 'renders edit view for not author' do
+        user = User.create(email: 'wrong_user@test.com', password: '123456', password_confirmation: '123456')
+        login(user)
+        get :edit, params: { id: question }
+        expect(question.user_id).to_not eq(user.id)
+        expect(response).to redirect_to question_path(question)
+      end
+    end
+
+    context 'Not Authorized user' do
+      it 'redirect to sign in' do
+        get :edit, params: { id: question }
+        expect(response).to redirect_to new_user_session_path
+      end
     end
   end
 

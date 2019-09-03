@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :is_creator?, only: [:edit]
 
   def index
     @questions = Question.all
@@ -46,11 +47,11 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
   end
 
-  # def question
-  #   @question ||= params[:id] ? Question.find(params[:id]) : Question.new
-  # end
-  #
-  # helper_method :question
+  def is_creator?
+    unless @question.user_id == current_user.id && current_user.present?
+      redirect_to question_path(@question), alert: 'Not enough permissions'
+    end
+  end
 
   def question_params
     params.require(:question).permit(:title, :body)
