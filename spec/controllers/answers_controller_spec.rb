@@ -37,48 +37,46 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
 
-    context 'User is creator' do
-      let(:user) { create(:user) }
-      before { login(user) }
-      let(:question) { create(:question, user: user) }
-      let(:answer) { create(:answer, question: question, user: user) }
+    let(:user) { create(:user) }
+    before { login(user) }
+    let(:question) { create(:question, user: user) }
+    let(:answer) { create(:answer, question: question, user: user) }
 
-      context 'valid' do
-        it 'updated answer' do
-          patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer), user: user}
+    context 'valid' do
+      it 'updated answer' do
+        patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer), user: user}
 
-          expect(assigns(:answer)).to eq answer
-        end
-
-        it 'changes answer attributes' do
-          patch :update, params: {id: answer, question_id: question, answer: {body: 'new'}, user: user}
-          answer.reload
-
-          expect(answer.body).to eq 'new'
-        end
-
-        it 'changes answer attributes with wrong user' do
-          user = FactoryBot.create(:user)
-          login(user)
-          patch :update, params: {id: answer, question_id: question, answer: {body: 'new'}, user: user}
-          answer.reload
-
-          expect(answer.body).to_not eq 'new'
-        end
+        expect(assigns(:answer)).to eq answer
       end
 
-      context 'invalid' do
-        it 'not updated answer' do
-          patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user}
-          answer.reload
+      it 'changes answer attributes' do
+        patch :update, params: {id: answer, question_id: question, answer: {body: 'new'}, user: user}
+        answer.reload
 
-          expect(answer.body).to eq 'MyText'
-        end
+        expect(answer.body).to eq 'new'
+      end
 
-        it 'render edit after fail update' do
-          patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user}
-          expect(response).to render_template(:edit)
-        end
+      it 'changes answer attributes with wrong user' do
+        user = FactoryBot.create(:user)
+        login(user)
+        patch :update, params: {id: answer, question_id: question, answer: {body: 'new'}, user: user}
+        answer.reload
+
+        expect(answer.body).to_not eq 'new'
+      end
+    end
+
+    context 'invalid' do
+      it 'not updated answer' do
+        patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user}
+        answer.reload
+
+        expect(answer.body).to eq 'MyText'
+      end
+
+      it 'render edit after fail update' do
+        patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user}
+        expect(response).to render_template(:edit)
       end
     end
 
