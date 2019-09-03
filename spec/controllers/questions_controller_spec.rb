@@ -51,12 +51,13 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'redirect to question view for not author' do
-        user = User.create(email: 'wrong_user@test.com', password: '123456', password_confirmation: '123456')
+        user = FactoryBot.create(:user)
+        # user = User.create!(email: 'wrong_user1@test.com', password: '123456', password_confirmation: '123456')
         login(user)
         get :edit, params: { id: question }
 
         expect(question.user_id).to_not eq(user.id)
-        expect(response).to redirect_to question
+        expect(response).to redirect_to(question)
       end
     end
 
@@ -143,7 +144,8 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'tries with wrong user' do
-      user = User.create(email: 'wrong_user@test.com', password: '123456', password_confirmation: '123456')
+      user = FactoryBot.create(:user)
+      # user = User.create(email: 'wrong_user@test.com', password: '123456', password_confirmation: '123456')
       before { login(user) }
       before { get :edit, params: { id: question } }
 
