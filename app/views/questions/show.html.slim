@@ -7,22 +7,27 @@ br
 h5 Question body:
 span= @question.body
 br
-h3= link_to 'Edit question', edit_question_path(@question)
+h3
+  = link_to 'Edit question', edit_question_path(@question)
+  span  |
+  = link_to 'Delete question', question_path(@question), method: :delete
 
-h5
+h4
+  = link_to 'Add answer', new_question_answer_path(@question)
+  br
   span Answers:
   span= @question.answers.count
   br
-  = link_to 'Add answer', new_question_answer_path(@question)
-  br
   br
   - @question.answers.each do |answer|
-    span answer id:
-    span= answer.id
+    span user:
+    span= User.find(answer.user_id).email
     br
     span answer body:
     span= answer.body
     br
     span= link_to 'Edit answer', edit_answer_path(answer)
+    span |
+    span= link_to 'Delete answer', answer_path(answer), method: :delete
     br
     br

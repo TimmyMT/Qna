@@ -1,6 +1,9 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, except: [:show]
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
   before_action :set_question, only: [:create, :new]
+  before_action :is_creator?, only: [:edit, :update, :destroy]
+
 
   def show
   end
@@ -11,6 +14,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
     if @answer.save
       redirect_to question_path(@question)
     else
@@ -38,6 +42,12 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body)
+  end
+
+  def is_creator?
+    unless @answer.user_id == current_user.id
+      redirect_to question_path(@answer.question), alert: 'Not enough permissions'
+    end
   end
 
   def set_question
