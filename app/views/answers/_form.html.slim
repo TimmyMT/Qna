@@ -1,4 +1,4 @@
-= form_with model: [@question, Answer.new], local: true do |f|
+= form_with model: [@question, @answer], local: true do |f|
   = f.label 'body'
   br
   = f.text_field :body

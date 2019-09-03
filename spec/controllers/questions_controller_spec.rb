@@ -50,7 +50,6 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirect to question view for not author' do
         user = FactoryBot.create(:user)
-        # user = User.create!(email: 'wrong_user1@test.com', password: '123456', password_confirmation: '123456')
         login(user)
         get :edit, params: { id: question }
 
@@ -143,7 +142,6 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'tries with wrong user' do
       user = FactoryBot.create(:user)
-      # user = User.create(email: 'wrong_user@test.com', password: '123456', password_confirmation: '123456')
       before { login(user) }
       before { get :edit, params: { id: question } }
 

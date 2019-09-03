@@ -13,7 +13,12 @@ h3
   = link_to 'Delete question', question_path(@question), method: :delete
 
 h4
-  = render 'answers/form'
+  = form_with model: [@question, Answer.new], local: true do |f|
+    = f.label 'body'
+    br
+    = f.text_field :body
+    br
+    = f.submit
   br
   span Answers:
   span= @question.answers.count
