@@ -1,12 +1,9 @@
 h2
   = link_to 'Ask question', new_question_path
 
-h3
-  - @questions.each do |q|
-    = q.title
-    br
-    = q.body
-    br
-    = link_to 'Show', question_path(q)
-    br
-    br
+- @questions.each do |q|
+  h4= q.title
+  p= q.body
+  h5= link_to 'Show', question_path(q)
+  br
+  br

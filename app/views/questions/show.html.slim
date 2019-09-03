@@ -1,14 +1,10 @@
 h1
   span Question id:
   span= @question.id
-br
-span Question title:
-br
+h5 Question title:
 span= @question.title
 br
-br
-span Question body:
-br
+h5 Question body:
 span= @question.body
 br
 h3= link_to 'Edit question', edit_question_path(@question)

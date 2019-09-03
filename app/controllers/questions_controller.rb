@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_question, only: [:show, :edit, :update, :destroy]
   before_action :is_creator?, only: [:edit]
+  before_action :authorized?, only: [:new, :create]
 
   def index
     @questions = Question.all
@@ -12,11 +13,11 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question = Question.new
+    @question = current_user.questions.new
   end
 
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.new(question_params)
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else
@@ -47,8 +48,12 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
   end
 
+  def authorized?
+    current_user.present?
+  end
+
   def is_creator?
-    unless @question.user_id == current_user.id && current_user.present?
+    unless @question.user_id == current_user.id && authorized?
       redirect_to question_path(@question), alert: 'Not enough permissions'
     end
   end
