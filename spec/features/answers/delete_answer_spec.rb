@@ -23,15 +23,13 @@ feature 'User can delete answer', %q{
     visit question_path(question)
 
     expect(page).to_not have_content 'Answers:0'
-    click_on 'Delete answer'
-    expect(page).to have_content 'Not enough permissions'
+    expect(page).to_not have_content 'Delete answer'
   end
 
   scenario 'Guest tries add answer' do
     visit question_path(question)
 
     expect(page).to_not have_content 'Answers:0'
-    click_on 'Delete answer'
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_content 'Delete answer'
   end
 end

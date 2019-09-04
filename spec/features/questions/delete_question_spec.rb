@@ -21,15 +21,13 @@ feature 'User can delete answer', %q{
     sign_in(wrong_user)
     visit question_path(question)
 
-    click_on 'Delete question'
-    expect(page).to have_content 'Not enough permissions'
+    expect(page).to_not have_content 'Delete question'
   end
 
   scenario 'Guest tries delete question' do
     visit question_path(question)
 
-    click_on 'Delete question'
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_content 'Delete question'
   end
 
 end

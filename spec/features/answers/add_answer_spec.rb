@@ -21,8 +21,6 @@ feature 'User can create answer', %q{
   scenario 'Guest tries add answer' do
     visit question_path(question)
 
-    fill_in 'Body', with: 'first answer'
-    click_on 'Create Answer'
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_content 'Create Answer'
   end
 end
