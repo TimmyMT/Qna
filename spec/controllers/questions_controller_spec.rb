@@ -44,7 +44,6 @@ RSpec.describe QuestionsController, type: :controller do
       it 'renders edit view for author - ' do
         login(user)
         get :edit, params: { id: question }
-        # expect(question.user_id).to eq(user.id)
         expect(response).to render_template(:edit)
       end
 
@@ -53,7 +52,6 @@ RSpec.describe QuestionsController, type: :controller do
         login(user)
         get :edit, params: { id: question }
 
-        # expect(question.user_id).to_not eq(user.id)
         expect(response).to redirect_to(question)
       end
     end
@@ -81,7 +79,7 @@ RSpec.describe QuestionsController, type: :controller do
       context 'with valid attributes' do
         it 'saves a new question in the database' do
           expect { post :create, params: {question: attributes_for(:question, user: user) } }.to change(Question, :count).by(1)
-          question = Question.last
+          question = Question.all.order(id: :desc).first
           expect(question.user).to eq(user)
         end
 
@@ -123,7 +121,6 @@ RSpec.describe QuestionsController, type: :controller do
           it 'assigns the requested question to @question' do
             patch :update, params: { id: question, question: attributes_for(:question), user: user }
 
-            expect(question.user_id).to eq(user.id)
             expect(assigns(:question)).to eq question
           end
 
@@ -131,7 +128,6 @@ RSpec.describe QuestionsController, type: :controller do
             patch :update, params: { id: question, question: {title: 'new', body: 'new'}, user: user }
             question.reload
 
-            expect(question.user_id).to eq(user.id)
             expect(question.title).to eq 'new'
             expect(question.body).to eq 'new'
           end
@@ -139,7 +135,6 @@ RSpec.describe QuestionsController, type: :controller do
           it 'redirects to updated attributes' do
             patch :update, params: { id: question, question: attributes_for(:question), user: user }
 
-            expect(question.user_id).to eq(user.id)
             expect(response).to redirect_to question
           end
         end
@@ -168,7 +163,6 @@ RSpec.describe QuestionsController, type: :controller do
           patch :update, params: { id: question, question: {body: 'new'}, user: user }
           question.reload
 
-          expect(question.user).to_not eq(user)
           expect(question.body).to eq 'MyText'
         end
       end
@@ -204,7 +198,6 @@ RSpec.describe QuestionsController, type: :controller do
       before { login(user) }
 
       it 'not delete the question' do
-        expect(question.user_id).to_not eq(user.id)
         expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
       end
     end

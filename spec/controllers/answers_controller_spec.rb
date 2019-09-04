@@ -11,7 +11,6 @@ RSpec.describe AnswersController, type: :controller do
       it 'render edit view for author' do
         login(user)
         get :edit, params: { id: answer, question: question, user: user }
-        expect(answer.user).to eq(user)
         expect(response).to render_template(:edit)
       end
 
@@ -53,7 +52,7 @@ RSpec.describe AnswersController, type: :controller do
           expect do
             post :create, params: {question_id: question, answer: attributes_for(:answer), user: user}
           end.to change(Answer, :count).by(1)
-          answer = Answer.last
+          answer = Answer.all.order(id: :desc).first
           expect(answer.user).to eq(user)
         end
 
@@ -159,7 +158,6 @@ RSpec.describe AnswersController, type: :controller do
 
         it 'redirect to question page after deleted' do
           delete :destroy, params: {id: answer, user: user}
-          expect(answer.user).to eq(user)
           expect(response).to redirect_to(question)
         end
       end
@@ -168,7 +166,6 @@ RSpec.describe AnswersController, type: :controller do
         it 'deleted answer' do
           user = FactoryBot.create(:user)
           login(user)
-          expect(answer.user).to_not eq(user)
           expect { delete :destroy, params: {id: answer, user: user} }.to_not change(Answer, :count)
         end
       end
