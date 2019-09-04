@@ -1,7 +1,8 @@
 h1 All questions
 
 h2
-  = link_to 'Ask question', new_question_path
+  - if signed_in?
+    = link_to 'Ask question', new_question_path
 
 .questions
   = render @questions

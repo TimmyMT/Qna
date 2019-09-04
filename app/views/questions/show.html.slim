@@ -8,17 +8,20 @@ h5 Question body:
 span= @question.body
 br
 h3
-  = link_to 'Edit question', edit_question_path(@question)
-  span  |
-  = link_to 'Delete question', question_path(@question), method: :delete
+  - if have_permission?(@question)
+    = link_to 'Edit question', edit_question_path(@question)
+    span  |
+    = link_to 'Delete question', question_path(@question), method: :delete
 
 h4
-  = form_with model: [@question, Answer.new], local: true do |f|
-    = f.label :body
-    br
-    = f.text_field :body
-    br
-    = f.submit
+  - if signed_in?
+    = form_with model: [@question, Answer.new], local: true do |f|
+      = f.label :body
+      br
+      = f.text_field :body
+      br
+      = f.submit
+
   br
   span Answers:
   span= @question.answers.count
