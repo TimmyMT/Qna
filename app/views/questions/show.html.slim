@@ -14,7 +14,7 @@ h3
 
 h4
   = form_with model: [@question, Answer.new], local: true do |f|
-    = f.label 'body'
+    = f.label :body
     br
     = f.text_field :body
     br

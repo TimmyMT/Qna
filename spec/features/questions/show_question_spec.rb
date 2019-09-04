@@ -5,14 +5,16 @@ feature 'User can watch question', %q{
 } do
 
   given(:user) { create(:user) }
-  given(:question) { create(:question, user: user) }
-  given(:answer) { create(:answer, question: question, user: user) }
 
   scenario 'Show question' do
+    question = user.questions.create!(title: 'Question show', body: 'Test body')
+    question.answers.create!(body: 'first answer', user: user)
     visit root_path
     click_on 'Questions'
-    click_on 'MyString'
-    expect(page).to have_content 'Question id'
+
+    expect(page).to have_content('Question show')
+    click_on 'Question show'
+    expect(page).to have_content('first answer')
   end
 
 end
