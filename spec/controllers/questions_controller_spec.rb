@@ -41,19 +41,19 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #edit' do
     context 'Authorized user' do
-      it 'renders edit view for author' do
+      it 'renders edit view for author - ' do
         login(user)
         get :edit, params: { id: question }
-        expect(question.user_id).to eq(user.id)
+        # expect(question.user_id).to eq(user.id)
         expect(response).to render_template(:edit)
       end
 
-      it 'redirect to question view for not author' do
+      it 'redirect to question view for not author - ' do
         user = FactoryBot.create(:user)
         login(user)
         get :edit, params: { id: question }
 
-        expect(question.user_id).to_not eq(user.id)
+        # expect(question.user_id).to_not eq(user.id)
         expect(response).to redirect_to(question)
       end
     end
@@ -69,94 +69,122 @@ RSpec.describe QuestionsController, type: :controller do
   ###############################################################################################
 
   describe 'POST #create' do
-    before { login(user) }
-    context 'with valid attributes' do
-      it 'saves a new question in the database' do
-        expect { post :create, params: {question: attributes_for(:question, user: user) } }.to change(Question, :count).by(1)
-      end
-
-      it 'redirect to show view' do
-        post :create, params: {question: attributes_for(:question, user: user) }
-        expect(response).to redirect_to assigns(:question)
+    context 'Guest' do
+      it 'tries to create question' do
+        expect { post :create, params: {question: attributes_for(:question) } }.to_not change(Question, :count)
       end
     end
 
-    context 'with invalid attributes' do
-      it 'does not save the question' do
-        expect { post :create, params: {question: attributes_for(:question, :invalid_question, user: user) } }.to_not change(Question, :count)
-      end
-
-      it 're-renders new view' do
-        post :create, params: {question: attributes_for(:question, :invalid_question, user: user) }
-        expect(response).to render_template(:new)
-      end
-    end
-  end
-
-  describe 'PATCH #update' do
-
-    context 'right user' do
+    context 'Authorized user' do
       before { login(user) }
-      before { get :edit, params: { id: question } }
 
       context 'with valid attributes' do
-        it 'assigns the requested question to @question' do
-          patch :update, params: { id: question, question: attributes_for(:question), user: user }
-
-          expect(question.user_id).to eq(user.id)
-          expect(assigns(:question)).to eq question
+        it 'saves a new question in the database' do
+          expect { post :create, params: {question: attributes_for(:question, user: user) } }.to change(Question, :count).by(1)
+          question = Question.last
+          expect(question.user).to eq(user)
         end
 
-        it 'changes question attributes' do
-          patch :update, params: { id: question, question: {title: 'new', body: 'new'}, user: user }
-          question.reload
-
-          expect(question.user_id).to eq(user.id)
-          expect(question.title).to eq 'new'
-          expect(question.body).to eq 'new'
-        end
-
-        it 'redirects to updated attributes' do
-          patch :update, params: { id: question, question: attributes_for(:question), user: user }
-
-          expect(question.user_id).to eq(user.id)
-          expect(response).to redirect_to question
+        it 'redirect to show view' do
+          post :create, params: {question: attributes_for(:question, user: user) }
+          expect(response).to redirect_to assigns(:question)
         end
       end
 
       context 'with invalid attributes' do
-        before { patch :update, params: { id: question, question: attributes_for(:question, :invalid_question), user: user } }
-
-        it 'does not change question' do
-          question.reload
-
-          expect(question.title).to eq 'MyString'
-          expect(question.body).to eq 'MyText'
+        it 'does not save the question' do
+          expect { post :create, params: {question: attributes_for(:question, :invalid_question, user: user) } }.to_not change(Question, :count)
         end
 
-        it 're-renders edit view' do
-          expect(response).to render_template(:edit)
+        it 're-renders new view' do
+          post :create, params: {question: attributes_for(:question, :invalid_question, user: user) }
+          expect(response).to render_template(:new)
         end
       end
     end
 
-    context 'tries with wrong user' do
-      user = FactoryBot.create(:user)
-      before { login(user) }
-      before { get :edit, params: { id: question } }
+  end
 
-      it 'changes question attributes' do
-        patch :update, params: { id: question, question: {body: 'new'}, user: user }
+  describe 'PATCH #update' do
+    context 'Guest' do
+      it 'tries update question' do
+        patch :update, params: { id: question, question: {body: 'new'} }
         question.reload
 
-        expect(question.user_id).to_not eq(user.id)
         expect(question.body).to_not eq 'new'
       end
     end
+
+    context 'Authorized user' do
+      context 'right user' do
+        before { login(user) }
+
+        context 'with valid attributes' do
+          it 'assigns the requested question to @question' do
+            patch :update, params: { id: question, question: attributes_for(:question), user: user }
+
+            expect(question.user_id).to eq(user.id)
+            expect(assigns(:question)).to eq question
+          end
+
+          it 'changes question attributes' do
+            patch :update, params: { id: question, question: {title: 'new', body: 'new'}, user: user }
+            question.reload
+
+            expect(question.user_id).to eq(user.id)
+            expect(question.title).to eq 'new'
+            expect(question.body).to eq 'new'
+          end
+
+          it 'redirects to updated attributes' do
+            patch :update, params: { id: question, question: attributes_for(:question), user: user }
+
+            expect(question.user_id).to eq(user.id)
+            expect(response).to redirect_to question
+          end
+        end
+
+        context 'with invalid attributes' do
+          before { patch :update, params: { id: question, question: attributes_for(:question, :invalid_question), user: user } }
+
+          it 'does not change question' do
+            question.reload
+
+            expect(question.title).to eq 'MyString'
+            expect(question.body).to eq 'MyText'
+          end
+
+          it 're-renders edit view' do
+            expect(response).to render_template(:edit)
+          end
+        end
+      end
+
+      context 'tries with wrong user' do
+        user = FactoryBot.create(:user)
+        before { login(user) }
+
+        it 'changes question attributes' do
+          patch :update, params: { id: question, question: {body: 'new'}, user: user }
+          question.reload
+
+          expect(question.user).to_not eq(user)
+          expect(question.body).to eq 'MyText'
+        end
+      end
+    end
+
+
   end
 
   describe 'DELETE #destroy' do
     let!(:question) { create(:question, user: user) }
+
+    context 'Guest' do
+      it 'tries to delete' do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+      end
+    end
 
     context 'Authorized user' do
       before { login(user) }
@@ -171,7 +199,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
 
-    context 'Not Authorized user' do
+    context 'Not question author' do
       user = User.create(email: 'wrong_user@test.com', password: '123456', password_confirmation: '123456')
       before { login(user) }
 
