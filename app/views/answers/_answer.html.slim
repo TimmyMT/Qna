@@ -1,13 +1,14 @@
-span user:
-span= answer.user.email
-br
-span answer body:
-span= answer.body
-br
-  - if have_permission?(answer)
-    span= link_to 'Edit answer', edit_answer_path(answer)
-    span |
-    span= link_to 'Delete answer', answer_path(answer), method: :delete
-    br
+- if answer_present?(answer)
+  span user:
+  span= answer.user.email
+  br
+  span answer body:
+  span= answer.body
+  br
+    - if have_permission?(answer)
+      span= link_to 'Edit answer', edit_answer_path(answer.id)
+      span |
+      span= link_to 'Delete answer', answer_path(answer.id), method: :delete
+      br
 
-br
+
