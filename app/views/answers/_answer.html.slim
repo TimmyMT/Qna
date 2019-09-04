@@ -1,0 +1,11 @@
+span user:
+span= User.find(answer.user_id).email
+br
+span answer body:
+span= answer.body
+br
+span= link_to 'Edit answer', edit_answer_path(answer)
+span |
+span= link_to 'Delete answer', answer_path(answer), method: :delete
+br
+br

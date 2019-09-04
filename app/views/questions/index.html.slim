@@ -1,9 +1,6 @@
 h2
   = link_to 'Ask question', new_question_path
 
-- @questions.each do |q|
-  span __________________________________________
-  h4= link_to "#{q.title}", question_path(q)
-  p= q.body
+= render @questions
 
 
