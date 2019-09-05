@@ -1,11 +1,11 @@
-- if answer_present?(answer)
+- if answer.persisted?
   span user:
   span= answer.user.email
   br
   span answer body:
   span= answer.body
   br
-    - if current_user.is_creator?(answer)
+    - if signed_in? && current_user.is_creator?(answer)
       span= link_to 'Edit answer', edit_answer_path(answer.id)
       span |
       span= link_to 'Delete answer', answer_path(answer.id), method: :delete
