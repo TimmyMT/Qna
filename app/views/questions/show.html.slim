@@ -9,7 +9,7 @@ br
 
 - if signed_in?
   h3
-    - if current_user.is_creator?(@question)
+    - if current_user.is_creator?(@question.user)
       = link_to 'Edit question', edit_question_path(@question)
       span  |
       = link_to 'Delete question', question_path(@question), method: :delete
@@ -22,8 +22,7 @@ h4
   br
 p
   .answers
-    - if @answers.present?
-      = render @answers
+    = render @answers
 
 
 

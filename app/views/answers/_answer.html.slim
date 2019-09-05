@@ -5,7 +5,7 @@
   span answer body:
   span= answer.body
   br
-    - if signed_in? && current_user.is_creator?(answer)
+    - if current_user&.is_creator?(answer.user)
       span= link_to 'Edit answer', edit_answer_path(answer.id)
       span |
       span= link_to 'Delete answer', answer_path(answer.id), method: :delete
