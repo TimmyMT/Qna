@@ -11,12 +11,14 @@ RSpec.describe User, type: :model do
     let(:question) { create(:question, user: user) }
     let(:wrong_user) { create(:user) }
 
-    it 'return true for author input:user_id' do
-      expect(user.is_creator?(question.user_id)).to be_truthy
+    it 'return true for author input:resource' do
+      expect(user).to be_creator(question)
+      # expect(user.creator?(question)).to be_truthy
     end
 
-    it 'return false for not author input:wrong_user_id' do
-      expect(wrong_user.is_creator?(question.user_id)).to be_falsey
+    it 'return false for not author input:resource' do
+      expect(wrong_user).to_not be_creator(question)
+      # expect(wrong_user.creator?(question)).to be_falsey
     end
   end
 end
