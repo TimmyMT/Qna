@@ -1,3 +1,12 @@
-// Place all the styles related to the Questions controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.question_card {
+  border: blue solid 2px;
+  padding: 15px;
+}
+
+.question_title {
+  font: bold 16pt verdana;
+}
+
+.question_body {
+  font: italic 14pt verdana;
+}

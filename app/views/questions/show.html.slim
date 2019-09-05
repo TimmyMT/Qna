@@ -1,12 +1,11 @@
 h1
   span Question id:
   span= @question.id
-h5 Question title:
-span= @question.title
+.question_title
+  span= @question.title
 br
-h5 Question body:
-span= @question.body
-br
+.question_title Question body:
+.question_body= @question.body
 
 - if signed_in?
   h3
@@ -14,7 +13,6 @@ br
       = link_to 'Edit question', edit_question_path(@question)
       span  |
       = link_to 'Delete question', question_path(@question), method: :delete
-
   h4
     = render 'answers/form'
 

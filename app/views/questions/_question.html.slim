@@ -1,3 +1,5 @@
-span __________________________________________
-h4= link_to question.title, question_path(question)
-p= question.body
+.question_card
+  .question_title
+    = link_to question.title, question_path(question)
+  .question_body= truncate(question.body, length: 130, separator: ' ')
+br
