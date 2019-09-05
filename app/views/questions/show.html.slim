@@ -7,14 +7,15 @@ br
 h5 Question body:
 span= @question.body
 br
-h3
-  - if have_permission?(@question)
-    = link_to 'Edit question', edit_question_path(@question)
-    span  |
-    = link_to 'Delete question', question_path(@question), method: :delete
 
-h4
-  - if signed_in?
+- if signed_in?
+  h3
+    - if current_user.is_creator?(@question)
+      = link_to 'Edit question', edit_question_path(@question)
+      span  |
+      = link_to 'Delete question', question_path(@question), method: :delete
+
+  h4
     = render 'answers/form'
 
 h4
