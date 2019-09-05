@@ -7,8 +7,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  def is_creator?(user)
-    self == user
+  def is_creator?(user_id)
+    self.id == user_id
   end
 
 end

@@ -9,7 +9,7 @@ br
 
 - if signed_in?
   h3
-    - if current_user.is_creator?(@question.user)
+    - if current_user.is_creator?(@question.user_id)
       = link_to 'Edit question', edit_question_path(@question)
       span  |
       = link_to 'Delete question', question_path(@question), method: :delete

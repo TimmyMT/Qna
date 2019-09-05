@@ -45,7 +45,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_author?
-    unless current_user.is_creator?(@answer.user)
+    unless current_user.is_creator?(@answer.user_id)
       redirect_to question_path(@answer.question), alert: 'Not enough permissions'
     end
   end
