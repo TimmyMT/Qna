@@ -79,7 +79,7 @@ RSpec.describe QuestionsController, type: :controller do
       context 'with valid attributes' do
         it 'saves a new question in the database' do
           expect { post :create, params: {question: attributes_for(:question, user: user) } }.to change(Question, :count).by(1)
-          question = Question.all.order(id: :desc).first
+          question = Question.all.order(created_at: :desc).first
           expect(question.user).to eq(user)
         end
 
@@ -109,7 +109,7 @@ RSpec.describe QuestionsController, type: :controller do
         patch :update, params: { id: question, question: {body: 'new'} }
         question.reload
 
-        expect(question.body).to_not eq 'new'
+        expect(question.body).to eq 'MyText'
       end
     end
 
