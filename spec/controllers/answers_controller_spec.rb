@@ -19,7 +19,6 @@ RSpec.describe AnswersController, type: :controller do
         login(user)
         get :edit, params: { id: answer, question: question, user: user }
 
-        # expect(answer.user).to_not eq(user)
         expect(response).to redirect_to(question)
       end
     end
@@ -52,7 +51,7 @@ RSpec.describe AnswersController, type: :controller do
           expect do
             post :create, params: {question_id: question, answer: attributes_for(:answer), user: user}
           end.to change(Answer, :count).by(1)
-          answer = Answer.all.order(created_at: :desc).first
+          answer = Answer.order(created_at: :desc).first
           expect(answer.question).to eq(question)
           expect(answer.user).to eq(user)
         end
@@ -110,7 +109,7 @@ RSpec.describe AnswersController, type: :controller do
           expect(answer.body).to eq 'new'
         end
 
-        it 'changes answer attributes with wrong user' do
+        it 'not changes answer attributes with wrong user' do
           user = FactoryBot.create(:user)
           login(user)
           patch :update, params: {id: answer, question_id: question, answer: {body: 'new'}, user: user}
@@ -171,7 +170,6 @@ RSpec.describe AnswersController, type: :controller do
         end
       end
     end
-
 
   end
 
