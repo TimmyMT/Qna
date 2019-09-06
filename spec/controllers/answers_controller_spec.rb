@@ -49,7 +49,7 @@ RSpec.describe AnswersController, type: :controller do
       context 'valid' do
         it 'create a new answer' do
           expect do
-            post :create, params: {question_id: question, answer: attributes_for(:answer), user: user}
+            post :create, params: {question_id: question, answer: attributes_for(:answer), user: user, format: :js}
           end.to change(Answer, :count).by(1)
           answer = Answer.order(created_at: :desc).first
           expect(answer.question).to eq(question)
@@ -57,21 +57,21 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         it 'redirect to answers page after create' do
-          post :create, params: {question_id: question, answer: attributes_for(:answer), user: user}
-          expect(response).to redirect_to question_path(question)
+          post :create, params: {question_id: question, answer: attributes_for(:answer), user: user, format: :js}
+          expect(response).to render_template :create
         end
       end
 
       context 'invalid' do
         it 'not created answer' do
           expect do
-            post :create, params: {question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user}
+            post :create, params: {question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user, format: :js}
           end.to_not change(Answer, :count)
         end
 
         it 're-render new page' do
-          post :create, params: {question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user}
-          expect(response).to render_template(:new)
+          post :create, params: {question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user, format: :js}
+          expect(response).to render_template :create
         end
       end
     end
@@ -121,15 +121,15 @@ RSpec.describe AnswersController, type: :controller do
 
       context 'invalid' do
         it 'not updated answer' do
-          patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user}
+          patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user, format: :js}
           answer.reload
 
           expect(answer.body).to eq 'MyText'
         end
 
         it 'render edit after fail update' do
-          patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user}
-          expect(response).to render_template(:edit)
+          patch :update, params: {id: answer, question_id: question, answer: attributes_for(:answer, :invalid_answer), user: user, format: :js}
+          expect(response).to render_template :update
         end
       end
     end
