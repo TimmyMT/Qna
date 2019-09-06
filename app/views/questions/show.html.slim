@@ -1,31 +1,21 @@
-h1
-  span Question id:
-  span= @question.id
-.question_title
-  span= @question.title
+h1= @question.title
+p= @question.body
+
+- if current_user&.creator?(@question)
+  p
+    = link_to 'Edit question', edit_question_path(@question)
+    span |
+    = link_to 'Delete question', question_path(@question), method: :delete
 br
-.question_title Question body:
-.question_body= @question.body
-
-- if signed_in?
-  h3
-    - if current_user.creator?(@question)
-      = link_to 'Edit question', edit_question_path(@question)
-      span  |
-      = link_to 'Delete question', question_path(@question), method: :delete
-
-  .answer-errors
-    = render 'shared/errors', resource: @answer
-  = render 'answers/form'
-
-h4
-  span Answers:
-  span= @answers.count
+.answer-errors
+  = render 'shared/errors', resource: @answer
+= form_with model: [@question, @answer], class: 'new-answer' do |f|
+  = f.label :body
   br
-p
-  .answers
-    = render @answers.order(created_at: :desc)
+  = f.text_area :body
+  br
+  = f.submit
 
-
-
+.answers
+  = render @question.answers
 

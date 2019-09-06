@@ -1,7 +1,0 @@
-= form_with model: [@question, @answer] do |f|
-  = render 'shared/errors', resource: @answer
-  = f.label 'body'
-  br
-  = f.text_field :body
-  br
-  = f.submit

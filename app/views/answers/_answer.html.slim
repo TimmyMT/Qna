@@ -1,14 +1,11 @@
-- if answer.persisted?
-  span user:
-  span= answer.user.email
-  br
-  span answer body:
-  span= answer.body
-  br
-    - if current_user&.creator?(answer)
-      span= link_to 'Edit answer', edit_answer_path(answer.id)
-      span |
-      span= link_to 'Delete answer', answer_path(answer.id), method: :delete
-      br
+p= answer.body
 
+- if user_signed_in?
+  p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
+= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+  = f.label :body
+  br
+  = f.text_area :body
+  br
+  = f.submit
