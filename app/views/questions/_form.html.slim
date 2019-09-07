@@ -1,5 +1,6 @@
-= form_with model: @question do |f|
-  = render 'shared/errors', resource: @question
+= form_with model: @question, id: "edit-question-#{@question.id}", class: 'edit_question' do |f|
+  .question-errors
+    = render 'shared/errors', resource: @question
   br
   = f.label 'title'
   = f.text_field :title
@@ -9,4 +10,4 @@
   = f.text_area :body
   br
   br
-  = f.submit 'Ask'
+  = f.submit 'Save'

@@ -1,5 +1,11 @@
-.question_card
-  .question_title
-    = link_to question.title, question_path(question)
-  .question_body= truncate(question.body, length: 130, separator: ' ')
-br
+div class="question_#{question.id}"
+  h1= question.title
+  p= question.body
+
+  - if current_user&.creator?(question)
+    p
+      = link_to 'Edit question', '#', class: 'edit-question-link', data: { question_id: question.id }
+      .edit_question
+      = render 'questions/form'
+      br
+      = link_to 'Delete question', question_path(question), method: :delete
