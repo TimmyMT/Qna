@@ -9,21 +9,21 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if answer_author
+    if answer_author?
       @answer.update(answer_params)
       @question = @answer.question
     end
   end
 
   def destroy
-    if answer_author
+    if answer_author?
       @answer.destroy
     end
   end
 
   private
 
-  def answer_author
+  def answer_author?
     current_user&.creator?(@answer)
   end
 
