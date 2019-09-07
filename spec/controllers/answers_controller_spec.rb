@@ -8,26 +8,26 @@ RSpec.describe AnswersController, type: :controller do
     let(:answer) { create(:answer, question: question, user: user) }
 
     context 'Authorized user' do
-      it 'render edit view for author' do
-        login(user)
-        get :edit, params: { id: answer, question: question, user: user }
-        expect(response).to render_template(:edit)
-      end
+      # it 'render edit view for author' do
+      #   login(user)
+      #   get :edit, params: { id: answer, question: question, user: user }
+      #   expect(response).to render_template(:edit)
+      # end
 
-      it 'redirect to question view for not author' do
-        user = FactoryBot.create(:user)
-        login(user)
-        get :edit, params: { id: answer, question: question, user: user }
-
-        expect(response).to redirect_to(question)
-      end
+      # it 'redirect to question view for not author' do
+      #   user = FactoryBot.create(:user)
+      #   login(user)
+      #   get :edit, params: { id: answer, question: question, user: user }
+      #
+      #   expect(response).to redirect_to(question)
+      # end
     end
 
     context 'Not Authorized user' do
-      it 'redirect to sign in' do
-        get :edit, params: { id: answer }
-        expect(response).to redirect_to new_user_session_path
-      end
+      # it 'redirect to sign in' do
+      #   get :edit, params: { id: answer }
+      #   expect(response).to redirect_to new_user_session_path
+      # end
     end
   end
 
@@ -38,7 +38,7 @@ RSpec.describe AnswersController, type: :controller do
     context 'Guest' do
       it 'tries create answer' do
         expect do
-          post :create, params: {question_id: question, answer: attributes_for(:answer)}
+          post :create, params: {question_id: question, answer: attributes_for(:answer), format: :js}
         end.to_not change(Answer, :count)
       end
     end
@@ -85,7 +85,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'Guest' do
       it 'tries update' do
-        patch :update, params: {id: answer, question_id: question, answer: {body: 'new'}}
+        patch :update, params: {id: answer, question_id: question, answer: {body: 'new'}, format: :js}
         answer.reload
 
         expect(answer.body).to eq 'MyText'
@@ -118,7 +118,7 @@ RSpec.describe AnswersController, type: :controller do
         it 'not changes answer attributes with wrong user' do
           user = FactoryBot.create(:user)
           login(user)
-          patch :update, params: {id: answer, question_id: question, answer: {body: 'new'}, user: user}
+          patch :update, params: {id: answer, question_id: question, answer: {body: 'new'}, user: user, format: :js}
           answer.reload
 
           expect(answer.body).to eq 'MyText'
