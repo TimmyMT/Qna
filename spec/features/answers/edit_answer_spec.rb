@@ -3,6 +3,7 @@ require 'rails_helper'
 feature 'User can edit his answer', %q{
   description
 } do
+
   given(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }

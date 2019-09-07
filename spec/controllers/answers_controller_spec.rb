@@ -142,10 +142,10 @@ RSpec.describe AnswersController, type: :controller do
 
   end
 
-  # describe 'DELETE #destroy' do
-  #   let(:user) { create(:user) }
-  #   let(:question) { create(:question, user: user) }
-  #   let!(:answer) { create(:answer, question: question, user: user) }
+  describe 'DELETE #destroy' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let!(:answer) { create(:answer, question: question, user: user) }
   #
   #   context 'Guest' do
   #     it 'tries to delete answer' do
@@ -153,20 +153,20 @@ RSpec.describe AnswersController, type: :controller do
   #     end
   #   end
   #
-  #   context 'Authorized user' do
-  #     before { login(user) }
+    context 'Authorized user' do
+      before { login(user) }
   #
-  #     context 'User is answer author' do
-  #       it 'deleted answer' do
-  #         expect(answer.user).to eq(user)
-  #         expect { delete :destroy, params: {id: answer, user: user} }.to change(Answer, :count).by(-1)
-  #       end
+      context 'User is answer author' do
+        it 'deleted answer' do
+          expect(answer.user).to eq(user)
+          expect { delete :destroy, params: {id: answer, user: user}, format: :js }.to change(Answer, :count).by(-1)
+        end
   #
   #       it 'redirect to question page after deleted' do
   #         delete :destroy, params: {id: answer, user: user}
   #         expect(response).to redirect_to(question)
   #       end
-  #     end
+      end
   #
   #     context 'User is not answer author' do
   #       it 'deleted answer' do
@@ -175,8 +175,8 @@ RSpec.describe AnswersController, type: :controller do
   #         expect { delete :destroy, params: {id: answer, user: user} }.to_not change(Answer, :count)
   #       end
   #     end
-  #   end
-  #
-  # end
+    end
+
+  end
 
 end

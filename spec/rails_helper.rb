@@ -52,6 +52,7 @@ RSpec.configure do |config|
   end
 
   Capybara.javascript_driver = :selenium_chrome_headless
+  config.include WaitForAjax, type: :feature
 
   ############################################################################
 
