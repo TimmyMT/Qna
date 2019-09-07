@@ -29,16 +29,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
-    end
+    @question.update(question_params) if question_author?
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path, notice: 'Question successfully deleted'
+    @question.destroy if question_author?
   end
 
   private
@@ -48,9 +43,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_author?
-    unless current_user.creator?(@question)
-      redirect_to question_path(@question), alert: 'Not enough permissions'
-    end
+    current_user&.creator?(@question)
   end
 
   def question_params

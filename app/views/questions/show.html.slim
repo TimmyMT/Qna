@@ -3,7 +3,8 @@ p= @question.body
 
 - if current_user&.creator?(@question)
   p
-    = link_to 'Edit question', edit_question_path(@question)
+    / = link_to 'Edit question', edit_question_path(@question)
+    = render 'questions/form'
     span |
     = link_to 'Delete question', question_path(@question), method: :delete
 br
