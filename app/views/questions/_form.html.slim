@@ -1,4 +1,4 @@
-= form_with model: @question, id: "edit-question-#{@question.id}", class: 'edit_question' do |f|
+= form_with model: @question, id: "edit-question-#{@question.id}" do |f|
   .question-errors
     = render 'shared/errors', resource: @question
   br
