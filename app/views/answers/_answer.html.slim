@@ -1,15 +1,16 @@
-div class="answer_#{answer.id}"
-  p= answer.body
-
-  - if current_user&.creator?(answer)
-    p
+.answer_card
+  div class="answer_#{answer.id}"
+    = answer.body
+    - if current_user&.creator?(answer)
+      br
       = link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       span |
-      span= link_to 'Delete answer', answer_path(answer), method: :delete, data: { remote: true }
+      a= link_to 'Delete answer', answer_path(answer), method: :delete, data: { remote: true }
 
-  = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
-    = f.label :body
-    br
-    = f.text_area :body
-    br
-    = f.submit
+    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+      = f.label :body
+      br
+      = f.text_area :body
+      br
+      = f.submit
+br
