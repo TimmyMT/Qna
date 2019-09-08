@@ -9,7 +9,7 @@ feature 'User can edit his answer', %q{
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
-  scenario 'Not Authorized user can not edit answer' do
+  scenario 'Guest can not edit answer' do
     visit question_path(question)
 
     expect(page).to_not have_link 'Edit answer'
