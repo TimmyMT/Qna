@@ -4,6 +4,8 @@ div class="question_#{question.id}"
 
   - if current_user&.creator?(question)
     = link_to 'Edit question', '#', class: 'edit-question-link', data: { question_id: question.id }
+    span |
+    = link_to 'Delete question', question_path(question), method: :delete
     = form_with model: @question, id: "edit-question-#{@question.id}", class: 'edit_question' do |f|
       .question-errors
         = render 'shared/errors', resource: @question
@@ -18,4 +20,3 @@ div class="question_#{question.id}"
       br
       = f.submit 'Save'
       br
-      = link_to 'Delete question', question_path(question), method: :delete

@@ -126,7 +126,7 @@ RSpec.describe QuestionsController, type: :controller do
             expect(question.body).to eq 'new'
           end
 
-          it 'changes question attributes' do
+          it 'select best answer of question' do
             answer = question.answers.create(body: 'first answer', user_id: user.id)
             patch :select_best_answer, params: { id: question, answer_id: answer.id, user: user, format: :js }
             question.reload
