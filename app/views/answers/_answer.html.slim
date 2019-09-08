@@ -3,9 +3,12 @@
     = answer.body
     - if current_user&.creator?(answer)
       br
-      = link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      a= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       span |
       a= link_to 'Delete answer', answer_path(answer), method: :delete, data: { remote: true }
+      span |
+    - if current_user&.creator?(answer.question)
+      a= link_to 'Make it best', select_best_answer_path(answer.question, answer)
 
     = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
       = f.label :body
