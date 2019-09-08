@@ -17,12 +17,9 @@ class QuestionsController < ApplicationController
   def select_best_answer
     @answer = Answer.find(params[:answer_id])
     if question_author?
-      @question.update_attributes(best_answer_id: @answer.id)
-      if @question.save!
-        redirect_to @question, notice: 'Success'
-      else
-        render @question, alert: 'Failure'
-      end
+      @question.update(best_answer_id: @answer.id)
+      @question.save!
+      # redirect_to @question
     end
   end
 

@@ -50,14 +50,6 @@ RSpec.describe QuestionsController, type: :controller do
         get :edit, params: { id: question }
         expect(response).to render_template(:edit)
       end
-
-      # it 'redirect to question view for not author - ' do
-      #   user = FactoryBot.create(:user)
-      #   login(user)
-      #   get :edit, params: { id: question }
-      #
-      #   expect(response).to redirect_to(question)
-      # end
     end
 
     context 'Not Authorized user' do
@@ -134,11 +126,13 @@ RSpec.describe QuestionsController, type: :controller do
             expect(question.body).to eq 'new'
           end
 
-          # it 'redirects to updated attributes' do
-          #   patch :update, params: { id: question, question: attributes_for(:question), user: user, format: :js }
-          #
-          #   expect(response).to render_template(question)
-          # end
+          it 'changes question attributes' do
+            answer = question.answers.create(body: 'first answer', user_id: user.id)
+            patch :select_best_answer, params: { id: question, answer_id: answer.id, user: user, format: :js }
+            question.reload
+
+            expect(question.best_answer).to eq(answer)
+          end
         end
 
         context 'with invalid attributes' do
@@ -150,10 +144,6 @@ RSpec.describe QuestionsController, type: :controller do
             expect(question.title).to eq 'MyString'
             expect(question.body).to eq 'MyText'
           end
-
-          # it 're-renders edit view' do
-          #   expect(response).to render_template(:edit)
-          # end
         end
       end
 
@@ -169,7 +159,6 @@ RSpec.describe QuestionsController, type: :controller do
         end
       end
     end
-
 
   end
 
