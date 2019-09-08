@@ -1,1 +1,2 @@
-$('.best_answer_of_question').html('<%= j render @question.best_answer %>')
+$('.best_answer_of_question').html('<%= j render 'best_answer', answer: @question.best_answer %>')
+$('.answers').html('<%= j render @question.answers %>');

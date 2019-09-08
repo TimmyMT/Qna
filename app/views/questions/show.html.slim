@@ -1,9 +1,10 @@
 = render @question
 
 .best_answer_of_question
-  span Best answer!
-  = render @question.best_answer if @question.best_answer.present?
-
+  - if @question.best_answer.present?
+    span Best answer!
+    br
+    = @question.best_answer.body
 br
 .answer-errors
   = render 'shared/errors', resource: @answer

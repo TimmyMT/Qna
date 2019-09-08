@@ -1,19 +1,21 @@
-.answer_card
-  div class="answer_#{answer.id}"
-    = answer.body
-    - if current_user&.creator?(answer)
-      br
-      a= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-      span |
-      a= link_to 'Delete answer', answer_path(answer), method: :delete, data: { remote: true }
-      span |
-    - if current_user&.creator?(answer.question)
-      a= link_to 'Make it best', select_best_answer_path(answer.question, answer), method: :patch, remote: true
-
-    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
-      = f.label :body
-      br
-      = f.text_area :body
-      br
-      = f.submit
 br
+- unless answer.question.best_answer == answer
+  .answer_card
+    div class="answer_#{answer.id}"
+      = answer.body
+      - if current_user&.creator?(answer)
+        br
+        a= link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
+        span |
+        a= link_to 'Delete answer', answer_path(answer), method: :delete, data: {remote: true}
+        span |
+      - if current_user&.creator?(answer.question)
+        br
+        a= link_to 'Make it best', select_best_answer_path(answer.question, answer), method: :patch, remote: true
+
+      = form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
+        = f.label :body
+        br
+        = f.text_area :body
+        br
+        = f.submit
