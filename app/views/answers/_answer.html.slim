@@ -11,7 +11,7 @@ br
         span |
       - if current_user&.creator?(answer.question)
         br
-        a= link_to 'Make it best', select_best_answer_path(answer.question, answer), method: :patch, remote: true
+        a= link_to 'Make it best', select_best_answer_question_path(answer.question, answer), method: :patch, remote: true
 
       = form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
         = f.label :body
