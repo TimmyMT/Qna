@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :question_author?, only: [:update, :destroy]
 
   def index
     @questions = Question.all
@@ -29,14 +30,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if question_author?
+    @question.update(question_params)
   end
 
   def destroy
-    if question_author?
-      @question.destroy
-      redirect_to questions_path, notice: 'Question successfully deleted'
-    end
+    @question.destroy
+    redirect_to questions_path, notice: 'Question successfully deleted'
   end
 
   private
@@ -46,7 +45,9 @@ class QuestionsController < ApplicationController
   end
 
   def question_author?
-    current_user&.creator?(@question)
+    unless current_user&.creator?(@question)
+      redirect_to @question, alert: 'Not enough permissions'
+    end
   end
 
   def question_params

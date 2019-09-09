@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:update, :destroy, :select_best]
+  before_action :answer_author?, only: [:update, :destroy]
 
   def create
     @question = Question.find(params[:question_id])
@@ -9,10 +10,8 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if answer_author?
-      @answer.update(answer_params)
-      @question = @answer.question
-    end
+    @answer.update(answer_params)
+    @question = @answer.question
   end
 
   def select_best
@@ -22,15 +21,15 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if answer_author?
-      @answer.destroy
-    end
+    @answer.destroy
   end
 
   private
 
   def answer_author?
-    current_user&.creator?(@answer)
+    unless current_user&.creator?(@answer)
+      redirect_to @answer.question, alert: 'Not enough permissions'
+    end
   end
 
   def set_answer

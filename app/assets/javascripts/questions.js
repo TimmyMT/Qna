@@ -7,5 +7,4 @@ var edit_question_click = function() {
   });
 };
 
-// $(document).ready(edit_question_click);
 $(document).on('turbolinks:load', edit_question_click);
