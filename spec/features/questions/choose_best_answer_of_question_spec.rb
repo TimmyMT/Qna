@@ -27,9 +27,6 @@ feature 'User can choose best answer', %q{
 
       within ".answers" do
         expect(page).to_not have_css ".answer_#{first_answer.id}"
-      end
-
-      within ".answers" do
         expect(page).to have_css ".answer_#{two_answer.id}"
       end
 
@@ -39,9 +36,6 @@ feature 'User can choose best answer', %q{
 
       within ".answers" do
         expect(page).to have_css ".answer_#{first_answer.id}"
-      end
-
-      within ".answers" do
         expect(page).to_not have_css ".answer_#{two_answer.id}"
       end
     end
