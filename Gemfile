@@ -3,7 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.3'
 
-# Custom gems
+###############################################################
+###################### Custom gems ############################
 
 gem 'slim-rails'
 # gem 'decent_exposure', '~> 3.0' # Гем для рефакторинга CRUD в контроллере
@@ -13,7 +14,8 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'rails-js'
 gem 'autoprefixer-rails'
 
-#############
+###############################################################
+###############################################################
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'

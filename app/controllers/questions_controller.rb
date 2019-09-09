@@ -1,26 +1,18 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_question, only: [:show, :edit, :update, :destroy, :select_best_answer]
+  before_action :set_question, only: [:show, :edit, :update, :destroy]
 
   def index
     @questions = Question.all
   end
 
   def show
+    @answers = @question.answers.order(best: :desc, created_at: :desc)
     @answer = Answer.new(user: current_user)
   end
 
   def new
     @question = current_user.questions.new
-  end
-
-  def select_best_answer
-    @answer = Answer.find(params[:answer_id])
-    if question_author?
-      @question.update(best_answer_id: @answer.id)
-      @question.save!
-      # redirect_to @question
-    end
   end
 
   def create

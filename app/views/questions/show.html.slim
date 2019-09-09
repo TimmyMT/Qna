@@ -1,10 +1,5 @@
 = render @question
 
-.best_answer_of_question
-  - if @question.best_answer.present?
-    span Best answer!
-    br
-    = @question.best_answer.body
 br
 .answer-errors
   = render 'shared/errors', resource: @answer
@@ -16,5 +11,5 @@ br
   = f.submit
 
 .answers
-  = render @question.answers
+  = render @answers
 

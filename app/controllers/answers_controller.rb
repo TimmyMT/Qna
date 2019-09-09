@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: [:update, :destroy]
+  before_action :set_answer, only: [:update, :destroy, :select_best]
 
   def create
     @question = Question.find(params[:question_id])
@@ -12,6 +12,12 @@ class AnswersController < ApplicationController
     if answer_author?
       @answer.update(answer_params)
       @question = @answer.question
+    end
+  end
+
+  def select_best
+    if current_user&.creator?(@answer.question)
+      @answer.switch_best
     end
   end
 
