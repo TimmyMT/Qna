@@ -107,6 +107,36 @@ RSpec.describe AnswersController, type: :controller do
 
   end
 
+  describe 'PATCH #select_best' do
+    let!(:user) { create(:user) }
+    let!(:wrong_user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+    let!(:answer) { create(:answer, question: question, user: user) }
+
+    it 'author of question selected best answer' do
+      login(user)
+      patch :select_best, params: { id: answer }, format: :js
+      answer.reload
+
+      expect(answer.best).to be_truthy
+    end
+
+    it 'not author of question tries selected best answer' do
+      login(wrong_user)
+      patch :select_best, params: { id: answer }, format: :js
+      answer.reload
+
+      expect(answer.best).to be_falsey
+    end
+
+    it 'guest tries selected best answer' do
+      patch :select_best, params: { id: answer }, format: :js
+      answer.reload
+
+      expect(answer.best).to be_falsey
+    end
+  end
+
   describe 'DELETE #destroy' do
     let(:user) { create(:user) }
     let(:question) { create(:question, user: user) }
