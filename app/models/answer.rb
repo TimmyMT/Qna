@@ -4,10 +4,6 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
-  def best?
-    self.best
-  end
-
   def switch_best
     question.answers.update_all(best: false)
     question.save!
