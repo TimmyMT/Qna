@@ -6,8 +6,7 @@ class Answer < ApplicationRecord
 
   def switch_best
     question.answers.update_all(best: false)
-    question.save!
-    self.update!(best: true)
+    self.update(best: true)
   end
 
 end

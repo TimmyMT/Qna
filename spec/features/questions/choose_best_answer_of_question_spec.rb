@@ -36,7 +36,9 @@ feature 'User can choose best answer', %q{
         expect(page).to_not have_content 'Best answer!'
       end
 
-      expect(first(".answers")).to have_content(second_answer.body)
+      within ".answers" do
+        expect(page.body).to match(/answer_#{second_answer.id}.*answer_#{first_answer.id}/)
+      end
     end
   end
 

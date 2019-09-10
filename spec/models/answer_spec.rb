@@ -14,7 +14,6 @@ RSpec.describe Answer, type: :model do
 
     it 'check best attribute for new best answer' do
       answer.switch_best
-      answer.reload
 
       expect(answer).to be_best
     end
