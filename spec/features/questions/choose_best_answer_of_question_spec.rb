@@ -35,6 +35,8 @@ feature 'User can choose best answer', %q{
         expect(page).to_not have_css '.best_answer_of_question'
         expect(page).to_not have_content 'Best answer!'
       end
+
+      expect(first(".answers")).to have_content(second_answer.body)
     end
   end
 
