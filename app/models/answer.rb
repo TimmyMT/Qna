@@ -5,8 +5,10 @@ class Answer < ApplicationRecord
   validates :body, presence: true
 
   def switch_best
-    question.answers.update_all(best: false)
-    self.update(best: true)
+    self.transaction do
+      question.answers.update_all(best: false)
+      self.update(best: true)
+    end
   end
 
 end
