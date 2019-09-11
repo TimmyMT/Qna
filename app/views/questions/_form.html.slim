@@ -10,8 +10,8 @@
     br
     = f.text_area :body, :required => true
   p
-    = f.label :file
+    = f.label :files
     br
-    = f.file_field :file
+    = f.file_field :files, multiple: true
   p
     = f.submit 'Save'

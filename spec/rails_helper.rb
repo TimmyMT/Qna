@@ -54,6 +54,10 @@ RSpec.configure do |config|
   Capybara.javascript_driver = :selenium_chrome_headless
   config.include WaitForAjax, type: :feature
 
+  config.after(:all) do
+    FileUtils.rm_rf("#{Rails.root}/tmp/storage")
+  end
+
   ############################################################################
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
