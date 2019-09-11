@@ -7,6 +7,7 @@ div class="question_#{question.id}"
       - question.files.each do |file|
         = link_to file.filename.to_s, url_for(file), target: "_blank"
         br
+        = link_to 'delete file', delete_attachment_path(file.id)
 
   - if current_user&.creator?(question)
     = link_to 'Edit question', '#', class: 'edit-question-link', data: { question_id: question.id }
