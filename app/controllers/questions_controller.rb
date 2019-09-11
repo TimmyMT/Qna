@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   before_action :question_author?, only: [:update, :destroy]
 
   def index
-    @questions = Question.all
+    @questions = Question.all.order(created_at: :desc)
   end
 
   def show

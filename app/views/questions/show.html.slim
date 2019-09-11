@@ -1,14 +1,20 @@
 = render @question
 
 br
-.answer-errors
-  = render 'shared/errors', resource: @answer
-= form_with model: [@question, @answer], class: 'new-answer' do |f|
-  = f.label :body
-  br
-  = f.text_area :body
-  br
-  = f.submit
+- if signed_in?
+  .answer-errors
+    = render 'shared/errors', resource: @answer
+  = form_with model: [@question, @answer], class: 'new-answer' do |f|
+    p
+      = f.label :body
+    p
+      = f.text_area :body
+    p
+      = f.label :files
+      br
+      = f.file_field :files, multiple: true
+    p
+      = f.submit
 
 .answers
   = render @answers

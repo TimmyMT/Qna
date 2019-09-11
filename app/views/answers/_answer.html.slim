@@ -3,6 +3,11 @@ div class="answer_#{answer.id}"
     - if answer.best?
       .best_answer_of_question Best answer!
     = answer.body
+    br
+    - if answer.files.attached?
+      - answer.files.each do |file|
+        = link_to file.filename.to_s, url_for(file), target: "_blank"
+        br
     - if current_user&.creator?(answer)
       br
       a= link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
