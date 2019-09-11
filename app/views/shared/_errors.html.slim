@@ -1,5 +1,5 @@
 - if resource.present? && resource.errors.any?
-  - resource.errors.full_messages.each do |message|
-    = message
-    br
-
+  div class="alert alert-danger"
+    - resource.errors.full_messages.each do |message|
+      = message
+      br
