@@ -8,10 +8,11 @@ div class="answer_#{answer.id}"
       - if answer.files.attached?
         div class="alert alert-info"
           - answer.files.each do |file|
-            - if current_user&.creator?(answer)
-              = link_to 'delete file', delete_attachment_path(file.id), class: 'btn btn-danger btn-sm'
-            = link_to file.filename.to_s, url_for(file), target: "_blank"
-            br
+            div id="attachment_#{file.id}"
+              - if record_creator?(file)
+                = link_to 'delete file', delete_attachment_path(file.id), class: 'btn btn-danger btn-sm', remote: true, data: { confirm: 'Are you sure?' }
+              = link_to file.filename.to_s, url_for(file), target: "_blank"
+              br
 
       - if current_user&.creator?(answer)
         = link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
