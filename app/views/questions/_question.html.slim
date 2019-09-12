@@ -3,13 +3,12 @@ div class="question_#{question.id}"
   p= question.body
 
   - if question.files.attached?
-    div class="alert alert-warning"
+    div class="alert alert-info"
       - question.files.each do |file|
         - if current_user&.creator?(question)
           = link_to 'delete file', delete_attachment_path(file.id), class: 'btn btn-danger btn-sm'
         = link_to file.filename.to_s, url_for(file), target: "_blank"
         br
-
   - if current_user&.creator?(question)
     = link_to 'Edit question', '#', class: 'edit-question-link', data: { question_id: question.id }
     span |

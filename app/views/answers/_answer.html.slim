@@ -5,21 +5,21 @@ div class="answer_#{answer.id}"
     = answer.body
     br
     - if answer.files.attached?
-      div class="alert alert-warning"
+      div class="alert alert-info"
         - answer.files.each do |file|
           - if current_user&.creator?(answer)
             = link_to 'delete file', delete_attachment_path(file.id), class: 'btn btn-danger btn-sm'
           = link_to file.filename.to_s, url_for(file), target: "_blank"
           br
+
     - if current_user&.creator?(answer)
-      br
-      a= link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
+      = link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
       span |
-      a= link_to 'Delete answer', answer_path(answer), method: :delete, data: {remote: true}
+      = link_to 'Delete answer', answer_path(answer), method: :delete, data: {remote: true}
       span |
     - if current_user&.creator?(answer.question)
       br
-      a= link_to 'Make it best', select_best_answer_path(answer), method: :patch, remote: true
+      = link_to 'Make it best', select_best_answer_path(answer), method: :patch, remote: true
 
     = form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
       p
