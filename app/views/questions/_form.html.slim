@@ -4,14 +4,14 @@
   p
     = f.label 'title'
     br
-    = f.text_field :title, :required => true
+    = f.text_field :title
   p
     = f.label 'body'
     br
-    = f.text_area :body, :required => true
+    = f.text_area :body
   p
     = f.label :files
     br
-    = f.file_field :files, multiple: true
+    = f.file_field :files, multiple: true, direc_upload: true
   p
     = f.submit 'Save'

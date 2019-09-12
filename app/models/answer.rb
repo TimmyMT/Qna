@@ -1,7 +1,7 @@
 class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user
-  has_many_attached :files
+  has_many_attached :files, dependent: :destroy
 
   validates :body, presence: true
 
