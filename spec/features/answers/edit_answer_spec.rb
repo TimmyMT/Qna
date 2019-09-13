@@ -16,10 +16,12 @@ feature 'User can edit his answer', %q{
   end
 
   describe 'Authorized user' do
-    scenario 'edits his answer', js: true do
+    background do
       sign_in(user)
       visit question_path(question)
+    end
 
+    scenario 'edits his answer', js: true do
       click_on 'Edit answer'
 
       within '.answers' do
@@ -32,10 +34,19 @@ feature 'User can edit his answer', %q{
       end
     end
 
-    scenario 'edits his answer with errors', js: true do
-      sign_in(user)
-      visit question_path(question)
+    scenario 'edit answer with attached file', js: true do
+      within ".answer_#{answer.id}" do
+        click_on 'Edit answer'
 
+        attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Update Answer'
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+    end
+
+    scenario 'edits his answer with errors', js: true do
       click_on 'Edit answer'
 
       within '.answers' do
@@ -46,12 +57,13 @@ feature 'User can edit his answer', %q{
       expect(page).to have_content "Body can't be blank"
     end
 
-    scenario 'tries to edit other users question', js: true do
-      sign_in(wrong_user)
-      visit question_path(question)
+  end
 
-      expect(page).to_not have_link 'Edit answer'
-    end
+  scenario 'tries to edit other users question', js: true do
+    sign_in(wrong_user)
+    visit question_path(question)
+
+    expect(page).to_not have_link 'Edit answer'
   end
 
 end
