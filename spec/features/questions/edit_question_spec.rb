@@ -15,10 +15,12 @@ feature 'User can edit his question', %q{
   end
 
   describe 'Authorized user' do
-    scenario 'edits his question', js: true do
+    background do
       sign_in(user)
       visit question_path(question)
+    end
 
+    scenario 'edits his question', js: true do
       within ".question_#{question.id}" do
         expect(page).to have_link 'Edit question'
         click_on 'Edit question'
@@ -35,10 +37,23 @@ feature 'User can edit his question', %q{
       end
     end
 
-    scenario 'edits his question with errors', js: true do
-      sign_in(user)
-      visit question_path(question)
+    scenario 'edit question with attached file', js: true do
+      within ".question_#{question.id}" do
+        click_on 'Edit question'
+      end
 
+      within ".edit_question" do
+        attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+      end
+
+      within ".question_#{question.id}" do
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+    end
+
+    scenario 'edits his question with errors', js: true do
       within ".question_#{question.id}" do
         expect(page).to have_link 'Edit question'
         click_on 'Edit question'
@@ -55,14 +70,14 @@ feature 'User can edit his question', %q{
         expect(page).to have_content "Body can't be blank"
       end
     end
+  end
 
-    scenario 'wrong user tries to edit question', js: true do
-      sign_in(wrong_user)
-      visit question_path(question)
+  scenario 'wrong user tries to edit question', js: true do
+    sign_in(wrong_user)
+    visit question_path(question)
 
-      within ".question_#{question.id}" do
-        expect(page).to_not have_link 'Edit question'
-      end
+    within ".question_#{question.id}" do
+      expect(page).to_not have_link 'Edit question'
     end
   end
 
