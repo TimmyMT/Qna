@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   root to: 'questions#index'
 
-  get 'delete_attachment/:id', to: 'attachments#delete_attachment', as: 'delete_attachment'
+  resources :attachments, only: [:destroy]
 
   resources :questions, shallow: true do
     resources :answers, shallow: true do

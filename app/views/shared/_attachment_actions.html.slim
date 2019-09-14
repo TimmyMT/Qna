@@ -3,6 +3,6 @@
     - resource.files.each do |file|
       div id="attachment_#{file.id}"
         - if record_creator?(file)
-          = link_to 'delete file', delete_attachment_path(file.id), class: 'btn btn-danger btn-sm', remote: true, data: { confirm: 'Are you sure?' }
+          = link_to 'delete file', attachment_path(file.id), method: :delete, class: 'btn btn-danger btn-sm', remote: true, data: { confirm: 'Are you sure?' }
         = link_to file.filename.to_s, url_for(file), target: "_blank"
         br
