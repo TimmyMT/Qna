@@ -10,16 +10,13 @@ feature 'User can delete files from answer', %q{
 
   describe 'Answer with file', js: true do
     background do
+      FactoryBot.create(:answer, :with_attachment, question: question, user: user)
+    end
+
+    scenario 'author delete file from answer', js: true do
       sign_in(user)
       visit question_path(question)
 
-      fill_in 'Body', with: 'New body answer'
-
-      attach_file 'Files', "#{Rails.root}/spec/rails_helper.rb"
-      click_on 'Create Answer'
-    end
-
-    scenario 'authorized user delete file from answer', js: true do
       within '.answers' do
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'delete file'
@@ -32,12 +29,6 @@ feature 'User can delete files from answer', %q{
     end
 
     scenario 'worng user tries delete file from answer', js: true do
-      within '.answers' do
-        expect(page).to have_link 'rails_helper.rb'
-        expect(page).to have_link 'delete file'
-      end
-
-      click_on 'Sign out'
       sign_in(wrong_user)
       visit question_path(question)
 
@@ -48,12 +39,6 @@ feature 'User can delete files from answer', %q{
     end
 
     scenario 'guest tries delete file from answer', js: true do
-      within '.answers' do
-        expect(page).to have_link 'rails_helper.rb'
-        expect(page).to have_link 'delete file'
-      end
-
-      click_on 'Sign out'
       visit question_path(question)
 
       within '.answers' do
