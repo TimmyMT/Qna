@@ -1,7 +1,8 @@
 module AttachmentsHelper
   def record_creator?(file)
-    class_name = file.record_type.constantize
-    return current_user&.creator?(class_name.find(file.record_id))
+    parent_klass = file.record_type.safe_constantize
+    parent = parent_klass.find(file.record_id)
+    return current_user&.creator?(parent)
   end
 
   def files_present?(object)
