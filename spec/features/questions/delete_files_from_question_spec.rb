@@ -9,18 +9,13 @@ feature 'User can delete files from question', %q{
 
   describe 'Question with file', js: true do
     background do
-      sign_in(user)
-      visit questions_path
-      click_on 'Ask question'
-
-      fill_in 'Title', with: 'New q'
-      fill_in 'Body', with: 'New body'
-
-      attach_file 'Files', "#{Rails.root}/spec/rails_helper.rb"
-      click_on 'Save'
+      @question = FactoryBot.create(:question, :with_attachment, user: user)
     end
 
     scenario 'authorized user delete file from question', js: true do
+      sign_in(user)
+      visit question_path(@question)
+
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'delete file'
 
@@ -32,31 +27,15 @@ feature 'User can delete files from question', %q{
     end
 
     scenario 'worng user tries delete file from question', js: true do
-      expect(page).to have_link 'rails_helper.rb'
-      expect(page).to have_link 'delete file'
-
-      click_on 'Sign out'
       sign_in(wrong_user)
-      visit questions_path
-
-      expect(page).to have_link 'New q'
-
-      click_on 'New q'
+      visit question_path(@question)
 
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to_not have_link 'delete file'
     end
 
     scenario 'guest tries delete file from question', js: true do
-      expect(page).to have_link 'rails_helper.rb'
-      expect(page).to have_link 'delete file'
-
-      click_on 'Sign out'
-      visit questions_path
-
-      expect(page).to have_link 'New q'
-
-      click_on 'New q'
+      visit question_path(@question)
 
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to_not have_link 'delete file'
