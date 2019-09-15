@@ -24,7 +24,7 @@ div class="answer_#{answer.id}"
         p
           = f.label :files
           br
-          = f.file_field :files, multiple: true
+          = f.file_field :files, multiple: true, direct_upload: true
         p
           = f.submit
         br
