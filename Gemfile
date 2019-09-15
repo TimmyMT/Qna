@@ -7,7 +7,6 @@ ruby '2.5.3'
 ###################### Custom gems ############################
 
 gem 'slim-rails'
-# gem 'decent_exposure', '~> 3.0' # Гем для рефакторинга CRUD в контроллере
 gem 'devise'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.3.1'
