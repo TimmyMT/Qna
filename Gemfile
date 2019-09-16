@@ -12,7 +12,6 @@ gem 'jquery-rails'
 gem 'bootstrap', '~> 4.3.1'
 gem 'rails-js'
 gem 'autoprefixer-rails'
-gem 'activestorage-dropbox'
 gem 'aws-sdk-s3', require: false
 
 ###############################################################
