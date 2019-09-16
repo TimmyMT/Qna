@@ -5,18 +5,20 @@ div class="answer_#{answer.id}"
         .best_answer_of_question Best answer!
       = answer.body
       br
+      br
       = render 'shared/attachment_actions', resource: answer
 
       - if current_user&.creator?(answer)
-        = link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
-        span |
-        = link_to 'Delete answer', answer_path(answer), method: :delete, data: {remote: true}
-        span |
+        = link_to 'Edit answer', '#', class: 'edit-answer-link text-warning', data: {answer_id: answer.id}
+        '
+        = link_to 'Delete answer', answer_path(answer), method: :delete, data: {remote: true}, class: 'text-danger'
       - if current_user&.creator?(answer.question)
-        br
-        = link_to 'Make it best', select_best_answer_path(answer), method: :patch, remote: true
+        '
+        = link_to 'Make it best', select_best_answer_path(answer), method: :patch, remote: true, class: 'text-success'
 
       = form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
+        .answer-errors
+          = render 'shared/errors', resource: answer
         p
           = f.label :body
         p

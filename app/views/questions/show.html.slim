@@ -2,21 +2,26 @@
 = render @question
 
 br
-- if signed_in?
-  .answer-errors
-    = render 'shared/errors', resource: @answer
-  = form_with model: [@question, @answer], class: 'new-answer' do |f|
-    p
-      = f.label :body
-    p
-      = f.text_area :body
-    p
-      = f.label :files
-      br
-      = f.file_field :files, multiple: true, direct_upload: true
-    p
-      = f.submit
 
+- if signed_in?
+  button onclick="hide()" class="btn btn-warning" id="addAnswerButton" Add answer
+  br
+  div id="addAnswerForm" style="display: none"
+    .answer-errors
+      = render 'shared/errors', resource: @answer
+    = form_with model: [@question, @answer], class: 'new-answer' do |f|
+      p
+        = f.label :body
+        br
+        = f.text_area :body
+      p
+        = f.label :files
+        br
+        = f.file_field :files, multiple: true, direct_upload: true, class: "btn btn-warning btn-sm"
+      p
+        = f.submit class: "btn btn-success btn-sm"
+    button onclick="hide()" class="btn btn-danger btn-sm" Cancel
+br
 .answers
   = render @answers
 
