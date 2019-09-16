@@ -6,15 +6,11 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
-#dropbox:
-#  service: Dropbox
-#  access_token: <%= Rails.application.credentials.dig(:dropbox_access_key) %>
-
 amazon:
   service: S3
   access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
-  region: us-east-2
+  region: eu-central-1
   bucket: <%= Rails.application.credentials.dig(:aws, :bucket) %>
 
 # Remember not to checkin your GCS keyfile to a repository
