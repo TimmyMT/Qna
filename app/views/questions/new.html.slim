@@ -1,3 +1,30 @@
 h1 New question
+
+.question-errors
+  = render 'shared/errors', resource: @question
+
 br
-= render 'form'
+= form_with model: @question, id: "edit-question-#{@question.id}", local: true do |f|
+  p
+    = f.label 'title'
+    br
+    = f.text_field :title
+  p
+    = f.label 'body'
+    br
+    = f.text_area :body
+  p
+    = f.label :files
+    br
+    = f.file_field :files, multiple: true, direct_upload: true
+  p Links:
+  p
+    = f.fields_for :links do |l|
+      p
+        = l.label :name, 'Link name'
+        = l.text_field :name
+      p
+        = l.label :url
+        = l.text_field :url
+
+  p= f.submit 'Save'

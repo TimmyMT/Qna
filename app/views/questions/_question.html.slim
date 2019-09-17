@@ -1,6 +1,12 @@
 div class="question_#{question.id}"
   h1= question.title
   p= question.body
+  .links
+    p Links:
+    ul
+      - question.links.each do |l|
+        li= link_to l.name, l.url, target: "_blank"
+        br
   = render 'shared/attachment_actions', resource: question
 
   - if current_user&.creator?(question)
@@ -22,5 +28,14 @@ div class="question_#{question.id}"
         = f.label :files
         br
         = f.file_field :files, multiple: true, direct_upload: true
+      p Links:
       p
-        = f.submit 'Save'
+        = f.fields_for :links do |l|
+          p
+            = l.label :name, 'Link name'
+            = l.text_field :name
+          p
+            = l.label :url
+            = l.text_field :url
+
+      p= f.submit 'Save'

@@ -31,32 +31,22 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "GET #new" do
-    it 'renders new view for authorized user' do
-      login(user)
-      get :new
-      expect(response).to render_template(:new)
+    context 'authorized user' do
+      before { login(user) }
+      before { get :new }
+
+      it 'render link fields when tries create new question' do
+        expect(assigns(:question).links.first).to be_a_new(Link)
+      end
+
+      it 'renders new view for authorized user' do
+        expect(response).to render_template(:new)
+      end
     end
 
     it 'redirect sign in view for guest' do
       get :new
       expect(response).to redirect_to new_user_session_path
-    end
-  end
-
-  describe 'GET #edit' do
-    context 'Authorized user' do
-      it 'renders edit view for author - ' do
-        login(user)
-        get :edit, params: { id: question }
-        expect(response).to render_template(:edit)
-      end
-    end
-
-    context 'Not Authorized user' do
-      it 'redirect to sign in' do
-        get :edit, params: { id: question }
-        expect(response).to redirect_to new_user_session_path
-      end
     end
   end
 
