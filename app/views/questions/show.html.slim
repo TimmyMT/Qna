@@ -18,8 +18,16 @@ br
         = f.label :files
         br
         = f.file_field :files, multiple: true, direct_upload: true, class: "btn btn-warning btn-sm"
+      p Links:
       p
-        = f.submit class: "btn btn-success btn-sm"
+        = f.fields_for :links do |l|
+          p
+            = l.label :name, 'Link name'
+            = l.text_field :name
+          p
+            = l.label :url
+            = l.text_field :url
+      p= f.submit class: "btn btn-success btn-sm"
     button onclick="hide()" class="btn btn-danger btn-sm" Cancel
 br
 .answers

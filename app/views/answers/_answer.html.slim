@@ -4,8 +4,12 @@ div class="answer_#{answer.id}"
       - if answer.best?
         .best_answer_of_question Best answer!
       = answer.body
-      br
-      br
+      .links
+        p Links:
+        ul
+          - answer.links.each do |l|
+            li= link_to l.name, l.url, target: "_blank"
+            br
       = render 'shared/attachment_actions', resource: answer
 
       - if current_user&.creator?(answer)
@@ -27,6 +31,14 @@ div class="answer_#{answer.id}"
           = f.label :files
           br
           = f.file_field :files, multiple: true, direct_upload: true
+        p Links:
         p
-          = f.submit
+          = f.fields_for :links do |l|
+            p
+              = l.label :name, 'Link name'
+              = l.text_field :name
+            p
+              = l.label :url
+              = l.text_field :url
+        p= f.submit
         br

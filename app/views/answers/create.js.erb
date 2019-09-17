@@ -2,9 +2,14 @@ $('.answer-errors').html('<%= render 'shared/errors', resource: @answer %>');
 
 <% if @answer.persisted? %>
   <% @best_answer = @question.answers.find_by(best: true) %>
+
   $('.answers').prepend('<%= j render @answer %>');
-  $('.answer_<%= @best_answer.id %>').remove();
-  $('.answers').prepend('<%= j render @best_answer %>');
+
+  <% if @best_answer.present? %>
+    $('.answer_<%= @best_answer.id %>').remove();
+    $('.answers').prepend('<%= j render @best_answer %>');
+  <% end %>
+
   $('.new-answer #answer_body').val('');
   $('#addAnswerForm').hide();
   $('#addAnswerButton').show();

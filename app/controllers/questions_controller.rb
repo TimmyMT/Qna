@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
   def show
     @answers = @question.answers.order(best: :desc, created_at: :desc)
     @answer = Answer.new(user: current_user)
+    @answer.links.new
   end
 
   def new
