@@ -13,6 +13,13 @@ $('.answer-errors').html('<%= render 'shared/errors', resource: @answer %>');
   $('.new-answer #answer_body').val('');
   $('#addAnswerForm').hide();
   $('#addAnswerButton').show();
+
+  <% @answer.links.each do |link| %>
+    <% if link.gist? %>
+      document.location.reload(true)
+      <% break %>
+    <% end %>
+  <% end %>
 <% end %>
 
 

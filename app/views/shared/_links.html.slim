@@ -2,5 +2,8 @@
   - if resource.links.present?
     span Links:
     ul
-      - resource.links.each do |l|
-        li= link_to l.name, l.url, target: "_blank"
+      - resource.links.each do |link|
+        - if link.gist?
+          | <script src="https://gist.github.com/#{link.gist_id}.js"></script>
+        - else
+          li= link_to link.name, link.url, target: "_blank"
