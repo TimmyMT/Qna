@@ -7,6 +7,7 @@ feature 'User can add links to question', %q{
   given(:user) { create(:user) }
   given(:new_url) { 'http://google.com' }
   given(:incorrect_url) { 'google.com' }
+  given(:gist_url) { 'https://gist.github.com/TimmyMT/fecb0d211eeaa8ab7409e0ddb13899c6' }
 
   describe 'User adds link when asks question' do
     background do
@@ -25,6 +26,14 @@ feature 'User can add links to question', %q{
       click_on 'Save'
 
       expect(page).to have_link 'new link', href: new_url
+    end
+
+    scenario 'gist link', js: true do
+      fill_in 'Url', with: gist_url
+
+      click_on 'Save'
+
+      expect(page).to have_selector('.gist-link')
     end
 
     scenario 'incorrect link' do
