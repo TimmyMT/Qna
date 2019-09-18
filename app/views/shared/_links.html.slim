@@ -1,5 +1,6 @@
 .links
-  span Links:
-  ul
-    - resource.links.each do |l|
-      li= link_to l.name, l.url, target: "_blank"
+  - if resource.links.present?
+    span Links:
+    ul
+      - resource.links.each do |l|
+        li= link_to l.name, l.url, target: "_blank"
