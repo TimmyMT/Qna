@@ -16,6 +16,7 @@ gem 'aws-sdk-s3', require: false
 gem 'cocoon'
 gem 'formtastic'
 gem 'file_validators'
+gem 'mini_magick'
 
 ###############################################################
 ###############################################################

@@ -1,8 +1,13 @@
 h1 Your achievements
 - @user_achievements.each do |award|
-  - if award.image.attached?
-    = image_tag(award.image, size: '50x50')
-  '
-  = award.name
-  br
-
+  div id="achievement_#{award.id}"
+    - if award.image.attached?
+      = image_tag(award.image_thumbnail)
+    '
+    = award.name
+    '
+    - if award.question.present?
+      span Award of question
+      '
+      = link_to award.question.title, question_path(award.question)
+    br

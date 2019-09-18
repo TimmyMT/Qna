@@ -5,6 +5,7 @@
     </div>
 
     <% if signed_in? %>
+      <%= link_to 'Your achievements', achievements_path, class: 'card-link text-warning' %>
       <span class="p-2 text-white"><%= current_user.email %></span>
       <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger my-2 my-sm-0' %>
     <% else %>
