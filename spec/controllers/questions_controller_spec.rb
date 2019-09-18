@@ -65,10 +65,25 @@ RSpec.describe QuestionsController, type: :controller do
       before { login(user) }
 
       context 'with valid attributes' do
+
         it 'saves a new question in the database' do
           expect { post :create, params: {question: attributes_for(:question, user: user) } }.to change(Question, :count).by(1)
           question = Question.order(created_at: :desc).first
           expect(question.user).to eq(user)
+        end
+
+        it 'create question with achievement' do
+          expect do
+            post :create, params: {question: attributes_for(:question, user: user,
+                                   achievement: FactoryBot.create(:achievement, question: question)) }
+          end.to change(Achievement, :count).by(1)
+        end
+
+        it 'create question with link' do
+          expect do
+            post :create, params: {question: attributes_for(:question, user: user,
+                                   links: FactoryBot.create(:link, linkable_id: question.id, linkable_type: question.class.to_s)) }
+          end.to change(Link, :count).by(1)
         end
 
         it 'redirect to show view' do
