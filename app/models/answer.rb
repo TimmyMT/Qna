@@ -12,6 +12,7 @@ class Answer < ApplicationRecord
     transaction do
       question.answers.update_all(best: false)
       self.update!(best: true)
+      question.achievement.update!(user_id: self.user.id) if question.achievement.present?
     end
   end
 

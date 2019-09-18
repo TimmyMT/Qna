@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   root to: 'questions#index'
 
+  resources :achievements, only: :index
   resources :attachments, only: :destroy
   resources :links, only: :destroy
 

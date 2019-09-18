@@ -1,0 +1,8 @@
+h1 Your achievements
+- @user_achievements.each do |award|
+  - if award.image.attached?
+    = image_tag(award.image, size: '50x50')
+  '
+  = award.name
+  br
+
