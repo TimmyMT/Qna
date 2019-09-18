@@ -12,10 +12,17 @@ RSpec.describe Answer, type: :model do
     let!(:user) { create(:user) }
     let!(:question) { create(:question, user: user) }
     let!(:answer) { create(:answer, question: question, user: user) }
+    let!(:achievement) { create(:achievement, question: question) }
     let!(:best_answer) { create(:answer, question: question, user: user, best: true) }
 
     it 'have many attached files' do
       expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+    end
+
+    it 'user taked achievement for best answer' do
+      answer.switch_best
+
+      expect(user.achievements.last).to eq achievement
     end
 
     it 'check best attribute for new best answer' do
