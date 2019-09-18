@@ -13,6 +13,8 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'rails-js'
 gem 'autoprefixer-rails'
 gem 'aws-sdk-s3', require: false
+gem 'cocoon'
+gem 'formtastic'
 
 ###############################################################
 ###############################################################

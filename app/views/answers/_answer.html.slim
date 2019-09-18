@@ -4,12 +4,7 @@ div class="answer_#{answer.id}"
       - if answer.best?
         .best_answer_of_question Best answer!
       = answer.body
-      .links
-        p Links:
-        ul
-          - answer.links.each do |l|
-            li= link_to l.name, l.url, target: "_blank"
-            br
+      = render 'shared/links', resource: answer
       = render 'shared/attachment_actions', resource: answer
 
       - if current_user&.creator?(answer)

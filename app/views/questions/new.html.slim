@@ -4,7 +4,7 @@ h1 New question
   = render 'shared/errors', resource: @question
 
 br
-= form_with model: @question, id: "edit-question-#{@question.id}", local: true do |f|
+= semantic_form_for @question, id: "edit-question-#{@question.id}", local: true do |f|
   p
     = f.label 'title'
     br
@@ -19,12 +19,9 @@ br
     = f.file_field :files, multiple: true, direct_upload: true
   p Links:
   p
-    = f.fields_for :links do |l|
-      p
-        = l.label :name, 'Link name'
-        = l.text_field :name
-      p
-        = l.label :url
-        = l.text_field :url
+    = f.semantic_fields_for :links do |link|
+      = render 'shared/link_fields', f: link
+    .links
+      = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'
 
   p= f.submit 'Save'

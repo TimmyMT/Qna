@@ -1,12 +1,7 @@
 div class="question_#{question.id}"
   h1= question.title
   p= question.body
-  .links
-    p Links:
-    ul
-      - question.links.each do |l|
-        li= link_to l.name, l.url, target: "_blank"
-        br
+  = render 'shared/links', resource: question
   = render 'shared/attachment_actions', resource: question
 
   - if current_user&.creator?(question)
