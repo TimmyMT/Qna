@@ -112,6 +112,7 @@ RSpec.describe AnswersController, type: :controller do
     let!(:wrong_user) { create(:user) }
     let!(:question) { create(:question, user: user) }
     let!(:answer) { create(:answer, question: question, user: user) }
+    let!(:achievement) { create(:achievement, question: question) }
 
     it 'author of question selected best answer' do
       login(user)
@@ -119,6 +120,14 @@ RSpec.describe AnswersController, type: :controller do
       answer.reload
 
       expect(answer.best).to be_truthy
+    end
+
+    it 'user taked achievement for best answer' do
+      login(user)
+      patch :select_best, params: { id: answer }, format: :js
+      user.reload
+
+      expect(user.achievements.last).to eq achievement
     end
 
     it 'not author of question tries selected best answer' do

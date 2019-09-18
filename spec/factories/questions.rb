@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :question do
+  factory :question, aliases: [:linkable] do
     title { "MyString" }
     body { "MyText" }
 
