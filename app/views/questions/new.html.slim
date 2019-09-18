@@ -22,6 +22,12 @@ br
     / = render 'shared/link_fields', f: link
   .links
     = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-primary btn-sm'
-
+  p Achievement
+  = f.fields_for :achievement do |achievement|
+    = achievement.label :name
+    = achievement.text_field :name
+    br
+    = achievement.label :image
+    = achievement.file_field :image
   br
   p= f.submit 'Save', class: 'btn btn-success'

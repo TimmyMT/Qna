@@ -16,6 +16,7 @@ class QuestionsController < ApplicationController
   def new
     @question = current_user.questions.new
     @question.links.new
+    @question.build_achievement
   end
 
   def create
@@ -53,7 +54,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [], links_attributes: [:name, :url, :done, :_destroy])
+    params.require(:question).permit(:title, :body, achievement_attributes: [:name, :image], files: [], links_attributes: [:name, :url, :done, :_destroy])
   end
 
 end
