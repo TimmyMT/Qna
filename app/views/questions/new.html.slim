@@ -18,17 +18,19 @@ br
     br
     = f.file_field :files, multiple: true, direct_upload: true
 
-  = f.fields_for :links do |link|
-    = render 'shared/link_fields', f: link
   .links
-    = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-primary btn-sm'
-  br
-  p Achievement
-  = f.fields_for :achievement do |achievement|
-    = achievement.label :name
-    = achievement.text_field :name
+    = f.fields_for :links do |link|
+      = render 'shared/link_fields', f: link
+    .add-link
+      = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-primary btn-sm'
     br
-    = achievement.label :image
-    = achievement.file_field :image
-  br
+  div class="achievement"
+    p Achievement
+    = f.fields_for :achievement do |achievement|
+      = achievement.label :name
+      = achievement.text_field :name
+      br
+      = achievement.label :image
+      = achievement.file_field :image
+    br
   p= f.submit 'Save', class: 'btn btn-success'

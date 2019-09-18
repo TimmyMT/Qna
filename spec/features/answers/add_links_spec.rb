@@ -6,22 +6,36 @@ feature 'User can add links to answer', %q{
 
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
-  given(:gist_url) { 'http://google.com' }
+  given(:new_url) { 'http://google.com' }
+  given(:incorrect_url) { 'google.com' }
 
-  scenario 'User adds link when asks question', js: true do
-    sign_in(user)
-    visit question_path(question)
-    click_on 'Add answer'
+  describe 'User adds link when asks question' do
+    background do
+      sign_in(user)
+      visit question_path(question)
+      click_on 'Add answer'
 
-    fill_in 'Body', with: 'A body'
+      fill_in 'Body', with: 'A body'
 
-    fill_in 'Link name', with: 'My gist'
-    fill_in 'Url', with: gist_url
+      fill_in 'Link name', with: 'new link'
+    end
 
-    click_on 'Create Answer'
+    scenario 'valid link', js: true do
+      fill_in 'Url', with: new_url
 
-    within '.answers' do
-      expect(page).to have_link 'My gist', href: gist_url
+      click_on 'Create Answer'
+
+      within '.answers' do
+        expect(page).to have_link 'new link', href: new_url
+      end
+    end
+
+    scenario 'incorrect link', js: true do
+      fill_in 'Url', with: incorrect_url
+
+      click_on 'Create Answer'
+
+      expect(page).to have_content 'Links url is invalid'
     end
   end
 
