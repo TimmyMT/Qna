@@ -2,12 +2,5 @@ $('.question-errors').html('<%= render 'shared/errors', resource: @question %>')
 
 <% unless @question.errors.present? %>
   $('.question_<%= @question.id %>').html('<%= j render @question %>');
-
-  <% @question.links.each do |link| %>
-    <% if link.gist? %>
-      document.location.reload(true)
-      <% break %>
-    <% end %>
-  <% end %>
 <% end %>
 

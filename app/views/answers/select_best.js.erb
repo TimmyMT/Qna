@@ -1,10 +1,3 @@
 $('.answer_<%= @answer.id %>').remove();
 $('.best_answer_of_question').remove();
 $('.answers').prepend('<%= j render @answer %>');
-
-<% @answer.links.each do |link| %>
-  <% if link.gist? %>
-    document.location.reload(true)
-    <% break %>
-  <% end %>
-<% end %>

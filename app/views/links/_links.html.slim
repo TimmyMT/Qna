@@ -4,8 +4,21 @@
       - resource.links.each do |link|
         div id="link_#{link.id}"
           - if link.gist?
-            div class="gist-link" style="width: 50%"
-              | <script src="https://gist.github.com/#{link.gist_id}.js"></script>
+            div id="gist-link_#{link.id}" style="width: 50%"
+              |
+                <script type="text/javascript">
+                  $(function() {
+                    postscribe(
+                      "#gist-link_#{link.id}",
+                      '<script src="https:\/\/gist.github.com\/#{link.gist_id}.js"><\/script>',
+                      {
+                        done: function() {
+                          $("#gist-link_#{link.id} script").remove();
+                        }
+                      }
+                    );
+                  });
+                </script>
           - else
             li
               = link_to link.name, link.url, target: "_blank"
