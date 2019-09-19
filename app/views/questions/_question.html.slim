@@ -1,7 +1,7 @@
 div class="question_#{question.id}"
   h1= question.title
   p= question.body
-  = render 'shared/links', resource: question
+  = render 'links/links', resource: question
   = render 'shared/attachment_actions', resource: question
 
   - if current_user&.creator?(question)
@@ -23,6 +23,6 @@ div class="question_#{question.id}"
         = f.label :files
         br
         = f.file_field :files, multiple: true, direct_upload: true
-      = render 'shared/add_links', f: f
+      = render 'links/add_links', f: f
 
       p= f.submit 'Save'

@@ -4,7 +4,7 @@ div class="answer_#{answer.id}"
       - if answer.best?
         .best_answer_of_question Best answer!
       = answer.body
-      = render 'shared/links', resource: answer
+      = render 'links/links', resource: answer
       = render 'shared/attachment_actions', resource: answer
 
       - if current_user&.creator?(answer)
@@ -26,7 +26,7 @@ div class="answer_#{answer.id}"
           = f.label :files
           br
           = f.file_field :files, multiple: true, direct_upload: true
-        = render 'shared/add_links', f: f
+        = render 'links/add_links', f: f
 
         p= f.submit
         br
