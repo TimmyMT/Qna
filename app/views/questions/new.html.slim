@@ -17,12 +17,7 @@ br
     = f.label :files
     br
     = f.file_field :files, multiple: true, direct_upload: true
-
-  .add-links
-    = f.fields_for :links do |link|
-      = render 'shared/link_fields', f: link
-    .add-link
-      = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-primary btn-sm'
+  = render 'shared/add_links', f: f
     br
   div class="achievement"
     p Achievement

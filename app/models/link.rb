@@ -6,14 +6,12 @@ class Link < ApplicationRecord
 
   def gist?
     host = URI.parse(url).host
-    return true if host&.include?('gist.github.com')
-    false
+    host&.include?('gist.github.com')
   end
 
   def gist_id
-    if gist?
-      url.split('/').reject!(&:empty?).last
-    end
+    return unless gist?
+    url.split('/').reject!(&:empty?).last
   end
 
 end

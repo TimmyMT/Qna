@@ -1,0 +1,11 @@
+div id="achievement_#{achievement.id}"
+  - if achievement.image.attached?
+    = image_tag(achievement.image_thumbnail)
+  '
+  = achievement.name
+  '
+  - if achievement.question.present?
+    span Award of question
+    '
+    = link_to achievement.question.title, question_path(achievement.question)
+  br
