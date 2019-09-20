@@ -37,7 +37,7 @@ feature 'User can add links to answer', %q{
       click_on 'Create Answer'
 
       within '.answers' do
-        expect(page).to have_selector('.gist-link')
+        expect(page).to have_selector("#gist-link_#{Answer.last.links.last.id}")
       end
     end
 

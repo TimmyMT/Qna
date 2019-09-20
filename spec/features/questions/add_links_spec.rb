@@ -33,7 +33,7 @@ feature 'User can add links to question', %q{
 
       click_on 'Save'
 
-      expect(page).to have_selector('.gist-link')
+      expect(page).to have_selector("#gist-link_#{Question.last.links.last.id}")
     end
 
     scenario 'incorrect link' do

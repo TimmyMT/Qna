@@ -77,6 +77,7 @@ RSpec.describe QuestionsController, type: :controller do
             post :create, params: {question: attributes_for(:question, user: user,
                                    achievement: FactoryBot.create(:achievement, question: question)) }
           end.to change(Achievement, :count).by(1)
+          expect(question.achievement).to eq Achievement.last
         end
 
         it 'create question with link' do
@@ -84,6 +85,7 @@ RSpec.describe QuestionsController, type: :controller do
             post :create, params: {question: attributes_for(:question, user: user,
                                    links: FactoryBot.create(:link, linkable_id: question.id, linkable_type: question.class.to_s)) }
           end.to change(Link, :count).by(1)
+          expect(question.links.last).to eq Link.last
         end
 
         it 'redirect to show view' do
