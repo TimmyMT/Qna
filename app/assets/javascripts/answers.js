@@ -7,13 +7,17 @@ $(document).on('turbolinks:load', function(){
   });
 
   $('form.new-answer').on('ajax:success', function(e) {
-    var xhr = e.detail[2];
+    console.log(e.detail)
+    var answer = e.detail[0];
 
-    $('.answers').append(xhr.responseText);
+    $('.answers').append('<p>' + answer.body + '</p>');
   })
     .on('ajax:error', function (e) {
-      var xhr = e.detail
+      var errors = e.detail[0]
 
+      $.each(errors, function (index, value) {
+        $('.answer-errors').append('<div class="alert alert-danger">' + value + '</div>')
+      });
       $('.answer-errors').html(xhr.responseText)
     })
 
