@@ -1,4 +1,4 @@
-$(".answer-<%= @answer.id %>-errors").html('<%= render 'shared/errors', resource: @answer %>');
+$(".answer-errors").html('<%= render 'shared/errors', resource: @answer %>');
 
 <% if @answer.persisted? %>
   <% @best_answer = @question.answers.find_by(best: true) %>

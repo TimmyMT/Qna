@@ -16,7 +16,7 @@ div class="answer_#{answer.id}"
         = link_to 'Make it best', select_best_answer_path(answer), method: :patch, remote: true, class: 'text-success'
 
       = form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
-        div class="answer-#{answer.id}-errors"
+        / div class="answer-#{answer.id}-errors"
           = render 'shared/errors', resource: answer
         p
           = f.label :body

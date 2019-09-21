@@ -7,9 +7,9 @@ br
   / button onclick="hide()" class="btn btn-warning" id="addAnswerButton" Add answer
   br
   / div id="addAnswerForm" style="display: none"
+  div class="answer-errors"
+    = render 'shared/errors', resource: @answer
   = form_with model: [@question, @answer], class: 'new-answer' do |f|
-    div class="answer-#{@answer.id}-errors"
-      = render 'shared/errors', resource: @answer
     p
       = f.label :body
       br
