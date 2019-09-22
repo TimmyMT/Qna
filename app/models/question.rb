@@ -1,6 +1,7 @@
 class Question < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable, inverse_of: :linkable
+  has_one :rating, dependent: :destroy, as: :ratingable
   belongs_to :user
 
   has_one :achievement, dependent: :nullify

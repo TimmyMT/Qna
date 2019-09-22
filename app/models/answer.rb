@@ -1,5 +1,6 @@
 class Answer < ApplicationRecord
   has_many :links, dependent: :destroy, as: :linkable, inverse_of: :linkable
+  has_one :rating, dependent: :destroy, as: :ratingable
   belongs_to :question
   belongs_to :user
   has_many_attached :files, dependent: :destroy

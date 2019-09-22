@@ -4,6 +4,14 @@ Rails.application.routes.draw do
 
   root to: 'questions#index'
 
+  resources :ratings do
+    member do
+      patch :up
+      patch :down
+      patch :clear_vote_from
+    end
+  end
+
   resources :achievements, only: :index
   resources :attachments, only: :destroy
   resources :links, only: :destroy

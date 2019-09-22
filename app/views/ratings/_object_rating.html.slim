@@ -1,0 +1,9 @@
+div class="rating_#{resource.rating.id}"
+  = resource.rating.value
+  '
+  - if resource.rating.votes.key?(current_user.id)
+    = link_to 'clear vote', clear_vote_from_rating_path(resource.rating), method: :patch, class: 'btn btn-outline-warning btn-sm'
+  - else
+    = link_to '-', down_rating_path(resource.rating), method: :patch, class: 'btn btn-outline-danger btn-sm'
+    '
+    = link_to '+', up_rating_path(resource.rating), method: :patch, class: 'btn btn-outline-success btn-sm'
