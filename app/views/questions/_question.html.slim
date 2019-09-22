@@ -4,13 +4,13 @@ div class="question_#{question.id}"
   = render 'links/links', resource: question
   = render 'shared/attachment_actions', resource: question
 
+  .object-rating
+    = render 'ratings/rating', resource: question.rating
+
   - if current_user&.creator?(question)
     = link_to 'Edit question', '#', class: 'edit-question-link text-warning', data: { question_id: question.id }
     '
     = link_to 'Delete question', question_path(question), method: :delete, class: 'text-danger'
-
-    .object-rating
-      = render 'ratings/rating', resource: question.rating
 
     = form_with model: @question, id: "edit-question-#{question.id}", class: 'edit_question' do |f|
       .question-errors
