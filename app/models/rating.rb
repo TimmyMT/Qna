@@ -4,7 +4,7 @@ class Rating < ApplicationRecord
   serialize :votes, Hash
 
   def up(user)
-    unless self.votes.key?(user.id) #&& object_creator(user)
+    unless self.votes.key?(user.id) && !object_creator(user)
       transaction do
         self.votes[user.id] = '+'
         self.value += 1
@@ -13,7 +13,7 @@ class Rating < ApplicationRecord
   end
 
   def down(user)
-    unless self.votes.key?(user.id) #&& object_creator(user)
+    unless self.votes.key?(user.id) && !object_creator(user)
       transaction do
         self.votes[user.id] = '-'
         self.value -= 1
@@ -22,7 +22,7 @@ class Rating < ApplicationRecord
   end
 
   def clear_vote(user)
-    if self.votes.key?(user.id) #&& !object_creator(user)
+    if self.votes.key?(user.id) && !object_creator(user)
       transaction do
         self.value -= 1 if self.votes[user.id] == '+'
         self.value += 1 if self.votes[user.id] == '-'
