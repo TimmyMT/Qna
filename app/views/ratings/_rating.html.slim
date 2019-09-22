@@ -1,16 +1,15 @@
-div class="rating_#{resource.id}"
-  span= resource.value
-  '
-  - if signed_in? && !current_user&.creator?(resource.ratingable_type.constantize.find(resource.ratingable_id))
-    .change-rating
-      - @currentUserInVotes = resource.votes.key?(current_user.id)
-      = link_to 'clear vote', clear_vote_from_rating_path(resource), method: :patch,
-              class: 'clear-vote-link btn btn-outline-warning btn-sm', remote: true,
-              style: ("display: none;" unless @currentUserInVotes)
-      = link_to '-', down_rating_path(resource), method: :patch,
-              class: 'down-vote-link btn btn-outline-danger btn-sm', remote: true,
-              style: ("display: none;" if @currentUserInVotes)
-      '
-      = link_to '+', up_rating_path(resource), method: :patch,
-              class: 'up-vote-link btn btn-outline-success btn-sm', remote: true,
-              style: ("display: none;" if @currentUserInVotes)
+.change-rating
+  - if signed_in? && !current_user&.creator?(resource.ratingable)
+    - @styles = check_vote_for_rating(resource, current_user)
+
+    = link_to 'clear vote', clear_vote_from_rating_path(resource), method: :patch,
+            class: "clear_vote-rating_#{resource.id} btn btn-outline-warning btn-sm",
+            remote: true, style: @styles[1]
+    '
+    = link_to '-', down_rating_path(resource), method: :patch,
+            class: "down-rating_#{resource.id} btn btn-outline-danger btn-sm",
+            remote: true, style: @styles[0]
+    '
+    = link_to '+', up_rating_path(resource), method: :patch,
+            class: "up-rating_#{resource.id} btn btn-outline-success btn-sm",
+            remote: true, style: @styles[0]

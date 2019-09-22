@@ -4,7 +4,10 @@ div class="question_#{question.id}"
   = render 'links/links', resource: question
   = render 'shared/attachment_actions', resource: question
 
-  .object-rating
+  br
+  div class="rating_#{question.rating.id}"
+    h5= question.rating.value
+  div class="change-rating_#{question.rating.id}"
     = render 'ratings/rating', resource: question.rating
 
   - if current_user&.creator?(question)

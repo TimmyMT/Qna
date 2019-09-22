@@ -15,7 +15,9 @@ div class="answer_#{answer.id}"
         '
         = link_to 'Make it best', select_best_answer_path(answer), method: :patch, remote: true, class: 'text-success'
       br
-      .object-rating
+      div class="rating_#{answer.rating.id}"
+        h5= answer.rating.value
+      div class="change-rating_#{answer.rating.id}"
         = render 'ratings/rating', resource: answer.rating
 
       = form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
