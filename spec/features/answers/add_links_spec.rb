@@ -14,7 +14,7 @@ feature 'User can add links to answer', %q{
     background do
       sign_in(user)
       visit question_path(question)
-      click_on 'Add answer'
+      # click_on 'Add answer'
 
       fill_in 'Body', with: 'A body'
 

@@ -9,6 +9,13 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
+  after_create :create_rating
+
+  def create_rating
+    self.build_rating
+    self.save
+  end
+
   def switch_best
     transaction do
       question.answers.update_all(best: false)

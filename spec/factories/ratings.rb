@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :rating do
-    value { 1 }
+    value { 0 }
+    votes { {} }
   end
 end

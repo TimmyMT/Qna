@@ -15,7 +15,7 @@ feature 'User can create answer', %q{
     end
 
     scenario 'create answer', js: true do
-      click_on 'Add answer'
+      # click_on 'Add answer'
       fill_in 'Body', with: 'first answer'
       click_on 'Create Answer'
 
@@ -26,7 +26,7 @@ feature 'User can create answer', %q{
     end
 
     scenario 'create answer with attached file', js: true do
-      click_on 'Add answer'
+      # click_on 'Add answer'
       fill_in 'Body', with: 'Answer with attached file'
 
       attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
@@ -37,7 +37,7 @@ feature 'User can create answer', %q{
     end
 
     scenario 'creates answer with errors', js: true do
-      click_on 'Add answer'
+      # click_on 'Add answer'
       click_on 'Create Answer'
 
       expect(page).to have_content "Body can't be blank"

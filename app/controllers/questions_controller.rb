@@ -21,7 +21,6 @@ class QuestionsController < ApplicationController
 
   def create
     @question = current_user.questions.new(question_params)
-    @question.build_rating
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else

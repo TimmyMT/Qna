@@ -12,4 +12,11 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :achievement, reject_if: :all_blank
 
   validates :title, :body, presence: true
+
+  after_create :create_rating
+
+  def create_rating
+    self.build_rating
+    self.save
+  end
 end
