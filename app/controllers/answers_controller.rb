@@ -6,16 +6,17 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
+    @answer.save
 
-    respond_to do |format|
-      if @answer.save
-        format.json { render json: @answer }
-      else
-        format.json do
-          render json: @answer.errors.full_messages, status: :unprocessable_entity
-        end
-      end
-    end
+    # respond_to do |format|
+    #   if @answer.save
+    #     format.json { render json: @answer }
+    #   else
+    #     format.json do
+    #       render json: @answer.errors.full_messages, status: :unprocessable_entity
+    #     end
+    #   end
+    # end
   end
 
   def update
