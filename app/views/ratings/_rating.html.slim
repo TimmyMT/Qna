@@ -1,0 +1,16 @@
+- @currentUserInVotes = resource.votes.key?(current_user.id)
+
+div class="rating_#{resource.id}"
+  span= resource.value
+  '
+  .change-rating
+    = link_to 'clear vote', clear_vote_from_rating_path(resource), method: :patch,
+            class: 'clear-vote-link btn btn-outline-warning btn-sm', remote: true,
+            style: ("display: none;" unless @currentUserInVotes)
+    = link_to '-', down_rating_path(resource), method: :patch,
+            class: 'down-vote-link btn btn-outline-danger btn-sm', remote: true,
+            style: ("display: none;" if @currentUserInVotes)
+    '
+    = link_to '+', up_rating_path(resource), method: :patch,
+            class: 'up-vote-link btn btn-outline-success btn-sm', remote: true,
+            style: ("display: none;" if @currentUserInVotes)

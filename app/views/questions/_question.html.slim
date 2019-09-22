@@ -9,7 +9,8 @@ div class="question_#{question.id}"
     '
     = link_to 'Delete question', question_path(question), method: :delete, class: 'text-danger'
 
-    = render 'ratings/object_rating', resource: question
+    .object-rating
+      = render 'ratings/rating', resource: question.rating
 
     = form_with model: @question, id: "edit-question-#{question.id}", class: 'edit_question' do |f|
       .question-errors

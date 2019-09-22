@@ -4,20 +4,41 @@ class RatingsController < ApplicationController
 
   def up
     @rating.up(current_user)
-    @rating.save
-    redirect_after_action
+
+    respond_to do |format|
+      if @rating.save
+        format.json { render json: @rating }
+      end
+    end
+
+    # @rating.save
+    # redirect_after_action
   end
 
   def down
     @rating.down(current_user)
-    @rating.save
-    redirect_after_action
+
+    respond_to do |format|
+      if @rating.save
+        format.json { render json: @rating }
+      end
+    end
+
+    # @rating.save
+    # redirect_after_action
   end
 
   def clear_vote_from
     @rating.clear_vote(current_user)
-    @rating.save
-    redirect_after_action
+
+    respond_to do |format|
+      if @rating.save
+        format.json { render json: @rating }
+      end
+    end
+
+    # @rating.save
+    # redirect_after_action
   end
 
   private
