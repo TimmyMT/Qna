@@ -1,7 +1,8 @@
 class Question < ApplicationRecord
+  include Ratingable
+
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable, inverse_of: :linkable
-  has_one :rating, dependent: :destroy, as: :ratingable
   belongs_to :user
 
   has_one :achievement, dependent: :nullify
@@ -12,7 +13,5 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :achievement, reject_if: :all_blank
 
   validates :title, :body, presence: true
-
-  after_create :create_rating!
 
 end
