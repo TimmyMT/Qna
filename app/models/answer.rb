@@ -9,12 +9,7 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
-  after_create :create_rating
-
-  def create_rating
-    self.build_rating
-    self.save
-  end
+  after_create :create_rating!
 
   def switch_best
     transaction do

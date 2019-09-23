@@ -13,10 +13,6 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
-  after_create :create_rating
+  after_create :create_rating!
 
-  def create_rating
-    self.build_rating
-    self.save
-  end
 end
