@@ -1,0 +1,3 @@
+span Votes rating:
+span class="rating-#{resource.class.to_s.downcase}_#{resource.id}"
+  = resource.votes.sum(:value)
