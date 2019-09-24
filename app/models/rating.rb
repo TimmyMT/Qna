@@ -10,6 +10,7 @@ class Rating < ApplicationRecord
       transaction do
         self.votes[user.id] = '+'
         self.value += 1
+        self.save!
       end
     end
   end
@@ -21,6 +22,7 @@ class Rating < ApplicationRecord
       transaction do
         self.votes[user.id] = '-'
         self.value -= 1
+        self.save!
       end
     end
   end
@@ -33,6 +35,7 @@ class Rating < ApplicationRecord
         self.value -= 1 if self.votes[user.id] == '+'
         self.value += 1 if self.votes[user.id] == '-'
         self.votes.delete(user.id)
+        self.save!
       end
     end
   end

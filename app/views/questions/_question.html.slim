@@ -7,8 +7,9 @@ div class="question_#{question.id}"
   br
   div class="rating_#{question.rating.id}"
     h5= question.rating.value
-  div class="change-rating_#{question.rating.id}"
-    = render 'ratings/rating', resource: question.rating
+  - if signed_in? && !current_user&.creator?(question.rating.ratingable)
+    div class="change-rating_#{question.rating.id}"
+      = render 'ratings/rating', resource: question.rating
 
   - if current_user&.creator?(question)
     = link_to 'Edit question', '#', class: 'edit-question-link text-warning', data: { question_id: question.id }

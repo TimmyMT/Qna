@@ -17,8 +17,9 @@ div class="answer_#{answer.id}"
       br
       div class="rating_#{answer.rating.id}"
         h5= answer.rating.value
-      div class="change-rating_#{answer.rating.id}"
-        = render 'ratings/rating', resource: answer.rating
+      - if signed_in? && !current_user&.creator?(answer.rating.ratingable)
+        div class="change-rating_#{answer.rating.id}"
+          = render 'ratings/rating', resource: answer.rating
 
       = form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
         / div class="answer-#{answer.id}-errors"

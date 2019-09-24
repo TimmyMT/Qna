@@ -1,2 +1,2 @@
 $(".change-rating_<%= @rating.id %>").empty();
-$(".change-rating_<%= @rating.id %>").append("<%= render 'ratings/rating', resource: @rating %>");
+$(".change-rating_<%= @rating.id %>").html("<%= j render 'ratings/rating', resource: @rating %>");
