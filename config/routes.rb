@@ -4,13 +4,8 @@ Rails.application.routes.draw do
 
   root to: 'questions#index'
 
-  resources :ratings do
-    member do
-      patch :up
-      patch :down
-      patch :clear_vote_from
-    end
-  end
+  post 'votes/create/:class_name/:class_name_id/:value', to: 'votes#create', as: 'give_vote'
+  delete 'votes/destroy/:votable_id', to: 'votes#destroy', as: 'pick_up_vote'
 
   resources :achievements, only: :index
   resources :attachments, only: :destroy
