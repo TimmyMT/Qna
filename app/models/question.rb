@@ -1,6 +1,6 @@
 class Question < ApplicationRecord
-  # include Ratingable
-  has_many :votes, dependent: :destroy, as: :votable
+  include Votable
+  # has_many :votes, dependent: :destroy, as: :votable
 
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable, inverse_of: :linkable

@@ -7,6 +7,14 @@ div class="answer_#{answer.id}"
       = render 'links/links', resource: answer
       = render 'shared/attachment_actions', resource: answer
 
+      br
+
+      h3= render "votes/votes_rating", resource: answer
+
+      .change-rating
+        - if signed_in? && !current_user&.creator?(answer)
+          = render "votes/vote_actions", resource: answer
+
       - if current_user&.creator?(answer)
         = link_to 'Edit answer', '#', class: 'edit-answer-link text-warning', data: {answer_id: answer.id}
         '

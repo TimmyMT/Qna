@@ -1,7 +1,7 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
 
-  def create
+  def give_vote
     return if current_user&.creator?(votable)
 
     unless votable.votes.find_by(user: current_user).present?
@@ -15,7 +15,7 @@ class VotesController < ApplicationController
     end
   end
 
-  def destroy
+  def pick_up_vote
     return if current_user&.creator?(object)
 
     if Vote.find_by(user: current_user, votable_id: params[:votable_id]).present?
@@ -38,8 +38,8 @@ class VotesController < ApplicationController
   end
 
   def votable
-    klass = params[:class_name].safe_constantize
-    klass.find(params[:class_name_id])
+    klass = params[:klass_name].safe_constantize
+    klass.find(params[:klass_name_id])
   end
 
 end

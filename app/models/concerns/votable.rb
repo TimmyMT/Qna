@@ -1,9 +1,7 @@
-module Ratingable
+module Votable
   extend ActiveSupport::Concern
 
   included do
-    has_one :rating, dependent: :destroy, as: :ratingable
-
-    after_create :create_rating!
+    has_many :votes, dependent: :destroy, as: :votable
   end
 end
