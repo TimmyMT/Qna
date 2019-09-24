@@ -1,6 +1,8 @@
 class VotesController < ApplicationController
 
   def create
+    return redirect_to request.referrer, alert: 'You cant changes votes for your created object' if current_user&.creator?(votable)
+
     unless votable.votes.find_by(user: current_user).present?
       @vote = votable.votes.build value: params[:value], user: current_user
       @vote.save!
@@ -16,7 +18,7 @@ class VotesController < ApplicationController
       @vote.destroy
       redirect_to @vote.votable, notice: 'Your vote pick up'
     else
-      redirect_to request.referrer, alert: 'You are vote not yet'
+      redirect_to request.referrer, alert: 'Failure'
     end
   end
 
