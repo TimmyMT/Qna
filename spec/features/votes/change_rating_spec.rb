@@ -13,16 +13,16 @@ feature 'User can up rating of object', %q{
     sign_in(wrong_user)
     visit question_path(question)
 
-    within ".rating_#{question.rating.id}" do
+    within ".rating-question_#{question.id}" do
       expect(page).to have_content "0"
     end
 
-    within ".change-rating_#{question.rating.id}" do
-      expect(page).to have_link "+"
-      click_on "+"
+    within ".change-rating" do
+      expect(page).to have_css "#vote-up-question_#{question.id}"
+      click_on "Vote Up"
     end
 
-    within ".rating_#{question.rating.id}" do
+    within ".rating-question_#{question.id}" do
       expect(page).to have_content "1"
     end
   end
@@ -31,24 +31,24 @@ feature 'User can up rating of object', %q{
     sign_in(user)
     visit question_path(question)
 
-    within ".rating_#{question.rating.id}" do
+    within ".rating-question_#{question.id}" do
       expect(page).to have_content "0"
     end
 
-    within ".change-rating_#{question.rating.id}" do
-      expect(page).to_not have_link "+"
+    within ".change-rating" do
+      expect(page).to_not have_css "#vote-up-question_#{question.id}"
     end
   end
 
   scenario 'Guest cant change rating for object' do
     visit question_path(question)
 
-    within ".rating_#{question.rating.id}" do
+    within ".rating-question_#{question.id}" do
       expect(page).to have_content "0"
     end
 
-    within ".change-rating_#{question.rating.id}" do
-      expect(page).to_not have_link "+"
+    within ".change-rating" do
+      expect(page).to_not have_css "#vote-up-question_#{question.id}"
     end
   end
 
