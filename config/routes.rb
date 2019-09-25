@@ -4,8 +4,12 @@ Rails.application.routes.draw do
 
   root to: 'questions#index'
 
-  post 'votes/create/:klass_name/:klass_name_id/:value', to: 'votes#create', as: 'give_vote'
-  delete 'votes/destroy/:votable_id', to: 'votes#destroy', as: 'pick_up_vote'
+  post 'votes/create/:klass_name/:klass_name_id/:value', to: 'votes#create',  as: 'give_vote'
+  delete 'votes/destroy/:votable_id',                    to: 'votes#destroy', as: 'pick_up_vote'
+
+  # Вот тут не понял как надо
+  # resources :questions, concerns: :votable
+  # resources :answers, concerns: :votable
 
   resources :achievements, only: :index
   resources :attachments, only: :destroy
@@ -16,6 +20,10 @@ Rails.application.routes.draw do
       member do
         patch :select_best
       end
+
+      # resources :votes
     end
+
+    # resources :votes
   end
 end
