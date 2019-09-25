@@ -9,9 +9,9 @@ class VotesController < ApplicationController
       @vote = votable.votes.build value: params[:value], user: current_user
       @vote.save!
 
-      render json: [votable, votable.votes.sum(:value), @votable_klass]
+      render json: [@vote, votable.votes.sum(:value)]
     else
-      render json: [votable, votable.votes.sum(:value)]
+      render json: [@vote, votable.votes.sum(:value)]
     end
   end
 
@@ -24,9 +24,9 @@ class VotesController < ApplicationController
       @object_klass = @object.class.to_s.downcase
       @vote.destroy!
 
-      render json: [@object, @object.votes.sum(:value), @object_klass]
+      render json: [@vote, @object.votes.sum(:value)]
     else
-      render json: [object, object.votes.sum(:value)]
+      render json: [@vote, object.votes.sum(:value)]
     end
   end
 
