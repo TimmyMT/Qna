@@ -9,8 +9,7 @@ div class="question_#{question.id}"
   h3= render "votes/votes_rating", resource: question
 
   .change-rating
-    - if signed_in? && !current_user&.creator?(question)
-      = render "votes/vote_actions", resource: question
+    = render "votes/vote_actions", resource: question
 
   - if current_user&.creator?(question)
     = link_to 'Edit question', '#', class: 'edit-question-link text-warning', data: { question_id: question.id }

@@ -1,13 +1,14 @@
-span Add your vote
-br
-= link_to 'Vote Up', give_vote_path(resource.class, resource.id, 1),
-        method: :post, remote: true, id: "vote-up-#{resource.class.to_s.downcase}_#{resource.id}",
-        style: vote_present?(resource)[0], class: "btn btn-outline-success btn-sm"
-'
-= link_to 'Vote Down', give_vote_path(resource.class, resource.id, -1),
-        method: :post, remote: true, id: "vote-down-#{resource.class.to_s.downcase}_#{resource.id}",
-        style: vote_present?(resource)[0], class: "btn btn-outline-danger btn-sm"
+- if signed_in? && !current_user&.creator?(resource)
+  span Add your vote
+  br
+  = link_to 'Vote Up', give_vote_path(resource.class, resource.id, 1),
+          method: :post, remote: true, id: "vote-up-#{resource.class.to_s.downcase}_#{resource.id}",
+          style: vote_present?(resource)[0], class: "btn btn-outline-success btn-sm"
+  '
+  = link_to 'Vote Down', give_vote_path(resource.class, resource.id, -1),
+          method: :post, remote: true, id: "vote-down-#{resource.class.to_s.downcase}_#{resource.id}",
+          style: vote_present?(resource)[0], class: "btn btn-outline-danger btn-sm"
 
-= link_to 'Vote Clear', pick_up_vote_path(resource.id),
-        method: :delete, remote: true, id: "vote-clear-#{resource.class.to_s.downcase}_#{resource.id}",
-        style: vote_present?(resource)[1], class: "btn btn-outline-warning btn-sm"
+  = link_to 'Vote Clear', pick_up_vote_path(resource.id),
+          method: :delete, remote: true, id: "vote-clear-#{resource.class.to_s.downcase}_#{resource.id}",
+          style: vote_present?(resource)[1], class: "btn btn-outline-warning btn-sm"

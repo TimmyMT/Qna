@@ -12,7 +12,7 @@ RSpec.describe VotesController, type: :controller do
 
     it 'Not author can vote for object' do
       expect do
-        post :give_vote, params: { klass_name_id: question.id, klass_name: question.class,
+        post :create, params: { klass_name_id: question.id, klass_name: question.class,
                                    user: not_author, value: 1}
       end.to change(Vote, :count).by(1)
     end
@@ -22,7 +22,7 @@ RSpec.describe VotesController, type: :controller do
       expect(question.votes.count).to eq 1
 
       expect do
-        delete :pick_up_vote, params: { votable_id: question.id }
+        delete :destroy, params: { votable_id: question.id }
       end.to change(Vote, :count).by(-1)
     end
   end
@@ -34,7 +34,7 @@ RSpec.describe VotesController, type: :controller do
 
     it 'Not author can vote for object' do
       expect do
-        post :give_vote, params: { klass_name_id: question.id, klass_name: question.class,
+        post :create, params: { klass_name_id: question.id, klass_name: question.class,
                                    user: author, value: 1}
       end.to_not change(Vote, :count)
     end
@@ -44,7 +44,7 @@ RSpec.describe VotesController, type: :controller do
       expect(question.votes.count).to eq 1
 
       expect do
-        delete :pick_up_vote, params: { votable_id: question.id }
+        delete :destroy, params: { votable_id: question.id }
       end.to_not change(Vote, :count)
     end
   end
@@ -52,7 +52,7 @@ RSpec.describe VotesController, type: :controller do
   context "Guest" do
     it 'Not author can vote for object' do
       expect do
-        post :give_vote, params: { klass_name_id: question.id, klass_name: question.class,
+        post :create, params: { klass_name_id: question.id, klass_name: question.class,
                                    user: not_author, value: 1}
       end.to_not change(Vote, :count)
     end
@@ -62,7 +62,7 @@ RSpec.describe VotesController, type: :controller do
       expect(question.votes.count).to eq 1
 
       expect do
-        delete :pick_up_vote, params: { votable_id: question.id }
+        delete :destroy, params: { votable_id: question.id }
       end.to_not change(Vote, :count)
     end
   end
