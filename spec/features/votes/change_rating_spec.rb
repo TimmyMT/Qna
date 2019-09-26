@@ -18,7 +18,7 @@ feature 'User can up rating of object', %q{
 
     within ".change-rating" do
       expect(page).to have_css "#vote-up-question_#{question.id}"
-      click_on "Vote Up"
+      click_on "Vote up"
     end
 
     within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
@@ -36,7 +36,7 @@ feature 'User can up rating of object', %q{
 
     within ".change-rating" do
       expect(page).to have_css "#vote-down-question_#{question.id}"
-      click_on "Vote Down"
+      click_on "Vote down"
     end
 
     within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
@@ -56,7 +56,7 @@ feature 'User can up rating of object', %q{
 
     within ".change-rating" do
       expect(page).to have_css "#vote-clear-question_#{question.id}"
-      click_on "Vote Clear"
+      click_on "Vote clear"
     end
 
     within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
