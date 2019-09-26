@@ -38,6 +38,13 @@ RSpec.describe Answer, type: :model do
         answer.vote_clear(wrong_user)
         expect(answer.votes.where(user: wrong_user)).to eq []
       end
+
+      it 'author cant vote' do
+        @vote = answer.votes.new(user: user, value: 1)
+
+        expect(@vote.valid?).to be_falsey
+        expect(@vote.errors[:user]).to eq ["Author can't vote"]
+      end
     end
 
     context 'swith best' do

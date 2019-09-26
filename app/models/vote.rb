@@ -6,7 +6,7 @@ class Vote < ApplicationRecord
   validate :author_cant_vote, if: -> { user == votable.user }
 
   def author_cant_vote
-    errors[:author] = 'Author cant vote'
+    errors[:user] << "Author can't vote"
   end
 
 end
