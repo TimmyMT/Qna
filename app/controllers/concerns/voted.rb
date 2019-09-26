@@ -2,6 +2,7 @@ module Voted
   extend ActiveSupport::Concern
 
   included do
+    before_action :authenticate_user!
     before_action :set_resource, only: [:vote_up, :vote_down, :vote_clear]
     before_action :vote_access, only: [:vote_up, :vote_down]
   end
@@ -28,6 +29,8 @@ module Voted
   private
 
   def vote_access
+    return head :unprocessable_entity unless signed_in?
+
     if @resource.voted?(current_user) || current_user.creator?(@resource)
       head :unprocessable_entity
     end
