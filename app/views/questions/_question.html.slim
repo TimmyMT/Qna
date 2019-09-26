@@ -5,11 +5,8 @@ div class="question_#{question.id}"
   = render 'shared/attachment_actions', resource: question
 
   br
-
-  h3= render "votes/votes_rating", resource: question
-
-  .change-rating
-    = render "votes/vote_actions", resource: question
+  p
+    = render 'votes/votes_rating', resource: question
 
   - if current_user&.creator?(question)
     = link_to 'Edit question', '#', class: 'edit-question-link text-warning', data: { question_id: question.id }

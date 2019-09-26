@@ -8,11 +8,8 @@ div class="answer_#{answer.id}"
       = render 'shared/attachment_actions', resource: answer
 
       br
-
-      h3= render "votes/votes_rating", resource: answer
-
-      .change-rating
-        = render "votes/vote_actions", resource: answer
+      p
+        = render 'votes/votes_rating', resource: answer
 
       - if current_user&.creator?(answer)
         = link_to 'Edit answer', '#', class: 'edit-answer-link text-warning', data: {answer_id: answer.id}

@@ -13,4 +13,8 @@ class User < ApplicationRecord
     self.id == object.user_id
   end
 
+  def not_creator?(object)
+    !creator?(object)
+  end
+
 end

@@ -4,26 +4,23 @@ Rails.application.routes.draw do
 
   root to: 'questions#index'
 
-  post 'votes/create/:klass_name/:klass_name_id/:value', to: 'votes#create',  as: 'give_vote'
-  delete 'votes/destroy/:votable_id',                    to: 'votes#destroy', as: 'pick_up_vote'
-
-  # Вот тут не понял как надо
-  # resources :questions, concerns: :votable
-  # resources :answers, concerns: :votable
+  concern :votable do
+    member do
+      post :vote_up
+      post :vote_down
+      post :vote_clear
+    end
+  end
 
   resources :achievements, only: :index
   resources :attachments, only: :destroy
   resources :links, only: :destroy
 
-  resources :questions, shallow: true do
-    resources :answers, shallow: true do
+  resources :questions, shallow: true, concerns: [:votable] do
+    resources :answers, shallow: true, concerns: [:votable] do
       member do
         patch :select_best
       end
-
-      # resources :votes
     end
-
-    # resources :votes
   end
 end

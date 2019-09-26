@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  include Voted
+
   before_action :set_answer, only: [:update, :destroy, :select_best]
   before_action :answer_author?, only: [:update, :destroy]
 
