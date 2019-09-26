@@ -43,15 +43,15 @@ RSpec.describe Voted, type: :controller do
     context "Author" do
       before { sign_in(user) }
 
-      it 'user can vote up for answer' do
+      it 'author cant vote up for answer' do
         expect { post :vote_up, params: { id: answer.id } }.to_not change(answer.votes, :count)
       end
 
-      it 'user can vote down for answer' do
+      it 'author cant vote down for answer' do
         expect { post :vote_down, params: { id: answer.id } }.to_not change(answer.votes, :count)
       end
 
-      it 'user can vote clear of answer' do
+      it 'author cant vote clear of answer' do
         @vote = answer.votes.create(value: 1, user: wrong_user)
 
         expect { post :vote_clear, params: { id: answer.id } }.to_not change(answer.votes, :count)
@@ -59,15 +59,15 @@ RSpec.describe Voted, type: :controller do
     end
 
     context "Guest" do
-      it 'user can vote up for answer' do
+      it 'guest cant vote up for answer' do
         expect { post :vote_up, params: { id: answer.id } }.to_not change(answer.votes, :count)
       end
 
-      it 'user can vote down for answer' do
+      it 'guest cant vote down for answer' do
         expect { post :vote_down, params: { id: answer.id } }.to_not change(answer.votes, :count)
       end
 
-      it 'user can vote clear of answer' do
+      it 'guest cant vote clear of answer' do
         @vote = answer.votes.create(value: 1, user: wrong_user)
 
         expect { post :vote_clear, params: { id: answer.id } }.to_not change(answer.votes, :count)
