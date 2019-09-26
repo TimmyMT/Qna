@@ -44,6 +44,15 @@ RSpec.describe Question, type: :model do
         expect(question.votes.where(user: wrong_user)).to eq []
       end
 
+      it 'user cant vote double' do
+        @vote = question.votes.create(user: wrong_user, value: 1)
+        expect(question.votes.last).to eq @vote
+        @double_vote = question.votes.new(user: wrong_user, value: -1)
+
+        expect(@double_vote.valid?).to be_falsey
+        expect(@double_vote.errors[:user]).to eq ["has already been taken"]
+      end
+
       it 'author cant vote' do
         @vote = question.votes.new(user: user, value: 1)
 
