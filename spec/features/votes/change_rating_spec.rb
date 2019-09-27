@@ -17,7 +17,7 @@ feature 'User can up rating of object', %q{
     end
 
     within ".change-rating" do
-      expect(page).to have_css "#vote-up-question_#{question.id}"
+      expect(page).to have_link "Vote up"
       click_on "Vote up"
     end
 
@@ -35,7 +35,7 @@ feature 'User can up rating of object', %q{
     end
 
     within ".change-rating" do
-      expect(page).to have_css "#vote-down-question_#{question.id}"
+      expect(page).to have_link "Vote down"
       click_on "Vote down"
     end
 
@@ -55,7 +55,7 @@ feature 'User can up rating of object', %q{
     end
 
     within ".change-rating" do
-      expect(page).to have_css "#vote-clear-question_#{question.id}"
+      expect(page).to have_link "Vote clear"
       click_on "Vote clear"
     end
 
@@ -73,7 +73,7 @@ feature 'User can up rating of object', %q{
     end
 
     within ".change-rating" do
-      expect(page).to_not have_css "#vote-up-question_#{question.id}"
+      expect(page).to_not have_link "Vote up"
     end
   end
 
@@ -85,7 +85,7 @@ feature 'User can up rating of object', %q{
     end
 
     within ".change-rating" do
-      expect(page).to_not have_css "#vote-up-question_#{question.id}"
+      expect(page).to_not have_link "Vote up"
     end
   end
 
