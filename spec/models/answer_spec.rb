@@ -9,6 +9,10 @@ RSpec.describe Answer, type: :model do
 
   it { should accept_nested_attributes_for :links }
 
+  it 'have many attached files' do
+    expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+  end
+
   describe 'model methods' do
     let!(:user) { create(:user) }
     let!(:wrong_user) { create(:user) }
@@ -18,10 +22,6 @@ RSpec.describe Answer, type: :model do
     let!(:best_answer) { create(:answer, question: question, user: user, best: true) }
 
     context 'swith best' do
-      it 'have many attached files' do
-        expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
-      end
-
       it 'user taked achievement for best answer' do
         answer.switch_best
 
