@@ -17,45 +17,6 @@ RSpec.describe Answer, type: :model do
     let!(:achievement) { create(:achievement, question: question) }
     let!(:best_answer) { create(:answer, question: question, user: user, best: true) }
 
-    context 'vote_ actions' do
-      it 'vote_up' do
-        answer.vote_up(wrong_user)
-        expect(answer.votes.last.user).to eq wrong_user
-        expect(answer.votes.last.value).to eq 1
-      end
-
-      it 'vote_down' do
-        answer.vote_down(wrong_user)
-        expect(answer.votes.last.user).to eq wrong_user
-        expect(answer.votes.last.value).to eq -1
-      end
-
-      it 'vote_clear' do
-        answer.votes.create!(user: wrong_user, value: 1)
-        expect(answer.votes.last.user).to eq wrong_user
-        expect(answer.votes.last.value).to eq 1
-
-        answer.vote_clear(wrong_user)
-        expect(answer.votes.where(user: wrong_user)).to eq []
-      end
-
-      it 'user cant vote double' do
-        @vote = answer.votes.create(user: wrong_user, value: 1)
-        expect(answer.votes.last).to eq @vote
-        @double_vote = answer.votes.new(user: wrong_user, value: -1)
-
-        expect(@double_vote.valid?).to be_falsey
-        expect(@double_vote.errors[:user]).to eq ["has already been taken"]
-      end
-
-      it 'author cant vote' do
-        @vote = answer.votes.new(user: user, value: 1)
-
-        expect(@vote.valid?).to be_falsey
-        expect(@vote.errors[:user]).to eq ["Author can't vote"]
-      end
-    end
-
     context 'swith best' do
       it 'have many attached files' do
         expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
@@ -82,4 +43,10 @@ RSpec.describe Answer, type: :model do
     end
   end
 
+  let(:user) { create(:user) }
+  let(:wrong_user) { create(:user) }
+  let(:question) { create(:question, user: user) }
+  let(:resource) { create(:answer, question: question, user: user) }
+
+  it_behaves_like 'votable'
 end
