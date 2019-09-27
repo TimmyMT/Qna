@@ -164,4 +164,11 @@ RSpec.describe AnswersController, type: :controller do
 
   end
 
+  it_behaves_like 'voted_spec' do
+    let(:user) { create(:user) }
+    let(:wrong_user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let(:resource) { create(:answer, question: question, user: user) }
+  end
+
 end

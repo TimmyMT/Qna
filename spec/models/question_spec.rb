@@ -17,9 +17,9 @@ RSpec.describe Question, type: :model do
     expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
   end
 
-  let(:user) { create(:user) }
-  let(:wrong_user) { create(:user) }
-  let(:resource) { create(:question, user: user) }
-
-  it_behaves_like 'votable'
+  it_behaves_like 'votable' do
+    let(:user) { create(:user) }
+    let(:wrong_user) { create(:user) }
+    let(:resource) { create(:question, user: user) }
+  end
 end

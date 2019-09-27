@@ -43,10 +43,10 @@ RSpec.describe Answer, type: :model do
     end
   end
 
-  let(:user) { create(:user) }
-  let(:wrong_user) { create(:user) }
-  let(:question) { create(:question, user: user) }
-  let(:resource) { create(:answer, question: question, user: user) }
-
-  it_behaves_like 'votable'
+  it_behaves_like 'votable' do
+    let(:user) { create(:user) }
+    let(:wrong_user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let(:resource) { create(:answer, question: question, user: user) }
+  end
 end

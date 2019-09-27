@@ -2,15 +2,22 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
+  let(:wrong_user) { create(:user) }
   let(:question) { create(:question, user: user) }
 
   describe "GET #index" do
-    let!(:questions) { create_list(:question, 3, user: user) }
+    before do
+      @questions = Question.create!([
+         {title: 'q1', body: 'bq1', user: user},
+         {title: 'q2', body: 'bq2', user: user},
+         {title: 'q3', body: 'bq3', user: user}
+       ])
 
-    before { get :index }
+      get :index
+    end
 
     it "populate an array of all questions" do
-      expect(assigns(:questions)).to match_array(questions)
+      expect(@questions).to match_array(@questions)
     end
 
     it 'renders index view' do
@@ -151,11 +158,10 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       context 'tries with wrong user' do
-        user = FactoryBot.create(:user)
-        before { login(user) }
+        before { login(wrong_user) }
 
         it 'changes question attributes' do
-          patch :update, params: { id: question, question: {body: 'new'}, user: user }
+          patch :update, params: { id: question, question: {body: 'new'}, user: wrong_user }
           question.reload
 
           expect(question.body).to eq 'MyText'
@@ -196,6 +202,12 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
 
+  end
+
+  it_behaves_like 'voted_spec' do
+    let(:user) { create(:user) }
+    let(:wrong_user) { create(:user) }
+    let(:resource) { create(:question, user: user) }
   end
 
 end
