@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :vote do
+
     value { 0 }
 
     trait :of_question do

@@ -7,6 +7,10 @@ FactoryBot.define do
       title { nil }
     end
 
+    trait :of_user do
+      association :user, factory: :user
+    end
+
     trait :with_attachment do
       after(:create) do |question|
         file = Rack::Test::UploadedFile.new("#{Rails.root}/spec/rails_helper.rb")
