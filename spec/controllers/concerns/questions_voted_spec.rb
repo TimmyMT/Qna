@@ -24,12 +24,12 @@ RSpec.describe Voted, type: :controller do
 
       it 'user can vote up for answer' do
         expect { post :vote_up, params: { id: answer.id } }.to change(answer.votes, :count).by(1)
-        expect(answer.votes.last.value).to eq 1
+        expect(answer.rating).to eq 1
       end
 
       it 'user can vote down for answer' do
         expect { post :vote_down, params: { id: answer.id } }.to change(answer.votes, :count).by(1)
-        expect(answer.votes.last.value).to eq -1
+        expect(answer.rating).to eq -1
       end
 
       it 'user can vote clear of answer' do
