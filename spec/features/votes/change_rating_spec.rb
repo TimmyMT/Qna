@@ -19,6 +19,8 @@ feature 'User can up rating of object', %q{
     within ".change-rating" do
       expect(page).to have_link "Vote up"
       click_on "Vote up"
+      expect(page).to_not have_link "Vote up"
+      expect(page).to have_link "Vote clear"
     end
 
     within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
@@ -37,6 +39,8 @@ feature 'User can up rating of object', %q{
     within ".change-rating" do
       expect(page).to have_link "Vote down"
       click_on "Vote down"
+      expect(page).to_not have_link "Vote down"
+      expect(page).to have_link "Vote clear"
     end
 
     within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
@@ -57,6 +61,9 @@ feature 'User can up rating of object', %q{
     within ".change-rating" do
       expect(page).to have_link "Vote clear"
       click_on "Vote clear"
+      expect(page).to_not have_link "Vote clear"
+      expect(page).to have_link "Vote up"
+      expect(page).to have_link "Vote down"
     end
 
     within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
@@ -74,6 +81,7 @@ feature 'User can up rating of object', %q{
 
     within ".change-rating" do
       expect(page).to_not have_link "Vote up"
+      expect(page).to_not have_link "Vote down"
     end
   end
 
@@ -86,6 +94,7 @@ feature 'User can up rating of object', %q{
 
     within ".change-rating" do
       expect(page).to_not have_link "Vote up"
+      expect(page).to_not have_link "Vote down"
     end
   end
 

@@ -6,37 +6,47 @@ shared_examples_for 'votable' do
       resource.vote_up(wrong_user)
       expect(resource.votes.last.user).to eq wrong_user
       expect(resource.votes.last.value).to eq 1
+      expect(resource.rating).to eq resource.votes.last.value
     end
 
     it 'vote_down' do
       resource.vote_down(wrong_user)
       expect(resource.votes.last.user).to eq wrong_user
       expect(resource.votes.last.value).to eq -1
+      expect(resource.rating).to eq resource.votes.last.value
     end
 
     it 'vote_clear' do
       resource.votes.create!(user: wrong_user, value: 1)
       expect(resource.votes.last.user).to eq wrong_user
       expect(resource.votes.last.value).to eq 1
+      expect(resource.rating).to eq resource.votes.last.value
 
       resource.vote_clear(wrong_user)
       expect(resource.votes.where(user: wrong_user)).to eq []
+      expect(resource.rating).to eq 0
     end
 
     it 'user cant vote double' do
-      @vote = resource.votes.create(user: wrong_user, value: 1)
-      expect(resource.votes.last).to eq @vote
-      @double_vote = resource.votes.new(user: wrong_user, value: -1)
+      resource.vote_up(wrong_user)
+      expect(resource.rating).to eq 1
+      current_rating = resource.rating
 
-      expect(@double_vote.valid?).to be_falsey
-      expect(@double_vote.errors[:user_id]).to eq ["has already been taken"]
+      expect do
+        resource.vote_down(wrong_user)
+      end.to raise_error(ActiveRecord::RecordInvalid,'Validation failed: User has already been taken')
+
+      expect(resource.rating).to eq current_rating
     end
 
     it 'author cant vote' do
-      @vote = resource.votes.new(user: user, value: 1)
+      current_rating = resource.rating
 
-      expect(@vote.valid?).to be_falsey
-      expect(@vote.errors[:user]).to eq ["Author can't vote"]
+      expect do
+        resource.vote_up(user)
+      end.to raise_error(ActiveRecord::RecordInvalid,"Validation failed: User Author can't vote")
+
+      expect(resource.rating).to eq current_rating
     end
   end
 end
