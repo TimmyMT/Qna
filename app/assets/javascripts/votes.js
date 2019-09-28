@@ -8,6 +8,8 @@ $(document).on('turbolinks:load', function() {
 
     $('.rating-'+ object_klass + '_' + object_id).text(rating);
 
+
+
     ['#vote-up-', '#vote-down-', '#vote-clear-'].forEach(function(classPrefix) {
       $(classPrefix  + object_klass + "_" + object_id).toggle();
     });

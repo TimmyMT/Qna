@@ -13,33 +13,31 @@ RSpec.describe Answer, type: :model do
     expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
   end
 
-  describe 'model methods' do
-    let!(:user) { create(:user) }
-    let!(:wrong_user) { create(:user) }
-    let!(:question) { create(:question, user: user) }
-    let!(:answer) { create(:answer, question: question, user: user) }
-    let!(:achievement) { create(:achievement, question: question) }
-    let!(:best_answer) { create(:answer, question: question, user: user, best: true) }
+  let!(:user) { create(:user) }
+  let!(:wrong_user) { create(:user) }
+  let!(:question) { create(:question, user: user) }
+  let!(:answer) { create(:answer, question: question, user: user) }
+  let!(:achievement) { create(:achievement, question: question) }
+  let!(:best_answer) { create(:answer, question: question, user: user, best: true) }
 
-    context 'swith best' do
-      it 'user taked achievement for best answer' do
-        answer.switch_best
+  context 'swith best' do
+    it 'user taked achievement for best answer' do
+      answer.switch_best
 
-        expect(user.achievements.last).to eq achievement
-      end
+      expect(user.achievements.last).to eq achievement
+    end
 
-      it 'check best attribute for new best answer' do
-        answer.switch_best
+    it 'check best attribute for new best answer' do
+      answer.switch_best
 
-        expect(answer).to be_best
-      end
+      expect(answer).to be_best
+    end
 
-      it 'check best attribute for old best answer' do
-        answer.switch_best
-        best_answer.reload
+    it 'check best attribute for old best answer' do
+      answer.switch_best
+      best_answer.reload
 
-        expect(best_answer).to_not be_best
-      end
+      expect(best_answer).to_not be_best
     end
   end
 
