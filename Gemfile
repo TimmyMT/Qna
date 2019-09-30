@@ -7,7 +7,7 @@ ruby '2.5.3'
 ###################### Custom gems ############################
 
 gem 'slim-rails'
-gem 'devise'
+gem 'devise', '~> 4.7', '>= 4.7.1'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.3.1'
 gem 'rails-js'
@@ -16,6 +16,8 @@ gem 'aws-sdk-s3', require: false
 gem 'cocoon'
 gem 'file_validators'
 gem 'mini_magick'
+gem 'skim', '~> 0.10.0'
+gem 'sprockets'
 
 ###############################################################
 ###############################################################

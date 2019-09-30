@@ -5,6 +5,10 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
   before_action :question_author?, only: [:update, :destroy]
 
+  before_action :set_user
+
+  after_action :publish_question, only: [:create]
+
   def index
     @questions = Question.all.order(created_at: :desc)
   end
@@ -44,6 +48,20 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def set_user
+    if current_user.present?
+      @user = current_user
+    end
+  end
+
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast(
+      'questions',
+      question: @question
+    )
+  end
 
   def set_question
     @question = Question.with_attached_files.find(params[:id])

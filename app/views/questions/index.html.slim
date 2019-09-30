@@ -6,7 +6,4 @@ h1 All questions
 
 .questions
   - @questions.each do |q|
-    p
-      = link_to q.title, question_path(q)
-      br
-      = truncate(q.body, length: 130, separator: ' ')
+    p= link_to q.title, question_path(q)
