@@ -31,3 +31,9 @@ div class="question_#{question.id}"
       = render 'links/add_links', f: f
 
       p= f.submit 'Save'
+
+  h5 Comments of question:
+  = render "comments/resource_comments", resource: question
+  br
+  - if signed_in?
+    = render partial: 'comments/form', locals: { commentable: question }

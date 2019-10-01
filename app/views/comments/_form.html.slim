@@ -1,0 +1,4 @@
+= form_for [commentable, Comment.new] do |f|
+  = f.text_field :body, placeholder: 'add a comment'
+  br
+  = f.submit

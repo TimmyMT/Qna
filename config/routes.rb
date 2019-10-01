@@ -17,7 +17,11 @@ Rails.application.routes.draw do
   resources :links, only: :destroy
 
   resources :questions, shallow: true, concerns: [:votable] do
+    resources :comments, module: :questions
+
     resources :answers, shallow: true, concerns: [:votable] do
+      resources :comments, module: :answers
+
       member do
         patch :select_best
       end
