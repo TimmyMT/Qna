@@ -1,3 +1,5 @@
-- resource.comments.each do |comment|
-  = comment.body
-  br
+h5 Comments:
+div class="comments#{resource.class.to_s}_#{resource.id}"
+  - resource.comments.each do |comment|
+    = comment.body
+    br

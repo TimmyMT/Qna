@@ -32,7 +32,6 @@ div class="question_#{question.id}"
 
       p= f.submit 'Save'
 
-  h5 Comments of question:
   = render "comments/resource_comments", resource: question
   br
   - if signed_in?
