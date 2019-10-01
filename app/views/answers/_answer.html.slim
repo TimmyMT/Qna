@@ -38,6 +38,5 @@ div class="answer_#{answer.id}"
         br
 
       = render "comments/resource_comments", resource: answer
-      br
       - if signed_in?
         = render partial: 'comments/form', locals: { commentable: answer }

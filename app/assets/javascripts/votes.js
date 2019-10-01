@@ -1,5 +1,5 @@
 $(document).on('turbolinks:load', function() {
-  $('.change-rating').on('ajax:success', function(e) {
+  $(document).on('ajax:success', '.change-rating', function(e) {
     var data = e.detail[0];
 
     var rating = data.rating;
@@ -13,5 +13,5 @@ $(document).on('turbolinks:load', function() {
     ['#vote-up-', '#vote-down-', '#vote-clear-'].forEach(function(classPrefix) {
       $(classPrefix  + object_klass + "_" + object_id).toggle();
     });
-  })
+  });
 });

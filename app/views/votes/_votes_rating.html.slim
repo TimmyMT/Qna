@@ -3,9 +3,9 @@ span class="rating#{resource.class.to_s}_#{resource.id}"
   = resource.rating
 
 .change-rating
-  | Your vote:
-  br
   - if current_user&.not_creator?(resource)
+    | Your vote:
+    br
     = link_to 'Vote clear', polymorphic_path(resource, action: :vote_clear), method: :post, remote: true,
             class: "btn btn-outline-warning btn-sm",
             style: "#{'display: none' unless resource.voted?(current_user)}",
