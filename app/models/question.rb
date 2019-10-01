@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
   include Votable
+  include Commentable
 
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable, inverse_of: :linkable
