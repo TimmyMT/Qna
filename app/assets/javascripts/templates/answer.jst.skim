@@ -1,0 +1,25 @@
+div class="answer_#{@answer.id}"
+  div class="card border-primary"
+    div class="card-body"
+      p = @answer.body
+      div class="rating#{@answer.class}_#{@answer.id}"
+      	p Votes rating:
+      	span class="commentsAnswer_#{@answer.id}"
+      - if gon.current_user_id != @answer.user_id
+      	a href="/answers/#{@answer.id}/vote_clear" data-method="post" data-remote="true" class="btn btn-outline-warning btn-sm" style="display: none" id="vote-clear-Answer_#{@answer.id}" rel="nofollow" Vote clear
+      	
+      	a href="/answers/#{@answer.id}/vote_up" data-method="post" data-remote="true" class="btn btn-outline-success btn-sm" style="display: " id="vote-up-Answer_#{@answer.id}" rel="nofollow" Vote up
+      	span  
+      	a href="/answers/#{@answer.id}/vote_down" data-method="post" data-remote="true" class="btn btn-outline-danger btn-sm" style="display: " id="vote-down-Answer_#{@answer.id}" rel="nofollow" Vote down
+    
+      - if gon.current_user_id == gon.current_question.user_id
+      	p
+      	  a href="/answers/#{@answer.id}/select_best" data-method="patch" data-remote="true" class="text-success" Make if best
+
+      h5 Comments:
+      div class="commentsAnswer_#{@answer.id}"
+      form action="/answers/#{@answer.id}/comments" accept-charset="UTF-8" data-remote="true" method="post"
+      	input name="utf8" type="hidden" value="✓"
+      	input id="comment_body" placeholder="add a comment" name="comment[body]" type="text"
+      	br
+      	input name="commit" value="Create Comment" data-disable-with="Create Comment" type="submit"

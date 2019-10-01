@@ -4,6 +4,8 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:update, :destroy, :select_best]
   before_action :answer_author?, only: [:update, :destroy]
 
+  after_action :publish_comment, only: :create
+
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)
@@ -27,6 +29,14 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def publish_comment
+    return if @answer.errors.any?
+    ActionCable.server.broadcast(
+        'answers',
+        answer: @answer
+    )
+  end
 
   def answer_author?
     unless current_user&.creator?(@answer)

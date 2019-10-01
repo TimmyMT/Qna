@@ -41,6 +41,6 @@ module Voted
   end
 
   def render_json
-    render json: { rating: @resource.rating, klass: @resource.class.to_s.downcase, id: @resource.id }
+    render json: { rating: @resource.rating, klass: @resource.class.to_s, id: @resource.id }
   end
 end

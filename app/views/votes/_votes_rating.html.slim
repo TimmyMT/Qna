@@ -1,5 +1,5 @@
 span Votes rating:
-span class="rating-#{resource.class.to_s.downcase}_#{resource.id}"
+span class="rating#{resource.class.to_s}_#{resource.id}"
   = resource.rating
 
 .change-rating
@@ -9,14 +9,14 @@ span class="rating-#{resource.class.to_s.downcase}_#{resource.id}"
     = link_to 'Vote clear', polymorphic_path(resource, action: :vote_clear), method: :post, remote: true,
             class: "btn btn-outline-warning btn-sm",
             style: "#{'display: none' unless resource.voted?(current_user)}",
-            id: "vote-clear-#{resource.class.to_s.downcase}_#{resource.id}"
+            id: "vote-clear-#{resource.class.to_s}_#{resource.id}"
     '
     = link_to 'Vote up', polymorphic_path(resource, action: :vote_up), method: :post, remote: true,
             class: "btn btn-outline-success btn-sm",
             style: "#{'display: none' if resource.voted?(current_user)}",
-            id: "vote-up-#{resource.class.to_s.downcase}_#{resource.id}"
+            id: "vote-up-#{resource.class.to_s}_#{resource.id}"
     '
     = link_to 'Vote down', polymorphic_path(resource, action: :vote_down), method: :post, remote: true,
             class: "btn btn-outline-danger btn-sm",
             style: "#{'display: none' if resource.voted?(current_user)}",
-            id: "vote-down-#{resource.class.to_s.downcase}_#{resource.id}"
+            id: "vote-down-#{resource.class.to_s}_#{resource.id}"

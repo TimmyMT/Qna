@@ -65,6 +65,7 @@ class QuestionsController < ApplicationController
 
   def set_question
     @question = Question.with_attached_files.find(params[:id])
+    gon.current_question = @question
   end
 
   def question_author?

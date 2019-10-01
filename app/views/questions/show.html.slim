@@ -8,7 +8,7 @@ br
   br
   / div id="addAnswerForm" style="display: none"
 
-  / = form_with model: [@question, @answer], class: 'new-answer', data: { type: :json } do |f|
+  h5 Add your answer:
   = form_with model: [@question, @answer], class: 'new-answer' do |f|
     div class="answer-errors"
       = render 'shared/errors', resource: @answer
