@@ -5,7 +5,9 @@ feature 'User can create answer', %q{
 } do
 
   given(:user) { create(:user) }
+  given(:another_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
+  given(:new_url) { 'http://google.com' }
 
   describe 'Authorized user' do
     background do
@@ -41,6 +43,111 @@ feature 'User can create answer', %q{
       click_on 'Create Answer'
 
       expect(page).to have_content "Body can't be blank"
+    end
+  end
+
+  context "multiple sessions" do
+    scenario "add answer to vision for other users", js: true do
+      Capybara.using_session('another user') do
+        sign_in(another_user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+        expect(page).to_not have_css ".card-body"
+      end
+
+      Capybara.using_session('another user') do
+        fill_in 'Body', with: 'new answer for check actioncable'
+        attach_file 'Files', "#{Rails.root}/spec/static/stewart.jpg"
+        fill_in 'Link name', with: 'new link'
+        fill_in 'Url', with: new_url
+
+        click_on 'Create Answer'
+
+        within ".card-body" do
+          expect(page).to have_content 'new answer for check actioncable'
+          expect(page).to have_link 'stewart.jpg'
+          expect(page).to have_link 'new link', href: new_url
+          expect(page).to_not have_link 'Vote up'
+          expect(page).to_not have_link 'Vote down'
+          expect(page).to have_content 'Votes rating:0'
+
+          expect(page).to_not have_link "Make it best"
+          expect(page).to have_content "Comments:"
+          expect(page).to have_css "#comment_body"
+          expect(page).to have_button "Create Comment"
+        end
+      end
+
+      Capybara.using_session('user') do
+        within ".card-body" do
+          expect(page).to have_content 'new answer for check actioncable'
+          expect(page).to have_link 'stewart.jpg'
+          expect(page).to have_link 'new link', href: new_url
+          expect(page).to have_link 'Vote up'
+          expect(page).to have_link 'Vote down'
+          expect(page).to have_content 'Votes rating:0'
+
+          expect(page).to have_link "Make it best"
+          expect(page).to have_content "Comments:"
+          expect(page).to have_css "#comment_body"
+          expect(page).to have_button "Create Comment"
+        end
+      end
+    end
+
+    scenario "add answer to vision for guests", js: true do
+      Capybara.using_session('another user') do
+        sign_in(another_user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+        expect(page).to_not have_css ".card-body"
+      end
+
+      Capybara.using_session('another user') do
+        fill_in 'Body', with: 'new answer for check actioncable'
+        attach_file 'Files', "#{Rails.root}/spec/static/stewart.jpg"
+        fill_in 'Link name', with: 'new link'
+        fill_in 'Url', with: new_url
+
+        click_on 'Create Answer'
+
+        within ".card-body" do
+          expect(page).to have_content 'new answer for check actioncable'
+          expect(page).to have_link 'stewart.jpg'
+          expect(page).to have_link 'new link', href: new_url
+          expect(page).to_not have_link 'Vote up'
+          expect(page).to_not have_link 'Vote down'
+          expect(page).to have_content 'Votes rating:0'
+
+          expect(page).to_not have_link "Make it best"
+          expect(page).to have_content "Comments:"
+          expect(page).to have_css "#comment_body"
+          expect(page).to have_button "Create Comment"
+        end
+      end
+
+      Capybara.using_session('guest') do
+        within ".card-body" do
+          expect(page).to have_content 'new answer for check actioncable'
+          expect(page).to have_link 'stewart.jpg'
+          expect(page).to have_link 'new link', href: new_url
+          expect(page).to_not have_link 'Vote up'
+          expect(page).to_not have_link 'Vote down'
+          expect(page).to have_content 'Votes rating:0'
+
+          expect(page).to_not have_link "Make it best"
+          expect(page).to have_content "Comments:"
+          expect(page).to_not have_css "#comment_body"
+          expect(page).to_not have_button "Create Comment"
+        end
+      end
     end
   end
 
