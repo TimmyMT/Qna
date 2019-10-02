@@ -1,17 +1,29 @@
 div class="answer_#{@answer.id}"
   div class="card border-primary"
     div class="card-body"
-      p = @answer.body
-      div class="rating#{@answer.class}_#{@answer.id}"
-      	p Votes rating:
-      	span class="commentsAnswer_#{@answer.id}"
-      - if gon.current_user_id != @answer.user_id
-      	a href="/answers/#{@answer.id}/vote_clear" data-method="post" data-remote="true" class="btn btn-outline-warning btn-sm" style="display: none" id="vote-clear-Answer_#{@answer.id}" rel="nofollow" Vote clear
-      	
-      	a href="/answers/#{@answer.id}/vote_up" data-method="post" data-remote="true" class="btn btn-outline-success btn-sm" style="display: " id="vote-up-Answer_#{@answer.id}" rel="nofollow" Vote up
-      	span  
-      	a href="/answers/#{@answer.id}/vote_down" data-method="post" data-remote="true" class="btn btn-outline-danger btn-sm" style="display: " id="vote-down-Answer_#{@answer.id}" rel="nofollow" Vote down
-    
+      = @answer.body
+      div class="links"
+      	- for link in @answer_links
+      	  a target="_blank" href=link.url #{link.name}
+      br
+      div class="file-card"
+      	- for file in @answer_files
+      	  a target="_blank" href="#{file[1]}" #{file[0]}
+      br
+      p
+      	span Votes rating:
+      	span class="ratingAnswer_#{@answer.id}" 0
+      	div class="change-rating"
+	      - if gon.current_user_id != @answer.user_id
+	        | Your vote:
+		  	br
+	      	
+	      	a href="/answers/#{@answer.id}/vote_clear" data-method="post" data-remote="true" class="btn btn-outline-warning btn-sm" style="display: none" id="vote-clear-Answer_#{@answer.id}" rel="nofollow" Vote clear
+	      	
+	      	a href="/answers/#{@answer.id}/vote_up" data-method="post" data-remote="true" class="btn btn-outline-success btn-sm" style="display: " id="vote-up-Answer_#{@answer.id}" rel="nofollow" Vote up
+	      	
+	      	a href="/answers/#{@answer.id}/vote_down" data-method="post" data-remote="true" class="btn btn-outline-danger btn-sm" style="display: " id="vote-down-Answer_#{@answer.id}" rel="nofollow" Vote down
+
       - if gon.current_user_id == gon.current_question.user_id
       	p
       	  a href="/answers/#{@answer.id}/select_best" data-method="patch" data-remote="true" class="text-success" Make if best

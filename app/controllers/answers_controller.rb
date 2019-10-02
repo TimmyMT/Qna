@@ -32,9 +32,15 @@ class AnswersController < ApplicationController
 
   def publish_comment
     return if @answer.errors.any?
+    @answer_files_urls = []
+    @answer.files.each do |file|
+      @answer_files_urls << [file.filename.to_s, url_for(file)]
+    end
     ActionCable.server.broadcast(
         'answers',
-        answer: @answer
+        answer: @answer,
+        answer_links: @answer.links,
+        answer_files: @answer_files_urls
     )
   end
 
