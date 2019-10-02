@@ -12,7 +12,7 @@ feature 'User can up rating of object', %q{
     sign_in(wrong_user)
     visit question_path(question)
 
-    within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
+    within ".rating#{question.class.to_s}_#{question.id}" do
       expect(page).to have_content "0"
     end
 
@@ -23,7 +23,7 @@ feature 'User can up rating of object', %q{
       expect(page).to have_link "Vote clear"
     end
 
-    within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
+    within ".rating#{question.class.to_s}_#{question.id}" do
       expect(page).to have_content "1"
     end
   end
@@ -32,7 +32,7 @@ feature 'User can up rating of object', %q{
     sign_in(wrong_user)
     visit question_path(question)
 
-    within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
+    within ".rating#{question.class.to_s}_#{question.id}" do
       expect(page).to have_content "0"
     end
 
@@ -43,7 +43,7 @@ feature 'User can up rating of object', %q{
       expect(page).to have_link "Vote clear"
     end
 
-    within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
+    within ".rating#{question.class.to_s}_#{question.id}" do
       expect(page).to have_content "-1"
     end
   end
@@ -54,7 +54,7 @@ feature 'User can up rating of object', %q{
     sign_in(wrong_user)
     visit question_path(question)
 
-    within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
+    within ".rating#{question.class.to_s}_#{question.id}" do
       expect(page).to have_content "1"
     end
 
@@ -66,7 +66,7 @@ feature 'User can up rating of object', %q{
       expect(page).to have_link "Vote down"
     end
 
-    within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
+    within ".rating#{question.class.to_s}_#{question.id}" do
       expect(page).to have_content "0"
     end
   end
@@ -75,7 +75,7 @@ feature 'User can up rating of object', %q{
     sign_in(user)
     visit question_path(question)
 
-    within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
+    within ".rating#{question.class.to_s}_#{question.id}" do
       expect(page).to have_content "0"
     end
 
@@ -88,7 +88,7 @@ feature 'User can up rating of object', %q{
   scenario 'Guest cant change rating for object' do
     visit question_path(question)
 
-    within ".rating-#{question.class.to_s.downcase}_#{question.id}" do
+    within ".rating#{question.class.to_s}_#{question.id}" do
       expect(page).to have_content "0"
     end
 
