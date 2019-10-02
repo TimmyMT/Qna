@@ -3,6 +3,10 @@ div class="answer_#{@answer.id}"
     div class="card-body"
       = @answer.body
       div class="links"
+      	<% @answer.links.each do |index| %>
+      	  = @answer.links[index].name
+  	  	<% end %>
+      	  
       br
       p
       	span Votes rating:

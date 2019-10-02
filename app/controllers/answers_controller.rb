@@ -32,9 +32,15 @@ class AnswersController < ApplicationController
 
   def publish_comment
     return if @answer.errors.any?
+    fake_user = @current_user.clone
+    fake_user.id = nil
     ActionCable.server.broadcast(
         'answers',
-        answer: @answer
+        answer: @answer,
+        html: render_to_string(
+            partial: "answers/answer",
+            locals: { answer: @answer, current_user: fake_user },
+        )
     )
   end
 

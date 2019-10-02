@@ -7,9 +7,11 @@ var ready = function () {
 
     received: function(data) {
       var answer = data.answer;
+      answer.links = data.answer_links;
       if (answer.user_id !== gon.current_user_id) {
         console.log(answer);
-        $('.answers').append(JST["templates/answer"](data));
+        // $('.answers').append(JST["templates/answer"](data));
+        $('.answers').append($.parseHTML(data.html, true));
       }
     }
   })
