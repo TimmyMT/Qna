@@ -3,20 +3,15 @@ div class="answer_#{@answer.id}"
     div class="card-body"
       = @answer.body
       div class="links"
-<<<<<<< HEAD
       	- for link in @answer_links
       	  a target="_blank" href=link.url #{link.name}
-      br
+          br
+
       div class="file-card"
       	- for file in @answer_files
       	  a target="_blank" href="#{file[1]}" #{file[0]}
-=======
-      	<% @answer.links.each do |index| %>
-      	  = @answer.links[index].name
-  	  	<% end %>
-      	  
->>>>>>> 0d5e15e162350a360f5a0b6c71d180c9f8a85a6a
-      br
+      	  br
+
       p
       	span Votes rating:
       	span class="ratingAnswer_#{@answer.id}" 0
