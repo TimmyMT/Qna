@@ -1,10 +1,7 @@
 var ready = function () {
   App.cable.subscriptions.create('CommentsChannel', {
     connected: function() {
-      console.log('Comments channel connected');
       this.perform('follow');
-      console.log('current_user_id:', gon.current_user_id);
-      console.log('user_signed_in:', gon.user_signed_in);
     },
 
     received: function(data) {
