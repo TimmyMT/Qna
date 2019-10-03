@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
   def publish_comment
     return if @comment.errors.any?
     ActionCable.server.broadcast(
-        'comments',
+        "comments-of-Question_#{@comment.commentable_id}",
         comment: @comment
     )
   end

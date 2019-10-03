@@ -21,7 +21,7 @@ var ready = function () {
         }
       }
     })
-  } else if (questionId === undefined) {
+  } else if (App.current_question) {
     App.current_question.unsubscribe();
   }
 
