@@ -11,10 +11,18 @@ class CommentsController < ApplicationController
 
   private
 
+  def set_question_id(comment)
+    if comment.commentable_type == 'Question'
+      comment.commentable_id
+    else
+      comment.commentable.question.id
+    end
+  end
+
   def publish_comment
     return if @comment.errors.any?
     ActionCable.server.broadcast(
-        "comments-of-Question_#{@comment.commentable_id}",
+        "comments-of-Question_#{set_question_id(@comment)}",
         comment: @comment
     )
   end

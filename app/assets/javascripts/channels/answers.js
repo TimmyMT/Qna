@@ -1,6 +1,6 @@
 var ready = function () {
   var questionId = $('.question').data('id');
-  console.log('question_id: ', questionId);
+  // console.log('question_id: ', questionId);
 
   if (questionId !== undefined) {
     App.current_question = App.cable.subscriptions.create('AnswersChannel', {
@@ -8,7 +8,7 @@ var ready = function () {
         this.perform('follow', {
           question_id: questionId
         });
-        console.log('Answers of Question-' + questionId + ' was connected');
+        // console.log('Answers of Question-' + questionId + ' was connected');
       },
 
       received: function(data) {
