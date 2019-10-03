@@ -7,6 +7,7 @@ feature 'User can add comment to question', %q{
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
+  given!(:answer) { create(:answer, question: question, user: another_user) }
 
   context "multiple sessions" do
     scenario "add comment to vision for other users", js: true do
@@ -40,8 +41,10 @@ feature 'User can add comment to question', %q{
       end
       #########################################################
       Capybara.using_session('another user') do
-        fill_in "write a comment", with: 'first comment'
-        click_on "Create Comment"
+        within ".question_#{question.id}" do
+          fill_in "write a comment", with: 'first comment'
+          click_on "Create Comment"
+        end
 
         within ".commentsQuestion_#{question.id}" do
           expect(page).to have_content "first comment"
@@ -54,8 +57,10 @@ feature 'User can add comment to question', %q{
           expect(page).to have_content "first comment"
         end
 
-        fill_in "write a comment", with: 'second comment'
-        click_on "Create Comment"
+        within ".question_#{question.id}" do
+          fill_in "write a comment", with: 'second comment'
+          click_on "Create Comment"
+        end
 
         within ".commentsQuestion_#{question.id}" do
           expect(page).to have_content "first comment"
@@ -74,6 +79,11 @@ feature 'User can add comment to question', %q{
         within ".commentsQuestion_#{question.id}" do
           expect(page).to have_content "first comment"
           expect(page).to have_content "second comment"
+        end
+
+        within ".answer_#{answer.id}" do
+          expect(page).to_not have_content "first comment"
+          expect(page).to_not have_content "second comment"
         end
       end
     end

@@ -88,6 +88,11 @@ feature 'User can add comment to answer', %q{
           expect(page).to have_content "first comment"
           expect(page).to have_content "second comment"
         end
+        # save_and_open_page
+        within ".question_#{answer.question.id}" do
+          expect(page).to_not have_content "first comment"
+          expect(page).to_not have_content "second comment"
+        end
       end
     end
   end
