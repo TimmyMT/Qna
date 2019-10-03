@@ -1,0 +1,2 @@
+$(".comments<%= @comment.commentable_type %>_<%= @comment.commentable_id %>").append(
+    "<%= j render 'comments/comment', comment: @comment %>")

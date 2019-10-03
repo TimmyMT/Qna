@@ -1,6 +1,6 @@
 div class="answer_#{@answer.id}"
   div class="card border-primary"
-    div class="card-body"
+    .card-body
       = @answer.body
       div class="links"
       	- for link in @answer_links

@@ -5,5 +5,4 @@ h2
 h1 All questions
 
 .questions
-  - @questions.each do |q|
-    p= link_to q.title, question_path(q)
+  = render partial: "questions/partial_index", locals: { questions: @questions }
