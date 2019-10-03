@@ -34,38 +34,8 @@ feature 'User can add comment to answer', %q{
         expect(page).to_not have_content "first comment"
       end
 
-      Capybara.using_session('another user') do
-        within ".answer_#{answer.id}" do
-          fill_in "write a comment", with: 'first comment'
-          click_on "Create Comment"
-
-          within ".commentsAnswer_#{answer.id}" do
-            expect(page).to have_content "first comment"
-          end
-        end
-      end
-
-      Capybara.using_session('guest') do
-        within ".commentsAnswer_#{answer.id}" do
-          expect(page).to have_content "first comment"
-        end
-      end
-    end
-
-    scenario "add comment to vision for other users", js: true do
-      Capybara.using_session('another user') do
-        sign_in(another_user)
-        visit question_path(question)
-
-        within ".answer_#{answer.id}" do
-          expect(page).to have_content "Comments:"
-          expect(page).to have_css "#comment_body"
-          expect(page).to have_button "Create Comment"
-        end
-      end
-
       Capybara.using_session('user') do
-        sign_in(another_user)
+        sign_in(user)
         visit question_path(question)
 
         within ".answer_#{answer.id}" do
@@ -76,6 +46,8 @@ feature 'User can add comment to answer', %q{
 
         expect(page).to_not have_content "first comment"
       end
+
+      ########################################################
 
       Capybara.using_session('another user') do
         within ".answer_#{answer.id}" do
@@ -98,6 +70,13 @@ feature 'User can add comment to answer', %q{
           click_on "Create Comment"
         end
 
+        within ".commentsAnswer_#{answer.id}" do
+          expect(page).to have_content "first comment"
+          expect(page).to have_content "second comment"
+        end
+      end
+
+      Capybara.using_session('guest') do
         within ".commentsAnswer_#{answer.id}" do
           expect(page).to have_content "first comment"
           expect(page).to have_content "second comment"
