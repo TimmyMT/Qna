@@ -2,8 +2,8 @@ var ready = function () {
   var questionId = $('.question').data('id');
   console.log('question_id: ', questionId);
 
-  if (questionId) {
-    App.cable.subscriptions.create('AnswersChannel', {
+  if (questionId !== undefined) {
+    App.current_question = App.cable.subscriptions.create('AnswersChannel', {
       connected: function() {
         this.perform('follow', {
           question_id: questionId
@@ -21,6 +21,8 @@ var ready = function () {
         }
       }
     })
+  } else if (questionId === undefined) {
+    App.current_question.unsubscribe();
   }
 
 };
