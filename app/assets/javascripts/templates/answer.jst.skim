@@ -17,7 +17,7 @@ div class="answer_#{@answer.id}"
       	span Votes rating:
       	span class="ratingAnswer_#{@answer.id}" 0
       	div class="change-rating"
-      	  - if gon.user_signed_in == true
+      	  - if gon.current_user_id
 		      - if gon.current_user_id != @answer.user_id
 		        | Your vote:
 			  	br
