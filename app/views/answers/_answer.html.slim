@@ -1,6 +1,6 @@
 div class="answer_#{answer.id}"
-  div class="card border-primary"
-    div class="card-body"
+  .card.border-primary
+    .card-body
       - if answer.best?
         .best_answer_of_question Best answer!
       = answer.body

@@ -1,14 +1,12 @@
 var ready = function () {
   var questionId = $('.question').data('id');
-  // console.log(questionId);
 
-  if (questionId !== undefined) {
+  if (typeof questionId !== 'undefined') {
     App.current_boards = App.cable.subscriptions.create('CommentsChannel', {
       connected: function() {
         this.perform('follow', {
           question_id: questionId
         });
-        // console.log('Comments of question_' + questionId + ' was connected');
       },
 
       received: function(data) {

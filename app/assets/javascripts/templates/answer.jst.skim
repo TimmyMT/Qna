@@ -1,5 +1,5 @@
 div class="answer_#{@answer.id}"
-  div class="card border-primary"
+  .card.border-primary
     .card-body
       = @answer.body
       div class="links"
@@ -34,9 +34,10 @@ div class="answer_#{@answer.id}"
 
       h5 Comments:
       div class="commentsAnswer_#{@answer.id}"
-      - if gon.user_signed_in == true
+      - if gon.current_user_id
 	      form action="/answers/#{@answer.id}/comments" accept-charset="UTF-8" data-remote="true" method="post"
 	      	input name="utf8" type="hidden" value="✓"
+	      	label for="comment_body" write a comment
 	      	input id="comment_body" placeholder="add a comment" name="comment[body]" type="text"
 	      	br
 	      	input name="commit" value="Create Comment" data-disable-with="Create Comment" type="submit"
