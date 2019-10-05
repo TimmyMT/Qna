@@ -17,8 +17,11 @@ gem 'cocoon'
 gem 'file_validators'
 gem 'mini_magick'
 gem 'skim', '~> 0.10.0'
-# gem 'sprockets'
+gem 'sprockets', '~> 3.7', '>= 3.7.2'
+gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
 gem 'gon'
+gem 'omniauth'
+gem 'omniauth-github'
 
 ###############################################################
 ###############################################################

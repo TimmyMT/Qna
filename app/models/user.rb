@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :authorizations, dependent: :destroy
   has_many :questions, dependent: :nullify
   has_many :answers, dependent: :nullify
   has_many :achievements, dependent: :nullify
@@ -8,7 +9,12 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:github]
+
+  def self.find_for_oauth(auth)
+    Services::FindForOauth.new(auth).call
+  end
 
   def creator?(object)
     self.id == object.user_id
@@ -16,6 +22,10 @@ class User < ApplicationRecord
 
   def not_creator?(object)
     !creator?(object)
+  end
+
+  def create_authorization(auth)
+    self.authorizations.create(provider: auth.provider, uid: auth.uid)
   end
 
 end
