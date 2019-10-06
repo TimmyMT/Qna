@@ -34,4 +34,15 @@ RSpec.describe OauthCallbacksController, type: :controller do
       expect(controller.current_user).to be_a User
     end
   end
+
+  describe 'without email' do
+    before do
+      request.env['omniauth.auth'] = mock_auth_hash(:github)
+      get :github
+    end
+
+    it 'email not exist' do
+      expect(response).to redirect_to new_user_registration_path
+    end
+  end
 end

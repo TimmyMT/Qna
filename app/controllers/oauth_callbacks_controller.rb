@@ -1,5 +1,7 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
 
+  before_action :check_email
+
   def github
     omniauth_callback('Github')
   end
@@ -9,6 +11,12 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   private
+
+  def check_email
+    unless OmniAuth::AuthHash.new(request.env['omniauth.auth']).info[:email]
+      redirect_to new_user_registration_path, notice: 'Email was undefinded, but you can sign up your account'
+    end
+  end
 
   def omniauth_callback(kind)
     @user = User.find_for_oauth(request.env['omniauth.auth'])
