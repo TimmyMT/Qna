@@ -34,6 +34,8 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
+OmniAuth.config.test_mode = true
+
 RSpec.configure do |config|
 
   ############## Custom settings #############################################
@@ -42,6 +44,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
+  config.include OmniauthMacros
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

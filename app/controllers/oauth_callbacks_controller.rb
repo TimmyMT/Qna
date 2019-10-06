@@ -1,14 +1,19 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
 
   def github
-    @user = User.find_for_oauth(request.env['omniauth.auth'])
+    omniauth_callback('Github')
+  end
 
-    if @user&.persisted?
-      sign_in_and_redirect @user, event: :authentication
-      set_flash_message(:notice, :success, kind: 'Github') if is_navigational_format?
-    else
-      redirect_to root_path, alert: 'Something went wrong'
-    end
+  def facebook
+    omniauth_callback('Facebook')
+  end
+
+  private
+
+  def omniauth_callback(kind)
+    @user = User.find_for_oauth(request.env['omniauth.auth'])
+    sign_in_and_redirect @user, event: :authentication
+    set_flash_message(:notice, :success, kind: kind) if is_navigational_format?
   end
 
 end
