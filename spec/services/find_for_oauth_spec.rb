@@ -9,6 +9,8 @@ RSpec.describe Services::FindForOauth do
     it 'returns the user' do
       user.authorizations.create(provider: 'facebook', uid: '123456')
       expect(subject.call).to eq user
+      expect { subject.call }.to_not change(User, :count)
+      expect { subject.call }.to_not change(Authorization, :count)
     end
   end
 
@@ -53,8 +55,10 @@ RSpec.describe Services::FindForOauth do
       end
 
       it 'create authorization for user' do
+        before_count = Authorization.count
         user = subject.call
         expect(user.authorizations).to_not be_empty
+        expect(Authorization.count).to_not eq before_count
       end
 
       it 'creates authorization with provider and uid' do

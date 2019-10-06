@@ -20,6 +20,14 @@ RSpec.describe User, type: :model do
       expect(service).to receive(:call)
       User.find_for_oauth(auth)
     end
+
+    it 'create autorization' do
+      before_count = user.authorizations.count
+      user.create_authorization(auth)
+      expect(user.authorizations.count).to_not eq before_count
+      expect(user.authorizations.last.provider).to eq auth.provider
+      expect(user.authorizations.last.uid).to eq auth.uid
+    end
   end
 
   describe 'Check instance method for author of object' do
