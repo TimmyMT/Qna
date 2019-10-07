@@ -23,7 +23,7 @@ RSpec.describe User, type: :model do
 
     it 'create autorization' do
       before_count = user.authorizations.count
-      user.create_authorization(auth)
+      user.create_authorization!(auth)
       expect(user.authorizations.count).to_not eq before_count
       expect(user.authorizations.last.provider).to eq auth.provider
       expect(user.authorizations.last.uid).to eq auth.uid

@@ -16,7 +16,7 @@ class Services::FindForOauth
       password = Devise.friendly_token[0, 20]
       user = User.create!(email: email, password: password, password_confirmation: password)
     end
-    user.create_authorization(auth)
+    user.create_authorization!(auth)
 
     user
   end

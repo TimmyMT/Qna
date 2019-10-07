@@ -24,7 +24,7 @@ class User < ApplicationRecord
     !creator?(object)
   end
 
-  def create_authorization(auth)
+  def create_authorization!(auth)
     self.authorizations.create!(provider: auth.provider, uid: auth.uid)
   end
 
