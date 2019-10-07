@@ -58,7 +58,8 @@ RSpec.describe Services::FindForOauth do
         before_count = Authorization.count
         user = subject.call
         expect(user.authorizations).to_not be_empty
-        expect(Authorization.count).to_not eq before_count
+        expect(Authorization.count).to be > before_count
+        expect(Authorization.last).to eq user.authorizations.last
       end
 
       it 'creates authorization with provider and uid' do

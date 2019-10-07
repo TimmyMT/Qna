@@ -21,7 +21,7 @@ RSpec.describe User, type: :model do
       User.find_for_oauth(auth)
     end
 
-    it 'create autorization' do
+    it 'User#create_autorization!' do
       before_count = user.authorizations.count
       user.create_authorization!(auth)
       expect(user.authorizations.count).to_not eq before_count
