@@ -1,10 +1,14 @@
 class AnswersController < ApplicationController
   include Voted
 
+  before_action :authenticate_user!
+
   before_action :set_answer, only: [:update, :destroy, :select_best]
   before_action :answer_author?, only: [:update, :destroy]
 
   after_action :publish_comment, only: :create
+
+  authorize_resource
 
   def create
     @question = Question.find(params[:question_id])

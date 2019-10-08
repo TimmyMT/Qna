@@ -2,12 +2,14 @@ class QuestionsController < ApplicationController
   include Voted
 
   before_action :authenticate_user!, except: [:index, :show]
+
+  authorize_resource
+
   before_action :set_question, only: [:show, :edit, :update, :destroy]
   before_action :question_author?, only: [:update, :destroy]
-
   before_action :set_user
-
   after_action :publish_question, only: [:create]
+
 
   def index
     @questions = Question.all.order(created_at: :desc)
