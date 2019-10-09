@@ -9,9 +9,10 @@ div class="question_#{question.id}"
   p
     = render 'votes/votes_rating', resource: question
 
-  - if current_user&.creator?(question)
+  - if can?(:update, question)
     = link_to 'Edit question', '#', class: 'edit-question-link text-warning', data: { question_id: question.id }
     '
+  - if can?(:destroy, question)
     = link_to 'Delete question', question_path(question), method: :delete, class: 'text-danger'
 
     = form_with model: @question, id: "edit-question-#{question.id}", class: 'edit_question' do |f|

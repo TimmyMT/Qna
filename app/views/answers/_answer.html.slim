@@ -11,11 +11,12 @@ div class="answer_#{answer.id}"
       p
         = render 'votes/votes_rating', resource: answer
 
-      - if current_user&.creator?(answer)
+      - if can?(:update, answer)
         = link_to 'Edit answer', '#', class: 'edit-answer-link text-warning', data: {answer_id: answer.id}
         '
+      - if can?(:destroy, answer)
         = link_to 'Delete answer', answer_path(answer), method: :delete, data: {remote: true}, class: 'text-danger'
-      - if current_user&.creator?(answer.question)
+      - if can?(:select_best, answer)
         '
         = link_to 'Make it best', select_best_answer_path(answer), method: :patch, remote: true, class: 'text-success'
       br

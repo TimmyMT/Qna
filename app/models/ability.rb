@@ -14,6 +14,8 @@ class Ability
       end
   end
 
+  private
+
   def guest_abilities
     can :read, :all
   end
