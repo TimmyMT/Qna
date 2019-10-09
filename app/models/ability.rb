@@ -26,5 +26,19 @@ class Ability
     guest_abilities
     can :create, [Question, Answer, Comment]
     can :update, [Question, Answer, Comment], user: user
+    can :destroy, [Question, Answer, Comment], user: user
+
+    alias_action :vote_up, :vote_down, :vote_clear, to: :vote
+    can :vote, [Question, Answer] do |resource|
+      user.not_creator?(resource)
+    end
+
+    can :select_best, Answer do |answer|
+      user.creator?(answer.question) && !answer.best?
+    end
+
+    can :destroy, ActiveStorage::Attachment do |attachment|
+      user.creator?(attachment.record)
+    end
   end
 end

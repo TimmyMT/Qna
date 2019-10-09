@@ -6,7 +6,6 @@ class QuestionsController < ApplicationController
   authorize_resource
 
   before_action :set_question, only: [:show, :edit, :update, :destroy]
-  before_action :question_author?, only: [:update, :destroy]
   before_action :set_user
   after_action :publish_question, only: [:create]
 
@@ -68,12 +67,6 @@ class QuestionsController < ApplicationController
   def set_question
     @question = Question.with_attached_files.find(params[:id])
     gon.current_question = @question
-  end
-
-  def question_author?
-    unless current_user&.creator?(@question)
-      redirect_to @question, alert: 'Not enough permissions'
-    end
   end
 
   def question_params

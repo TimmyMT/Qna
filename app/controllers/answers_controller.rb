@@ -4,7 +4,6 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
 
   before_action :set_answer, only: [:update, :destroy, :select_best]
-  before_action :answer_author?, only: [:update, :destroy]
 
   after_action :publish_comment, only: :create
 
@@ -23,9 +22,7 @@ class AnswersController < ApplicationController
   end
 
   def select_best
-    if current_user&.creator?(@answer.question)
-      @answer.switch_best
-    end
+    @answer.switch_best
   end
 
   def destroy
@@ -43,12 +40,6 @@ class AnswersController < ApplicationController
         answer_links: @answer.links,
         answer_files: answer_files_urls
     )
-  end
-
-  def answer_author?
-    unless current_user&.creator?(@answer)
-      redirect_to @answer.question, alert: 'Not enough permissions'
-    end
   end
 
   def set_answer
