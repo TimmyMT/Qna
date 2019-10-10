@@ -25,6 +25,8 @@ gem 'omniauth-github'
 gem 'omniauth-facebook'
 gem 'cancancan'
 gem 'doorkeeper', '4.2.6'
+gem 'active_model_serializers', '~> 0.10.7'
+gem 'oj', '~> 3.6'
 
 ###############################################################
 ###############################################################
