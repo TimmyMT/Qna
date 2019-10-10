@@ -7,11 +7,9 @@ class Ability
 
   def initialize(user)
     @user = user
-      if user
-        user.admin? ? admin_abilities : user_abilities
-      else
-        guest_abilities
-      end
+
+    return guest_abilities unless user
+    user.admin? ? admin_abilities : user_abilities
   end
 
   private
@@ -32,11 +30,12 @@ class Ability
 
     alias_action :vote_up, :vote_down, :vote_clear, to: :vote
     can :vote, [Question, Answer] do |resource|
-      user.not_creator?(resource)
+      !user.creator?(resource)
     end
 
     can :select_best, Answer do |answer|
-      user.creator?(answer.question) && !answer.best?
+      next false if answer.best?
+      user.creator?(answer.question)
     end
 
     can :destroy, ActiveStorage::Attachment do |attachment|
