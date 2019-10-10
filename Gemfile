@@ -24,6 +24,7 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-facebook'
 gem 'cancancan'
+gem 'doorkeeper', '4.2.6'
 
 ###############################################################
 ###############################################################
