@@ -16,7 +16,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     if @question.save
       head :created, location: api_v1_question_url(@question)
     else
-      render json: { errors: @question.errors.full_messages }, status: :bad_request
+      render json: { errors: @question.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -25,7 +25,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     if @question.update(question_params)
       head :ok
     else
-      head :bad_request
+      head :unprocessable_entity
     end
   end
 

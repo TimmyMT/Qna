@@ -108,7 +108,7 @@ describe 'Answer API', type: :request do
                                                                       access_token: access_token.token}
         end.to_not change(Answer, :count)
 
-        expect(response).to have_http_status :bad_request
+        expect(response).to have_http_status :unprocessable_entity
       end
     end
   end
@@ -147,7 +147,7 @@ describe 'Answer API', type: :request do
         patch "/api/v1/answers/#{answer.id}", params: { answer: { body: '' },
                                                             access_token: access_token.token }
         answer.reload
-        expect(response).to have_http_status :bad_request
+        expect(response).to have_http_status :unprocessable_entity
         expect(answer.body).to eq before_body
       end
     end

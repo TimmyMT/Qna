@@ -13,7 +13,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
     if @answer.save
       head :created, location: api_v1_answer_url(@answer)
     else
-      render json: { errors: @answer.errors.full_messages }, status: :bad_request
+      render json: { errors: @answer.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -22,7 +22,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
     if @answer.update(answer_params)
       head :ok
     else
-      head :bad_request
+      head :unprocessable_entity
     end
   end
 
