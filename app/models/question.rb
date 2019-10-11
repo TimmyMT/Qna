@@ -2,6 +2,7 @@ class Question < ApplicationRecord
   include Votable
   include Commentable
 
+  has_many :url_files, dependent: :destroy, as: :url_fileable
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable, inverse_of: :linkable
   belongs_to :user

@@ -6,6 +6,7 @@ class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user
   has_many_attached :files, dependent: :destroy
+  has_many :url_files, dependent: :destroy, as: :url_fileable
 
   accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true
 

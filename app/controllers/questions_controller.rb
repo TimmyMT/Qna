@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   include Voted
+  include UrlGenerator
 
   before_action :authenticate_user!, except: [:index, :show]
 
@@ -30,6 +31,7 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.new(question_params)
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
+      generate_urls(@question)
     else
       render :new
     end

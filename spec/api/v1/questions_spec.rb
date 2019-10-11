@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'Questions API', type: :request do
   let(:headers) { { "CONTENT_TYPE" => "application/json",
                     "ACCEPT" => 'application/json' } }
+
   describe 'GET /api/v1/questions' do
     let(:method) { :get }
     let(:api_path) { '/api/v1/questions' }

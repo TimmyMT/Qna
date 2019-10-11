@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   include Voted
+  include UrlGenerator
 
   before_action :authenticate_user!
 
@@ -14,6 +15,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
+    generate_urls(@answer)
   end
 
   def update

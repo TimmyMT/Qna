@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_10_043007) do
+ActiveRecord::Schema.define(version: 2019_10_11_064241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,15 @@ ActiveRecord::Schema.define(version: 2019_10_10_043007) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "url_files", force: :cascade do |t|
+    t.string "url", null: false
+    t.string "url_fileable_type"
+    t.bigint "url_fileable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["url_fileable_type", "url_fileable_id"], name: "index_url_files_on_url_fileable_type_and_url_fileable_id"
   end
 
   create_table "users", force: :cascade do |t|
