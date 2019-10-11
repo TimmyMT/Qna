@@ -1,5 +1,5 @@
 class Api::V1::AnswersController < Api::V1::BaseController
-  before_action :set_answer, only: :show
+  before_action :set_answer, only: [:show, :update, :destroy]
   before_action :set_question, only: :create
 
   def show
@@ -15,6 +15,21 @@ class Api::V1::AnswersController < Api::V1::BaseController
     else
       render json: { errors: @answer.errors.full_messages }, status: :bad_request
     end
+  end
+
+  def update
+    authorize! :update, @answer
+    if @answer.update(answer_params)
+      head :ok
+    else
+      head :bad_request
+    end
+  end
+
+  def destroy
+    authorize! :destroy, @answer
+    @answer.destroy
+    head :ok
   end
 
   private

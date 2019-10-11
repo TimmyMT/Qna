@@ -151,4 +151,72 @@ describe 'Questions API', type: :request do
       end
     end
   end
+
+  describe 'PATCH /api/v1/questions/{id}' do
+    let!(:access_token) { create(:access_token) }
+    let!(:question) { create(:question, user_id: access_token.resource_owner_id) }
+
+    context 'unauthorized' do
+      it 'returns 401 status if there is no access_token' do
+        patch "/api/v1/questions/#{question.id}", params: { format: :json }
+        expect(response.status).to eq 401
+      end
+
+      it 'returns 401 status if access_token is invalid' do
+        patch "/api/v1/questions/#{question.id}", params: { format: :json, access_token: '1234' }
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      it 'return 201 status when question successfully updated' do
+        expect do
+          patch "/api/v1/questions/#{question.id}", params: { question: { body: 'Updated text', title: 'Updated title' },
+                                               access_token: access_token.token }
+        end.to_not change(Question, :count)
+
+        question.reload
+        expect(response).to have_http_status :ok
+        expect(question.title).to eq 'Updated title'
+        expect(question.body).to eq 'Updated text'
+      end
+
+      it 'not valid question' do
+        before_body = question.body
+        before_title = question.title
+        patch "/api/v1/questions/#{question.id}", params: { question: { body: '', title: '' },
+                                                            access_token: access_token.token }
+        question.reload
+        expect(response).to have_http_status :bad_request
+        expect(question.body).to eq before_body
+        expect(question.title).to eq before_title
+      end
+    end
+  end
+
+  describe 'DELETE /api/v1/questions/{id}' do
+    let!(:access_token) { create(:access_token) }
+    let!(:question) { create(:question, user_id: access_token.resource_owner_id) }
+
+    context 'unauthorized' do
+      it 'returns 401 status if there is no access_token' do
+        delete "/api/v1/questions/#{question.id}", params: { format: :json }
+        expect(response.status).to eq 401
+      end
+
+      it 'returns 401 status if access_token is invalid' do
+        delete "/api/v1/questions/#{question.id}", params: { format: :json, access_token: '1234' }
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      it 'deletes question' do
+        expect do
+          delete "/api/v1/questions/#{question.id}", params: { access_token: access_token.token }
+        end.to change(Question, :count).by(-1)
+        expect(response).to have_http_status :ok
+      end
+    end
+  end
 end
