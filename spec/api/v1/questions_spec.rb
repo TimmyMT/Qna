@@ -118,16 +118,9 @@ describe 'Questions API', type: :request do
   describe 'POST /api/v1/questions/' do
     let(:access_token) { create(:access_token) }
 
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        post "/api/v1/questions/", params: { format: :json }
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        post "/api/v1/questions/", params: { format: :json, access_token: '1234' }
-        expect(response.status).to eq 401
-      end
+    it_behaves_like 'API Authorizable json format' do
+      let!(:method) { :post }
+      let!(:api_path) { "/api/v1/questions/" }
     end
 
     context 'authorized' do
@@ -156,16 +149,9 @@ describe 'Questions API', type: :request do
     let!(:access_token) { create(:access_token) }
     let!(:question) { create(:question, user_id: access_token.resource_owner_id) }
 
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        patch "/api/v1/questions/#{question.id}", params: { format: :json }
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        patch "/api/v1/questions/#{question.id}", params: { format: :json, access_token: '1234' }
-        expect(response.status).to eq 401
-      end
+    it_behaves_like 'API Authorizable json format' do
+      let!(:method) { :patch }
+      let!(:api_path) { "/api/v1/questions/#{question.id}" }
     end
 
     context 'authorized' do
@@ -198,16 +184,9 @@ describe 'Questions API', type: :request do
     let!(:access_token) { create(:access_token) }
     let!(:question) { create(:question, user_id: access_token.resource_owner_id) }
 
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        delete "/api/v1/questions/#{question.id}", params: { format: :json }
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        delete "/api/v1/questions/#{question.id}", params: { format: :json, access_token: '1234' }
-        expect(response.status).to eq 401
-      end
+    it_behaves_like 'API Authorizable json format' do
+      let!(:method) { :delete }
+      let!(:api_path) { "/api/v1/questions/#{question.id}" }
     end
 
     context 'authorized' do
