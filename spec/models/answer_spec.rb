@@ -47,4 +47,16 @@ RSpec.describe Answer, type: :model do
     let(:question) { create(:question, user: user) }
     let(:resource) { create(:answer, question: question, user: user) }
   end
+
+  describe 'notify answers question author for created' do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+    let(:answer) { build(:answer, question: question, user: other_user) }
+
+    it 'calls NewAnswerNotifyJob#perform' do
+      expect(NewAnswerNotifyJob).to receive(:perform_later).with(answer)
+      answer.save!
+    end
+  end
 end

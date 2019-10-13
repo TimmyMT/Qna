@@ -12,12 +12,20 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
+  after_create :send_new_answer_notify
+
   def switch_best
     transaction do
       question.answers.update_all(best: false)
       self.update!(best: true)
       question.achievement.update!(user: self.user) if question.achievement.present?
     end
+  end
+
+  private
+
+  def send_new_answer_notify
+    NewAnswerNotifyJob.perform_later(self)
   end
 
 end
