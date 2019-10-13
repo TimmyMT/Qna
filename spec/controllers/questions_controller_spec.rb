@@ -161,7 +161,7 @@ RSpec.describe QuestionsController, type: :controller do
         before { login(wrong_user) }
 
         it 'changes question attributes' do
-          patch :update, params: { id: question, question: {body: 'new'}, user: wrong_user }
+          patch :update, params: { id: question, question: {body: 'new'}, user: wrong_user, format: :js }
           question.reload
 
           expect(question.body).to eq 'MyText'
