@@ -8,5 +8,9 @@ RSpec.describe DailyMailer, type: :mailer do
     it 'renders the headers' do
       expect(mail.to).to eq([user.email])
     end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match("Hello")
+    end
   end
 end

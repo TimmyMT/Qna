@@ -51,12 +51,6 @@ describe Ability do
 
       it { should be_able_to :destroy, question_attachment, user: user }
       it { should_not be_able_to :destroy, other_question_attachment, user: user }
-
-      it { should_not be_able_to :subscribe, other_question, user: other_user }
-      it { should be_able_to :unsubscribe, other_question, user: other_user }
-
-      it { should be_able_to :subscribe, question, user: other_user }
-      it { should_not be_able_to :unsubscribe, question, user: other_user }
     end
 
     context 'Answer' do

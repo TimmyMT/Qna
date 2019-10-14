@@ -9,7 +9,7 @@ module Subscribable
   end
 
   def subscribe(user)
-    subscriptions.create(user: user)
+    subscriptions.create!(user: user)
   end
 
   def unsubscribe(user)

@@ -9,11 +9,12 @@ div class="question_#{question.id}"
   p
     = render 'votes/votes_rating', resource: question
 
-  - if can?(:subscribe, question)
-    = link_to 'Unsub', unsubscribe_question_path, method: :delete
-  - if can?(:unsubscribe, question)
-    = link_to 'Sub', subscribe_question_path, method: :post
-  '
+  - if can?(:create, Subscription)
+    - if question.subscribed?(current_user)
+      = link_to 'Unsub', subscription_path(question.subscribed?(current_user)), method: :delete
+    - else
+      = link_to 'Sub', question_subscriptions_path(question), method: :post
+
   - if can?(:update, question)
     = link_to 'Edit question', '#', class: 'edit-question-link text-warning', data: { question_id: question.id }
     '

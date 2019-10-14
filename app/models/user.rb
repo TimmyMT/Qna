@@ -24,7 +24,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:github, :facebook]
 
   def self.send_daily_digest
-    find_each.each do |user|
+    find_each do |user|
       DailyMailer.digest(user).deliver_later
     end
   end

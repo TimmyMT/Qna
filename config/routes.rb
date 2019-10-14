@@ -13,29 +13,6 @@ Rails.application.routes.draw do
     end
   end
 
-  concern :subscribable do
-    member do
-      post :subscribe
-      delete :unsubscribe
-    end
-  end
-
-  resources :achievements, only: :index
-  resources :attachments, only: :destroy
-  resources :links, only: :destroy
-
-  resources :questions, shallow: true, concerns: [:votable, :subscribable] do
-    resources :comments, module: :questions
-
-    resources :answers, shallow: true, concerns: [:votable] do
-      resources :comments, module: :answers
-
-      member do
-        patch :select_best
-      end
-    end
-  end
-
   namespace :api do
     namespace :v1 do
       resources :profiles, only: [:index] do
@@ -46,6 +23,24 @@ Rails.application.routes.draw do
         resources :answers, only: [:show, :create, :update, :destroy], shallow: true
       end
     end
+  end
+
+  resources :achievements, only: :index
+  resources :attachments, only: :destroy
+  resources :links, only: :destroy
+
+  resources :questions, shallow: true, concerns: [:votable] do
+    resources :comments, module: :questions
+
+    resources :answers, shallow: true, concerns: [:votable] do
+      resources :comments, module: :answers
+
+      member do
+        patch :select_best
+      end
+    end
+
+    resources :subscriptions, only: [:create, :destroy], shallow: true
   end
 
   mount ActionCable.server => '/cable'

@@ -22,10 +22,4 @@ RSpec.describe Question, type: :model do
     let(:wrong_user) { create(:user) }
     let(:resource) { create(:question, user: user) }
   end
-
-  it_behaves_like 'subscribable' do
-    let(:user) { create(:user) }
-    let(:other_user) { create(:user) }
-    let(:resource) { create(:question, user: user) }
-  end
 end

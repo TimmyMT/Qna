@@ -1,7 +1,6 @@
 class QuestionsController < ApplicationController
   include Voted
   include UrlGenerator
-  include Subscribed
 
   before_action :authenticate_user!, except: [:index, :show]
 

@@ -24,21 +24,13 @@ class Ability
 
   def user_abilities
     guest_abilities
-    can :create, [Question, Answer, Comment]
+    can :create, [Question, Answer, Comment, Subscription]
     can :update, [Question, Answer, Comment], user: user
     can :destroy, [Question, Answer, Comment], user: user
 
     alias_action :vote_up, :vote_down, :vote_clear, to: :vote
     can :vote, [Question, Answer] do |resource|
       !user.creator?(resource)
-    end
-
-    can :subscribe, Question do |question|
-      question.subscribed?(user)
-    end
-
-    can :unsubscribe, Question do |question|
-      !question.subscribed?(user)
     end
 
     can :select_best, Answer do |answer|
@@ -48,6 +40,10 @@ class Ability
 
     can :destroy, ActiveStorage::Attachment do |attachment|
       user.creator?(attachment.record)
+    end
+
+    can :destroy, Subscription do |sub|
+      sub.question.subsribed?(user)
     end
   end
 end
