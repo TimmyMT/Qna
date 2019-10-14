@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :achievements, dependent: :nullify
   has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   has_many :access_grants,
            class_name: 'Doorkeeper::AccessGrant',
@@ -21,6 +22,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:github, :facebook]
+
+  def self.send_daily_digest
+    find_each.each do |user|
+      DailyMailer.digest(user).deliver_later
+    end
+  end
 
   def self.find_for_oauth(auth)
     Services::FindForOauth.new(auth).call

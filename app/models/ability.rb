@@ -33,6 +33,14 @@ class Ability
       !user.creator?(resource)
     end
 
+    can :subscribe, Question do |question|
+      question.subscribed?(user)
+    end
+
+    can :unsubscribe, Question do |question|
+      !question.subscribed?(user)
+    end
+
     can :select_best, Answer do |answer|
       next false if answer.best?
       user.creator?(answer.question)

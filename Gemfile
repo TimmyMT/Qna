@@ -28,8 +28,7 @@ gem 'doorkeeper', '4.2.6'
 gem 'active_model_serializers', '~> 0.10.7'
 gem 'oj', '~> 3.6'
 gem 'sidekiq'
-gem 'sinatra', require: false
-gem 'whenever', require: false
+gem 'whenever'
 
 ###############################################################
 ###############################################################

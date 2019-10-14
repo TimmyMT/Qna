@@ -1,6 +1,7 @@
 class Question < ApplicationRecord
   include Votable
   include Commentable
+  include Subscribable
 
   has_many :url_files, dependent: :destroy, as: :url_fileable
   has_many :answers, dependent: :destroy
@@ -16,11 +17,4 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
-  after_create :calculate_reputation
-
-  private
-
-  def calculate_reputation
-    ReputationJob.perform_later(self)
-  end
 end

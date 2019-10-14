@@ -1,0 +1,6 @@
+| Hello
+| New questions for the last day:
+= @questions.count
+- @questions.each do |question|
+  = question.title
+  = question_url(question)

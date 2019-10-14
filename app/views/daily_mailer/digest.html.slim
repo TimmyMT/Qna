@@ -1,0 +1,6 @@
+h3 Hello
+h4
+  | New questions for the last day:
+  = @questions.count
+- @questions.each do |question|
+  = link_to question.title, question_url(question)

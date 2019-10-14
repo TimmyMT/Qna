@@ -23,13 +23,9 @@ RSpec.describe Question, type: :model do
     let(:resource) { create(:question, user: user) }
   end
 
-  describe 'reputation' do
+  it_behaves_like 'subscribable' do
     let(:user) { create(:user) }
-    let(:question) { build(:question, user: user) }
-
-    it 'calls Services::Reputation#calculate' do
-      expect(ReputationJob).to receive(:perform_later).with(question)
-      question.save!
-    end
+    let(:other_user) { create(:user) }
+    let(:resource) { create(:question, user: user) }
   end
 end

@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   include Voted
   include UrlGenerator
+  include Subscribed
 
   before_action :authenticate_user!, except: [:index, :show]
 
@@ -9,7 +10,6 @@ class QuestionsController < ApplicationController
   after_action :publish_question, only: [:create]
 
   authorize_resource
-
 
   def index
     @questions = Question.all.order(created_at: :desc)

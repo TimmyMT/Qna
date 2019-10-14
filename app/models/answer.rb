@@ -12,7 +12,7 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
-  after_create :send_new_answer_notify
+  after_commit :subscriptions_notification
 
   def switch_best
     transaction do
@@ -22,10 +22,8 @@ class Answer < ApplicationRecord
     end
   end
 
-  private
-
-  def send_new_answer_notify
-    NewAnswerNotifyJob.perform_later(self)
+  def subscriptions_notification
+    AnswerNotificationJob.perform_later(self)
   end
 
 end
