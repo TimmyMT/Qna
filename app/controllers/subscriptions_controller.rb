@@ -1,4 +1,6 @@
 class SubscriptionsController < ActionController::Base
+  before_action :authenticate_user!
+
   authorize_resource
 
   def create
