@@ -8,6 +8,15 @@ feature 'subscribe to a question' do
 
   before { sign_in(user) }
 
+  scenario 'Creator of question already subscribed for his question' do
+    visit questions_path
+    click_on 'Ask question'
+    fill_in 'Title', with: 'q for sub'
+    fill_in 'Body', with: 'text'
+    click_on 'Save'
+    expect(page).to have_link 'Unsub'
+  end
+
   scenario 'User can subscribe to a question' do
     visit question_path(other_question)
     click_on 'Sub'

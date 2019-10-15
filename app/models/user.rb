@@ -23,12 +23,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:github, :facebook]
 
-  # def self.send_daily_digest
-  #   find_each do |user|
-  #     DailyMailer.digest(user).deliver_later
-  #   end
-  # end
-
   def self.find_for_oauth(auth)
     Services::FindForOauth.new(auth).call
   end

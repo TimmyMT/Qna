@@ -43,7 +43,7 @@ class Ability
     end
 
     can :destroy, Subscription do |sub|
-      sub.question.subsribed?(user)
+      sub.question.subscribed?(user)
     end
   end
 end

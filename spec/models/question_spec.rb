@@ -22,4 +22,20 @@ RSpec.describe Question, type: :model do
     let(:wrong_user) { create(:user) }
     let(:resource) { create(:question, user: user) }
   end
+
+  describe 'Creator of question' do
+    let!(:user) { create(:user) }
+    let!(:other_user) { create(:user) }
+
+    it 'already subscribed for his question' do
+      before_sub = Subscription.count
+      question = Question.create(user: user, title: 'new', body: 'new')
+
+      expect(Subscription.count).to be > before_sub
+
+      expect(question.subscribed?(user)).to be_truthy
+      expect(question.subscribed?(other_user)).to be_falsey
+    end
+  end
+
 end

@@ -1,12 +1,15 @@
 class Question < ApplicationRecord
   include Votable
   include Commentable
-  include Subscribable
+
+  belongs_to :user
 
   has_many :url_files, dependent: :destroy, as: :url_fileable
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable, inverse_of: :linkable
-  belongs_to :user
+
+  has_many :subscriptions, dependent: :destroy
+  has_many :subscribers, through: :subscriptions, source: :user
 
   has_one :achievement, dependent: :nullify
 
@@ -16,5 +19,15 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :achievement, reject_if: :all_blank
 
   validates :title, :body, presence: true
+
+  after_create :subscribe_creator
+
+  def subscribe_creator
+    self.subscribers.push(self.user)
+  end
+
+  def subscribed?(user)
+    self.subscriptions.where(user: user).present?
+  end
 
 end
