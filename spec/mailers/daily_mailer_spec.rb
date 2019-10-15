@@ -14,8 +14,8 @@ RSpec.describe DailyMailer, type: :mailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match("Hello")
 
-      Question.where('created_at > ?', 1.day.ago).each do |question|
-        expect(mail.body.encoded).to match(question.title)
+      Question.where('created_at < ?', 1.day.ago).each do |question|
+        expect(mail.body.encoded).to_not match(question.title)
       end
     end
   end
