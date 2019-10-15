@@ -5,6 +5,10 @@ RSpec.describe DailyMailer, type: :mailer do
     let(:user) { create(:user) }
     let(:other_user) { create(:user) }
     let!(:question) { create(:question, user: other_user) }
+    let!(:old_question) { create(:question,
+                                title: 'old question',
+                                user: other_user,
+                                created_at: question.created_at - 1.day) }
     let(:mail) { DailyMailer.digest(user) }
 
     it 'renders the headers' do
