@@ -41,9 +41,5 @@ class Ability
     can :destroy, ActiveStorage::Attachment do |attachment|
       user.creator?(attachment.record)
     end
-
-    # can :destroy, Subscription do |sub|
-    #   sub.question.subscribed?(user)
-    # end
   end
 end
