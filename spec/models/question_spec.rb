@@ -31,10 +31,10 @@ RSpec.describe Question, type: :model do
       before_sub = Subscription.count
       question = Question.create(user: user, title: 'new', body: 'new')
 
-      expect(Subscription.count).to be > before_sub
+      expect(Subscription.count).to eq before_sub + 1
 
-      expect(question.subscribed?(user)).to be_truthy
-      expect(question.subscribed?(other_user)).to be_falsey
+      expect(question).to be_subscribed(user)
+      expect(question).to_not be_subscribed(other_user)
     end
   end
 

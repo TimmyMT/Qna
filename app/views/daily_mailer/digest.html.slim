@@ -2,5 +2,5 @@ h3 Hello
 h4
   | New questions for the last day:
   = @questions.count
-- @questions.each do |question|
+- @questions.find_each do |question|
   = question.title

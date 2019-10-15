@@ -27,7 +27,7 @@ class Question < ApplicationRecord
   end
 
   def subscribed?(user)
-    self.subscriptions.where(user: user).present?
+    self.subscriptions.find_by(user: user).present?
   end
 
 end

@@ -26,7 +26,7 @@ class Ability
     guest_abilities
     can :create, [Question, Answer, Comment, Subscription]
     can :update, [Question, Answer, Comment], user: user
-    can :destroy, [Question, Answer, Comment], user: user
+    can :destroy, [Question, Answer, Comment, Subscription], user: user
 
     alias_action :vote_up, :vote_down, :vote_clear, to: :vote
     can :vote, [Question, Answer] do |resource|
@@ -42,8 +42,8 @@ class Ability
       user.creator?(attachment.record)
     end
 
-    can :destroy, Subscription do |sub|
-      sub.question.subscribed?(user)
-    end
+    # can :destroy, Subscription do |sub|
+    #   sub.question.subscribed?(user)
+    # end
   end
 end

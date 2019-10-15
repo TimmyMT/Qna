@@ -11,7 +11,7 @@ div class="question_#{question.id}"
 
   - if can?(:create, Subscription)
     - if question.subscribed?(current_user)
-      = link_to 'Unsub', subscription_path(question.id), method: :delete
+      = link_to 'Unsub', subscription_path(question), method: :delete
     - else
       = link_to 'Sub', question_subscriptions_path(question), method: :post
 
