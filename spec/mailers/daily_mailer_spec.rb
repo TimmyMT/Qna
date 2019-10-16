@@ -8,7 +8,7 @@ RSpec.describe DailyMailer, type: :mailer do
     let!(:old_question) { create(:question,
                                 title: 'old question',
                                 user: other_user,
-                                created_at: question.created_at - 2.days.ago) }
+                                created_at: 2.days.ago) }
     let(:mail) { DailyMailer.digest(user) }
 
     it 'renders the headers' do
@@ -18,13 +18,8 @@ RSpec.describe DailyMailer, type: :mailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match("Hello")
 
-      Question.where('created_at < ?', 1.day.ago).each do |question|
-        expect(mail.body.encoded).to_not match(question.title)
-      end
-
-      Question.where('created_at > ?', 1.day.ago).each do |question|
-        expect(mail.body.encoded).to match(question.title)
-      end
+      expect(mail.body.encoded).to_not match(old_question.title)
+      expect(mail.body.encoded).to match(question.title)
     end
   end
 end
