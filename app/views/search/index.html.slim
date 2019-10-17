@@ -1,0 +1,27 @@
+= form_tag search_index_path, method: :get do
+  = label_tag 'query'
+  br
+  = text_field_tag :query, params[:query]
+  br
+  = select_tag :category, options_for_select(Search::CATEGORIES, selected: params[:category]), { prompt: "All", class: 'browser-default' }
+  br
+  = button_tag 'Search'
+- if @resources.present?
+  - @resources.each do |resource|
+    - case resource.class.to_s
+    - when 'Question'
+      = link_to resource.title, question_path(resource)
+    - when 'User'
+      = resource.email
+    - when 'Answer'
+      = link_to resource.body, question_path(resource.question)
+    - when 'Comment'
+      - if resource.commentable.is_a?(Answer)
+        = link_to resource.body, question_path(resource.commentable.question)
+      - else
+        = link_to resource.body, question_path(resource.commentable)
+    '
+    span = resource.class.to_s
+    br
+- else
+  = "Results for #{params[:query]} was not found"
