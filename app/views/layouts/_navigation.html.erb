@@ -4,7 +4,7 @@
       <%= link_to 'Questions', questions_path, class: 'navbar-brand', id: "indexQuestionButton" %>
     </div>
 
-    <%= link_to 'Search...', search_index_path %>
+    <%= link_to 'Search...', search_index_path, class: 'card-link text-success' %>
     <% if signed_in? %>
       <%= link_to 'Your achievements', achievements_path, class: 'card-link text-warning' %>
       <span class="p-2 text-white"><%= current_user.email %></span>

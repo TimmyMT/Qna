@@ -6,6 +6,8 @@
   = select_tag :category, options_for_select(Search::CATEGORIES, selected: params[:category]), { prompt: "All", class: 'browser-default' }
   br
   = button_tag 'Search'
+  br
+  br
 - if @resources.present?
   - @resources.each do |resource|
     - case resource.class.to_s
@@ -16,10 +18,13 @@
     - when 'Answer'
       = link_to resource.body, question_path(resource.question)
     - when 'Comment'
-      - if resource.commentable.is_a?(Answer)
-        = link_to resource.body, question_path(resource.commentable.question)
-      - else
-        = link_to resource.body, question_path(resource.commentable)
+      / = resource.body
+      - if resource.commentable_type == 'Answer'
+        = link_to "#{resource.body}", question_path(resource.commentable.question.id)
+      - elsif resource.commentable_type == 'Question'
+        = link_to "#{resource.body}", question_path(resource.commentable.id)
+      '
+      = resource.commentable_type
     '
     span = resource.class.to_s
     br

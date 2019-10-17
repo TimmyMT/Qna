@@ -1,34 +1,44 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
+require "selenium/webdriver"
+
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+      chromeOptions: { args: %w(headless disable-gpu) }
+  )
+
+  Capybara::Selenium::Driver.new app,
+                                 browser: :chrome,
+                                 desired_capabilities: capabilities
+end
+
+Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.default_max_wait_time = 5
+Capybara.server = :puma
+ActionDispatch::IntegrationTest
+Capybara.server_port = 3001
+Capybara.app_host = 'http://localhost:3001'
 
 RSpec.configure do |config|
-  config.use_transactional_fixtures = false
+  config.include SphinxHelpers, type: :feature
 
-  # DatabaseCleaner settings
   config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
     # Ensure sphinx directories exist for the test environment
     ThinkingSphinx::Test.init
-    # Configure and start Sphinx, and automatically stop Sphinx at the end of the test suite.
+    # Configure and start Sphinx, and automatically
+    # stop Sphinx at the end of the test suite.
     ThinkingSphinx::Test.start_with_autostop
   end
 
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
+  config.use_transactional_fixtures = false
 
-  config.before(:each, sphinx: true) do
-    DatabaseCleaner.strategy = :truncation
-    # Index data when running an acceptance spec.
-    ThinkingSphinx::Test.index
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
+  config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
+  config.before(:each) { DatabaseCleaner.strategy = :transaction }
+  config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each) { DatabaseCleaner.start }
+  config.after(:each) { DatabaseCleaner.clean }
 end
+
