@@ -6,7 +6,6 @@ var ready = function () {
 
     received: function(data) {
       var question = data.question;
-      // $('.questions').append('<p>' + "<a href='http://localhost:3000/questions/" + question.id + "'>" + question.title + "</a>" + '</p>')
       $('.questions').append(JST["templates/question"](data));
     }
   })
