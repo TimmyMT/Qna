@@ -5,7 +5,6 @@ var ready = function () {
     },
 
     received: function(data) {
-      var question = data.question;
       $('.questions').append(JST["templates/question"](data));
     }
   })
