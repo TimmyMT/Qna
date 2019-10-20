@@ -14,4 +14,6 @@ append :linked_files, "config/database.yml", 'config/master.key'
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", 'storage'
 
-set :rvm1_map_bins, fetch(:rvm1_map_bins ).to_a.concat(%w(sidekiq sidekiqctl))
+# set :rvm1_map_bins, fetch(:rvm1_map_bins ).to_a.concat(%w(sidekiq sidekiqctl))
+
+after 'deploy:publishing', 'unicorn:restart'
