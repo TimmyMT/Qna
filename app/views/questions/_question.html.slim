@@ -1,9 +1,10 @@
 .question data-id=question.id
 div class="question_#{question.id}"
-  h1= question.title
-  p= question.body
-  = render 'links/links', resource: question
-  = render 'shared/attachment_actions', resource: question
+  - cache do
+    h1= question.title
+    p= question.body
+    = render 'links/links', resource: question
+    = render 'shared/attachment_actions', resource: question
 
   br
   p

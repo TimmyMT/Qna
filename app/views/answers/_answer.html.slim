@@ -3,9 +3,10 @@ div class="answer_#{answer.id}"
     .card-body
       - if answer.best?
         .best_answer_of_question Best answer!
-      = answer.body
-      = render 'links/links', resource: answer
-      = render 'shared/attachment_actions', resource: answer
+      - cache answer do
+        = answer.body
+        = render 'links/links', resource: answer
+        = render 'shared/attachment_actions', resource: answer
 
       br
       p

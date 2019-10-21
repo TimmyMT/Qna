@@ -34,6 +34,9 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'mini_racer'
 gem 'unicorn'
+gem 'redis-rails'
+
+gem 'actionpack-page_caching'
 
 ###############################################################
 ###############################################################

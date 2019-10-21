@@ -3,7 +3,7 @@ class Answer < ApplicationRecord
   include Commentable
 
   has_many :links, dependent: :destroy, as: :linkable, inverse_of: :linkable
-  belongs_to :question
+  belongs_to :question, touch: true
   belongs_to :user
   has_many_attached :files, dependent: :destroy
   has_many :url_files, dependent: :destroy, as: :url_fileable
