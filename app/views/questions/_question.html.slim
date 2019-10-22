@@ -3,8 +3,8 @@ div class="question_#{question.id}"
   - cache do
     h1= question.title
     p= question.body
-    = render 'links/links', resource: question
-    = render 'shared/attachment_actions', resource: question
+  = render 'links/links', resource: question
+  = render 'shared/attachment_actions', resource: question
 
   br
   p

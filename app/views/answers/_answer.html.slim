@@ -5,8 +5,8 @@ div class="answer_#{answer.id}"
         .best_answer_of_question Best answer!
       - cache answer do
         = answer.body
-        = render 'links/links', resource: answer
-        = render 'shared/attachment_actions', resource: answer
+      = render 'links/links', resource: answer
+      = render 'shared/attachment_actions', resource: answer
 
       br
       p
