@@ -2,7 +2,7 @@
 
 This application is an analogue of the system of questions/answers StackOverflow.
 
-
+Used technologies:
 * Ruby version 2.5.3
 * Rails 5.2.3
 * PostgreSQL
